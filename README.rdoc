@@ -1,0 +1,13 @@
+= ISDC Integral Pipeline
+
+This is a collection of scripts from around 2007.  
+Out of context, they are pretty worthless.
+Nevertheless, here they are.
+
+
+Going to integrate all for starting with 20070625
+
+opus-20070625
+opus-20071011
+opus-20071106
+opus (?)

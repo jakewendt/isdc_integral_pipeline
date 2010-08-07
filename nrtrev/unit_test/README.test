@@ -11,8 +11,8 @@ set system = "nrtrev"
 source unittest.setup.csh
 if ( $status != 0 ) exit $status
 
-set TEST_DATA_TGZ = "nrtrev-8.8_test_data.tar.gz"
-set OUTREF_TGZ    = "nrtrev-8.9_outref.tar.gz"
+set TEST_DATA_TGZ = "nrtrev-9.0_test_data.tar.gz"
+set OUTREF_TGZ    = "nrtrev-9.0_outref.tar.gz"
 
 if ( ! $?DO_NOT_RECREATE_DATA ) then
 	source unittest.data.csh

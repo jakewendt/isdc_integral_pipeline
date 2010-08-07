@@ -4,21 +4,27 @@ NOTE:  Rev pipeline executables don't all compile in the WCT environment due to 
 I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
 
 
+
+
+spi_psd_adcgain: GetChisquare and GetNDF may require root 4.03.02
+
+MUST add "root 4.03.02" to dependencies or get diffs from Sun run
+
+
+
+----------------------------------------------------------
+20071030 - Jake - delivering 4.0 on SCREW 1769 1998
+
+20071025 - Jake
+	new test_data created using Preproc 4.2
+
 20070905 - Jake
 	using HEADAS instead of LHEASOFT in unit_test
-
-
 
 20070608 - Jake
 	SCREW 1988 - merged crvidp and crvirn resource files to ensure that all idps are processed before any irns
 
 	THIS APPARENTLY MAY REQUIRE MODIFICATION TO pipeline_lib/opus_wrapper
-
-
-
-
-
-
 
 20070516 - Jake
 	separated crvmon.pl subroutines to CRVLIB.pm for possible use elsewhere (SCREW 1983)

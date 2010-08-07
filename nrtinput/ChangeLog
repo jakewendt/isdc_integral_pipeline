@@ -1,4 +1,32 @@
 
+Sun64 fails because spi_merge_schk.
+Linux
+Lin64
+Darwin fails because no opus.
+
+
+Sun64 Failure:
+	Error_2 2007-10-30T10:44:49 spi_merge_schk 4.3: DAL_NUM_OVERFLOW : overflow during datatype conversion
+	Error_2 2007-10-30T10:44:49 spi_merge_schk 4.3: Task spi_merge_schk terminating with status -1412
+	-----   Command was:  spi_merge_schk  kill_old="yes" scw_dol="swg_raw.fits[1]"
+	-----   Execution time:  30 seconds (approximate real elapsed time) for spi_merge_schk
+	-----   Retval is -1 from the executable.
+	>>>>>>>     Real exit status from CommonExit was 1412
+	>>>>>>>     WARNING:  cannot find ignored_errors.cfg in /isdc/isdc_lib/CHECK_DELIVERIES/009/comp_2_validate/unit_test/opus_work/opus;  skipping check.
+	>>>>>>>     Found no ignored errors entry for dataset 002500000051, program spi_merge_schk, and error 1412.
+
+
+--------------------------------------------------------------------------
+20071030 - Jake - deliver nrtinput 4.9 on SPR 4750
+
+20071024 - Jake
+	new test_data from integration of Preproc 4.2
+
+20071022 - Jake
+	SPR 4750i - NRT-Preproc moved from nrtpp to conspp
+	The NRT-Preproc was moved from nrtpp to conspp
+	Three occurences of nrtpp in ninpmp.pl need to be replaced by conspp
+
 20070226 - Jake
 	modification of unittest.data.csh to use /isdc/ic_tree/
 

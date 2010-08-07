@@ -2,6 +2,14 @@
 eval '  exec perl -x $0 ${1+"$@"} '
 #! perl
 
+#	qdp column names
+#	center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype 
+
+#	ops_nrt@anaB6:~> rsync -avz /home/scientist/IQLA/SOURCES/ /isdc/pvphase/IQLA/SOURCES/
+
+#  ops_nrt@anaB6:~> cp /nrt/ops_1/cat/hec/nrt_refr_cat.fits /isdc/pvphase/IQLA/
+
+
 use strict;
 use File::Basename;
 #	$ENV{COMMONLOGFILE} = "+";
@@ -25,12 +33,16 @@ my %hsh;
 $hsh{"jemx"}{"template"} = "JMX1-SRCL-CAT";	#	JMX1 or JMX2.  Doesn't matter.
 $hsh{"jemx"}{"filename"} = "jemx_qla_history.fits";
 $hsh{"jemx"}{"max_bin1"} = 70;
+$hsh{"jemx"}{"factor_bin1"} = 1;
 $hsh{"jemx"}{"max_bin2"} = 25;
+$hsh{"jemx"}{"factor_bin2"} = 1;
 
 $hsh{"isgr"}{"template"} = "ISGR-SRCL-CAT";
 $hsh{"isgr"}{"filename"} = "isgr_qla_history.fits";
 $hsh{"isgr"}{"max_bin1"} = 85;
+$hsh{"isgr"}{"factor_bin1"} = 1.5872;
 $hsh{"isgr"}{"max_bin2"} = 55;
+$hsh{"isgr"}{"factor_bin2"} = 1.4194;
 
 #	-rw-r--r--    1 4510     pv           2692 Aug 13 10:59 0467_Vela_X-1_isgri_lc.qdp
 #	-rw-r--r--    1 4510     pv           2297 Aug 13 10:59 0467_Vela_X-1_jemx1_lc.qdp
@@ -114,6 +126,23 @@ foreach my $instr ( keys ( %hsh ) ) {
 	print &DoOrDie ( "faddrow inDol=$hsh{$instr}{'filename'}+1 numrows=$numrows" );
 	my $row = 1;
 	foreach my $id ( sort { $source{"$a"}{"name"} cmp $source{"$b"}{"name"} } keys ( %source ) ) {
+
+#	I did now also the OSA 7 processing for the Crab in the hard ISGRI band. Concerning JEM-X, Stephane confirmed that the count rates did not change. So all we have to do, is to update the ISGRI historic light curves. Looking at the ISGRI Crab count rate in OSA 7, it appears that the count rate is lower towards latest revolutions. Therefore, I suggest to apply the following conversion:
+#	
+#	                     OSA 5.1    OSA 7        factor
+#	ISGRI 20-40 keV      109 cps    173 cps      1.5872
+#	ISGRI 40-80 keV       62 cps     88 cps      1.4194
+#	
+#	Can you update the history files and let us know when we can switch?
+#	At the same time, I'll create and updated version of the limit files.
+#	It would be great if we could get this done next week.
+#	
+#	Cheers
+#	Volker 
+
+		$source{"$id"}{"max1"} *= $hsh{$instr}{'factor_bin1'};
+		$source{"$id"}{"max2"} *= $hsh{$instr}{'factor_bin2'};
+
 		printf OUTPUT "%20s %20s %15s %15s   %50s\n", $id, $source{"$id"}{"name"}, $source{"$id"}{"max1"}, $source{"$id"}{"max2"}, $source{"$id"}{"cmt"}; 
 		print &DoOrDie ( "ftedit infile=$hsh{$instr}{'filename'}+1 column=SOURCE_ID      row=$row value=\"$id\"" );
 		print &DoOrDie ( "ftedit infile=$hsh{$instr}{'filename'}+1 column=NAME           row=$row value=\"$source{$id}{'name'}\"" );

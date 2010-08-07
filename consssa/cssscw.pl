@@ -59,7 +59,9 @@ if ( ( $ENV{REDO_CORRECTION} ) && ( $INST=~/SPI|OMC|PICSIT/ ) ) {
 	exit 0;
 }
 
-#	if ( $ENV{STAGE} == 2 ) {
+#if (  ( exists $ENV{W_STAGE} )
+#	&& ( exists $ENV{R_STAGE} ) 
+#	&& ( $ENV{W_STAGE} eq $ENV{R_STAGE} ) ) {
 #		&ISDCPipeline::PipelineStep(
 #			"step"         => "$proc - dummy step to set COMMONLOGFILE variable",
 #			"program_name" => "$myecho",
@@ -94,7 +96,9 @@ if (( -e "$OBSDIR") ||		#	using -e bc may be link or directory
 		"$ENV{LOG_FILES}/$ENV{OSF_DATASET}.log"			#	link location
 		) if ( -e "$OBSDIR/logs/${OG_DATAID}_css.txt" );
 	
-#	unless ( $ENV{STAGE} == 2 ) {
+#unless (  ( exists $ENV{W_STAGE} )
+#	&& ( exists $ENV{R_STAGE} ) 
+#	&& ( $ENV{W_STAGE} eq $ENV{R_STAGE} ) ) { ?????
 	#	If the log file doesn't exist, this will fail.
 	#	The log file will probably exist at the beginning, but then it has been deleted.
 	#	This same thing continues below with the &Error calls.
@@ -185,6 +189,9 @@ if ( $proctype =~ /mosaic/ ) {
 	&Error ( "Version of $ENV{REP_BASE_PROD}/scw/$revno/$scwid not found!?!?!?" ) unless ( $idx2og );
 	$idx2og .= "/swg.fits[GROUPING]";
 }
+
+
+#	add third possible option to continue processing in the same directory
 
 if (  ( exists $ENV{W_STAGE} )
 	&& ( exists $ENV{R_STAGE} ) 

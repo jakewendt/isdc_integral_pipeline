@@ -1,6 +1,6 @@
 
 COMPONENT_NAME  = consrev
-COMPONENT_VERS  = 3.9
+COMPONENT_VERS  = 4.0
 
 consssatest::	
 	(cd unit_test; ./CONSSSA.test)

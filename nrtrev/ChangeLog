@@ -50,6 +50,9 @@ Sun differences from wrong version of root ( use  "root  4.03.02" )...
 	WARNING: 'Fits-different' files -->    scw/0025/rev.000/osm/spi_psd_adcgain.fits.gz
 
 
+20071024 - Jake
+	new test_data from integration of Preproc 4.2
+
 -----------------------------------------------------------------------
 20070925 - Jake - deliver nrtrev 8.9 on SCREW 1980
 

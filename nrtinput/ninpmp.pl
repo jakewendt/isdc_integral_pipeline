@@ -15,7 +15,7 @@ within the Input pipeline.
 
 This process monitors Pre-Processing and sends alerts in the case of problems.
 
-The process runs a shell script B<spvspp.opus> on the nrtpp machine which 
+The process runs a shell script B<spvspp.opus> on the conspp machine which 
 checks that preproc is in the process list as running.  If it is, the shell
 script returns a status of 0 and the monitor quits happily.  If not, the
 shell script returns a status of 1 and the monitor decides whether or not 
@@ -84,7 +84,7 @@ $ENV{COMMONLOGFILE} = "$ENV{LOG_FILES}/rttm_pp_monitor.log";
 #
 #  (can't use ssh anymore, prompts for password)
 my ( $retval, @result ) = &ISDCPipeline::RunProgram (
-	"rsh nrtpp $ENV{ISDC_ENV}/opus/nrtinput/spvspp.opus","quiet" );
+	"rsh conspp $ENV{ISDC_ENV}/opus/nrtinput/spvspp.opus","quiet" );
 
 my $time  = &TimeLIB::MyTime ();
 my $times = &TimeLIB::MyTimeSec ();
@@ -109,7 +109,7 @@ if ( ! ($retval) && ( $result[0] =~ /running/ ) ) {
 else { # in case of error
 	if ( $retval ) {
 		# this not 0 means rsh failed
-		print "ERROR:  cannot rsh to machine nrtpp:\n@result";
+		print "ERROR:  cannot rsh to machine conspp:\n@result";
 	}
 	else {
 		print "\n********\npreproc not present or unverifiable at $time\n";

@@ -1,8 +1,15 @@
 
-Linux gcc differences are expected.  Linux intel compilation will fail.
+Linux gcc differences are expected.  
+Linux intel compilation will fail.
+004400930010_jmx?.trigger have been removed from the test because j_ima_iros continues to core dump (see SPR 4742)
 
 Try to implement a way to test cons_sma.sh in the unit test
 
+
+--------------------------------------------------
+20071030 - deliver consssa 2.2 on SPR 4735
+
+	Includes changes for multi-stage processing
 
 20070921 - Jake
 	SPR 4735 - different printf behaviour on isdclin machines

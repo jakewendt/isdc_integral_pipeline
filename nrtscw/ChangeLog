@@ -1,6 +1,4 @@
 
-I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
-
 Linux differences expected.
 LinInt differences expected.
 Compilation fails on Lin64 due to conflict with 32-bit root.
@@ -54,6 +52,12 @@ Compilation fails on Sun64 due to conflict with 32-bit root
 	ild: (argument error) can't find library arguments :: -lCore -lCint -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lGui
 	make[3]: *** [param_gui] Error 8
 
+
+---------------------------------------------------------------------------
+20071030 - Jake - deliver nrtscw 8.4 on SPR 4695
+
+20071024 - Jake
+	new test_data from integration of Preproc 4.2
 
 20071008 - Jake
 	SPR 4695 - ibis_correction 10.2 parameter updates

@@ -1,5 +1,6 @@
 
 This component will fail on Darwin for reasons which include the lack of OPUS commands on Darwin.
+Compilation will also fail on LinInt.
 
 
 Notes:
@@ -16,6 +17,9 @@ Many lines marked with FIX
 
 Check them!
 
+
+--------------------------------------------------------------------------------------
+20071029 - Jake - deliver pipeline_lib 9.6.1 on SPR 4695
 
 20071008 - Jake
 	SPR 4695 - ibis_science_analysis 10.6 parameter updates

@@ -75,8 +75,13 @@ ENV.TIMEOUT = 14400
 !		SCREW 2046 Test
 !	W_STAGE is used to determine the parameters in IBISLIB.pm
 !	R_STAGE is used as a source for og_copy
-ENV.R_STAGE = '.S01'		!	Used as the read  obsdir when og_copy is run
-ENV.W_STAGE = '.S02'		!	Used as the write obsdir when og_create or og_copy is run
+!	These should be very unique strings as at one point W_STAGE is replaced with R_STAGE
+!ENV.R_STAGE = .S01		!	Used as the read  obsdir when og_copy is run
+!ENV.W_STAGE = .S02		!	Used as the write obsdir when og_create or og_copy is run
+!
+!	either also include the ENV.W_STAGE setting in cssfin.resource OR 
+!	create a symbolic link between obs_isgri${W_STAGE} and obs_isgri
+!
 !
 !	NOT USED
 !ENV.STAGE = 1		!	og_create is run;  COR to BIN_I

@@ -11,7 +11,7 @@ set system = "nrtqla"
 source unittest.setup.csh
 if ( $status != 0 ) exit $status
 
-set OUTREF_TGZ    = "nrtqla-3.4_outref.tar.gz"
+set OUTREF_TGZ    = "nrtqla-3.5_outref.tar.gz"
 
 setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0025.fits[1]"
 echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
@@ -75,6 +75,7 @@ echo "#######     Looping over triggers in opus_work/nrtqla/input"
 #	foreach trigger ( "007300590010" )
 #foreach trigger ( "007300590010" "010200370010" "010200370020" "010200370030" )
 foreach trigger ( "010200370010" "010200370020" "010200370030" )
+#foreach trigger ( "010200370010" )
 
 	echo "###############################################################################"
 	echo "######"
@@ -99,7 +100,9 @@ foreach trigger ( "010200370010" "010200370020" "010200370030" )
 	#  Now we see what triggers were created:
 	###############################################
 	echo "#######     Examining OSFs created..."
-	set obsosfs =  `osf_test -p nrtqla.path -pr dataset | sort`
+#	071001
+	set obsosfs =  `osf_test -p nrtqla.path -pr dataset | grep $trigger | sort`
+#	set obsosfs =  `osf_test -p nrtqla.path -pr dataset | sort`
 	echo "#######     Found OSFs:  $obsosfs"
 	
 	#  We know in what order they should come out (I think):
@@ -155,8 +158,11 @@ foreach trigger ( "010200370010" "010200370020" "010200370030" )
 		
 	end  # foreach instrument
 	
-#	#  Now we have to clean up the blackboard so that the next trigger sees 
-#	#   only its related OSFs:
+	#  Now we have to clean up the blackboard so that the next trigger sees 
+	#   only its related OSFs:
+#
+#	We can't clean the black because then the mosaics won't start
+#
 #	foreach osf ( `osf_test -p nrtqla.path -pr dataset`)
 #		set command = "cleanup.pl --path=nrtqla --dataset=$osf --level=opus --do_not_confirm"
 #		echo "#######     Running $command"
@@ -200,9 +206,6 @@ foreach osf ( `osf_test -p nrtqla.path -pr dataset`)
 	$command
 	if ($status != 0) exit 1
 end
-
-
-
 
 echo "#######     "
 echo "###############################################################################"

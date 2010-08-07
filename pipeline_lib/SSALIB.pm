@@ -132,6 +132,7 @@ sub ParseOSF {
 	&Message ("INST:$INST") if ( $ENV{DEBUGIN} );
 
 	my $og = "og_$inst.fits";
+	$og = "og_ibis.fits" if ( $inst =~ /isgri|picsit/ );
 	&Message ("og:$og") if ( $ENV{DEBUGIN} );
 
 	my $instdir = &inst2instdir ( $inst, $revno );
@@ -244,9 +245,9 @@ sub ParseTrigger {
 
 returns obs_$inst at minimum.
 
-If $ENV{OSA_VERSION} is set, it is appended to obs_$inst, returning obs_$inst$ENV{OSA_VERSION}.
+If $ENV{OSA_VERSION} is set, it is appended to obs_$inst, returning obs_$inst$ENV{OSA_VERSION}$ENV{W_STAGE}.
 
-If $revno is given, that too is appended with a preceding "/", returning obs_$inst$ENV{OSA_VERSION}/$revno.
+If $revno is given, that too is appended with a preceding "/", returning obs_$inst$ENV{OSA_VERSION}$ENV{W_STAGE}/$revno.
 
 =cut
 
@@ -255,6 +256,7 @@ sub inst2instdir {
 	my $instdir = "obs_$inst";
 	$instdir    =~ s/obs_jmx\d/obs_jmx/;
 	$instdir   .= "$ENV{OSA_VERSION}" if ( exists $ENV{OSA_VERSION} );
+	$instdir   .= "$ENV{W_STAGE}"     if ( exists $ENV{W_STAGE} );
 	$instdir   .= "/$revno.000" if ( defined $revno );
 	return $instdir
 }

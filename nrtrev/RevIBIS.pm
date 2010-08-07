@@ -1554,14 +1554,19 @@ sub ICAiltNRT {
 		"par_maxRT"        => "128.0",
 		"par_minRT"        => "6.0",	#	051028 - Jake - from 7.0 SCREW 1677
 		"par_maxLT"        => "38.0",	#	060426 - SCREW 1816 - from "36.0",	#	050107 - Jake - from 32.0		041206 - Jake - added for 3.6
-		"par_minLT"        => "14.7",	#	050107 - Jake - from 14.0		041116 - Jake - SCREW 1598 - from 13
-		"par_maxDead"      => "650",	#	060426 - SCREW 1816 - from "550",
+		#"par_minLT"        => "14.7",	#	050107 - Jake - from 14.0		041116 - Jake - SCREW 1598 - from 13
+		"par_minLT"        => "14.1",	#	070910 - Jake - from 14.7 - SCREW 1980
+		#"par_maxDead"      => "650",	#	060426 - SCREW 1816 - from "550",
+		"par_maxDead"      => "600",	#	070910 - Jake, from 650 SCREW 1980
 		"par_maxNewDead"   => "9",		#	060426 - SCREW 1816 - from "8",
 		"par_maxLTM"       => "99",	#	060426 - SCREW 1816 - from "150",
-		"par_max_step_inc" => "15",	#	051028 - Jake - from 13 SCREW 1677	#	041116 - Jake - SPR 3919 - from 15
+		#"par_max_step_inc" => "15",	#	051028 - Jake - from 13 SCREW 1677	#	041116 - Jake - SPR 3919 - from 15
+		"par_max_step_inc" => "13",     #	070910 - Jake - from 15 - SCREW 1980
 		"par_maxStep"      => "6",		#	050107 - Jake - added for 3.8
 		#	070227 - 15.29 to 15.39 (typo) # 061207 - SPR 4631 - from 15.25,	#	050107 - Jake - from 13.75		041206 - Jake - was "13.45",
-		"par_meanExpect"   => "15.39",	
+		#"par_meanExpect"   => "15.39",	
+		#"par_meanExpect"   => "14.95",	# 070910 - Jake - from 15.39 - SCREW 1980
+		"par_meanExpect"   => "14.99",	# 070925 - Jake - from 14.95 - SCREW 1980
 		"par_meanREVon"    => "5.0",	#	051028 - Jake - NEW SCREW 1677
 		"par_ratioDEAD"    => "$ENV{ILT_RATIO_DEAD}",# 2.1
 		"par_ratioPeak"    => "$ENV{ILT_RATIO_PEAK}",# 0.04	- 041206 - Jake - was 0.07

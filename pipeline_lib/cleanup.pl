@@ -5,8 +5,8 @@ eval '  exec perl -x $0 ${1+"$@"} '
 use strict;
 use Cwd;
 use File::Basename;
-use lib "$ENV{ISDC_OPUS}/pipeline_lib/";
-use lib "/home/wendt/";
+use lib "$ENV{ISDC_OPUS}/pipeline_lib/";	#  do I really need this since the libs are in the same place?
+#use lib "/home/wendt/";
 use UnixLIB;
 use ISDCLIB;		#	very generic functions ( don't need &ISDCLIB:: prefix )
 use CleanLIB;

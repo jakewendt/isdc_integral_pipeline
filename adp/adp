@@ -1,0 +1,20 @@
+#!/bin/sh
+
+	if [ "$1" = "--v" ]; then
+		echo Log_1  : Version : adp 4.9
+		exit 0
+	elif [ "$1" = "--h" ]; then
+		if [ -f "$ISDC_ENV/help/adp.txt" ]; then
+			cat $ISDC_ENV/help/adp.txt
+		else
+			echo $ISDC_ENV/help/adp.txt not found
+		fi
+		exit 0
+	else
+		echo Unexpected argument: + $1 +.  Aborting...
+		exit 1
+	fi
+
+echo The component you have called + $0 + is a container for other
+echo executables.  This one does nothing.  Exiting.
+exit 0

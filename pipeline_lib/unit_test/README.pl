@@ -54,7 +54,7 @@ push @TEST_DATA_TGZ, "consssa-1.7_outref.tar.gz";
 push @TEST_DATA_TGZ, "conssa-2.6_outref.tar.gz";
 
 my @OUTREF_TGZ;			
-push @OUTREF_TGZ, "pipeline_lib-8.9_outref.tar.gz";
+push @OUTREF_TGZ, "pipeline_lib-9.6_outref.tar.gz";
 
 $ENV{REP_BASE_PROD}  = "$ENV{PWD}/test_data";					print "\$ENV{REP_BASE_PROD} is $ENV{REP_BASE_PROD}\n";
 $ENV{SCWDIR}         = "$ENV{REP_BASE_PROD}/scw/"; 

@@ -3,6 +3,68 @@ NOTE:  Rev pipeline executables don't all compile in the WCT environment due to 
 
 spi_psd_adcgain: GetChisquare and GetNDF may require root 4.03.02
 
+MUST add "root 4.03.02" to dependencies or get diffs from Sun run
+
+Linux differences are expected.
+Compilation fails on LinInt because root will not build with intel compiler.
+Compilation fails on Lin64 due to conflict with 32-bit root.
+Compilation fails on Sun64 due to conflict with 32-bit root.
+Compilation fails on Darwin for many reasons.
+
+Compilation fails on Lin64 due to conflict with 32-bit root.
+	/usr/bin/ld: skipping incompatible /isdc/sw/root/4.03.02/gcc/4.1.2/i686-pc-linux-gnu/lib/libCore.so when searching for -lCore
+	/usr/bin/ld: skipping incompatible /isdc/sw/root/4.03.02/gcc/4.1.2/i686-pc-linux-gnu/lib/libCore.so when searching for -lCore
+	/usr/bin/ld: cannot find -lCore
+	collect2: ld returned 1 exit status
+	make[3]: *** [param_gui] Error 1
+
+Compilation fails on Sun64 due to conflict with 32-bit root.
+	ild: (argument error) can't find library arguments :: -lCore -lCint -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lGui
+	make[3]: *** [param_gui] Error 8
+
+Compilation fails on Darwin for many reasons.
+
+Compilation fails on LinInt because root will not build with intel compiler.
+	8^E??8^E??make[4]: root-config: Command not found
+	/isdc/isdc_lib/CHECK_DELIVERIES/040/include/ISDCPars.h(12): catastrophic error: could not open source file "TString.h"
+	  #include "TString.h"
+	compilation aborted for ibis_isgr_low_thres.cpp (code 4)
+	make[4]: *** [ibis_isgr_low_thres.o] Error 4
+
+Linux differences are expected.
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/aca/ibis_aca_veto_20021226220948.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/aca/spi_cal_se_results.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/aca/spi_gain_coeff.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/osm/spi_psd_adcgain.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/osm/spi_psd_performance.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/aca/ibis_aca_veto_20021227054859.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/aca/ibis_aca_veto_20021227085924.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/aca/spi_cal_se_results.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/prp/irem_prp_20021227060629.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/prp/irem_prp_20021227070629.fits.gz
+
+
+
+Sun differences from wrong version of root ( use  "root  4.03.02" )...
+	WARNING: 'Fits-different' files -->    scw/0024/rev.000/osm/spi_psd_adcgain.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/rev.000/osm/spi_psd_adcgain.fits.gz
+
+
+-----------------------------------------------------------------------
+20070925 - Jake - deliver nrtrev 8.9 on SCREW 1980
+
+20070925 - Jake
+	SCREW 1980
+		meanExpect 14.99 (RevIBIS.pm)
+		revolWait   4 (nrvidp.resource ENV.ILT_REVOL_WAIT)
+
+20070910 - Jake
+	SCREW 1980 - ibis_isgr_low_thres param changes
+		"par_minLT" => "14.1",
+		"par_maxDead" => "600",
+		"par_meanExpect" => "14.95",
+		"par_max_step_inc" => "13",
+
 -----------------------------------------------------------------------
 20070227 - Jake - deliver nrtrev 8.8 on SPR 4631 4644
 

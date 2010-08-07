@@ -17,7 +17,7 @@ Utility for summarizing a blackboard in a readable form.
 =cut
 
 use strict;
-use lib "$ENV{ISDC_OPUS}/pipeline_lib/";
+use lib "$ENV{ISDC_OPUS}/pipeline_lib/";	#	do I really need this since the libs are in the same place?
 use OPUSLIB;
 use UnixLIB;
 use TimeLIB;

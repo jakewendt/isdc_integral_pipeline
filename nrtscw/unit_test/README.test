@@ -12,7 +12,7 @@ source unittest.setup.csh
 if ( $status != 0 ) exit $status
 
 set TEST_DATA_TGZ = "nrtscw-8.2_test_data.tar.gz"
-set OUTREF_TGZ    = "nrtscw-8.3_outref.tar.gz"
+set OUTREF_TGZ    = "nrtscw-8.4_outref.tar.gz"
 
 eval `/usr/bin/envv set NRTSCW_UNIT_TEST TRUE`												#  040721 - Jake - SPR 3776 
 echo "#######     NRTSCW_UNIT_TEST now set to ${NRTSCW_UNIT_TEST}"		#  040721 - Jake - SPR 3776

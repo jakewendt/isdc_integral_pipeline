@@ -80,6 +80,10 @@ if ( ! $?DO_NOT_RECREATE_DATA ) then
 	foreach instrument ( $instruments )
 		cons_ssa_start.sh --min_duration 700 --max_duration 2164 --instruments $instrument 0044
 	end
+#\rm opus_work/consssa/input/*004400120010*
+#\rm opus_work/consssa/input/*004400850010*
+#\rm opus_work/consssa/input/*004400930010*
+\rm opus_work/consssa/input/004400930010_jmx?.trigger	#	because j_ima_iros continues to core dump
 endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
 #	
 #	\rm opus_work/consssa/input/*trigger
@@ -117,7 +121,8 @@ end  # foreach trigger
 
 
 
-set instruments = ( "jmx1" "picsit" "omc" "isgri" )
+set instruments = ( "picsit" "omc" "isgri" )	#	because not all the science windows have been processed for jemx
+#set instruments = ( "jmx1" "picsit" "omc" "isgri" )
 
 
 
@@ -193,6 +198,12 @@ foreach ogid ( `/bin/ls -d obs_*/s* obs_*/0*/s*` )
 	echo "#######     Write-protecting $ogid"
 	/bin/chmod -w $ogid
 end	#	foreach obs_spi
+#	070831 - Jake - big file causing memory problems
+chmod +w obs_jmx/0044.000/smj1_0044_TestMosaic/
+chmod +w obs_jmx/0044.000/smj1_0044_TestMosaic/J_MOSAIC.fits.gz
+gunzip obs_jmx/0044.000/smj1_0044_TestMosaic/J_MOSAIC.fits.gz
+chmod -w obs_jmx/0044.000/smj1_0044_TestMosaic/J_MOSAIC.fits
+chmod -w obs_jmx/0044.000/smj1_0044_TestMosaic/
 cd ..
 
 echo "#######     "

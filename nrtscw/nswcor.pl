@@ -206,14 +206,9 @@ sub ibisAnalysis {
 		"par_PCOR_enerDOL"      => "",
 		"par_outputExists"      => "YES",
 		"par_ICOR_probShot"     => "0.01",
-
-
-#		"par_ICOR_icDOL"        => "",	#	060703 - Jake - removed for ibis_correction 9.0
-		"par_ICOR_protonDOL" => "",		#	060703 - Jake - added for ibis_correction 9.0	#	061218 - Jake - removed for 9.2
-		"par_ICOR_switDOL" => "",			#	060703 - Jake - added for ibis_correction 9.0	#	061218 - Jake - removed for 9.2
-		"par_ICOR_rtcDOL" => "",			#	060703 - Jake - added for ibis_correction 9.0
-
-		"par_RTdriftCor" => "1",		#	070327 - Jake
+		"par_ICOR_protonDOL"    => "",
+		"par_ICOR_supGDOL"      => "",
+		"par_ICOR_supODOL"      => "",
 		);
 
 	&ISDCPipeline::PipelineStep(
@@ -227,13 +222,6 @@ sub ibisAnalysis {
 		"par_disablePICsIT"    => "NO",
 		"par_disableCompton"   => "YES",
 		"par_GTI_LimitTable"   => "",
-
-
-#		"par_GTI_attTolerance" => "0.5",		#	060627 - Jake - removed for SCREW 1872
-		"par_GTI_attTolerance_X" => "0.5",	#	060627 - Jake - added for SCREW 1872
-		"par_GTI_attTolerance_Z" => "3.0",	#	060627 - Jake - added for SCREW 1872
-
-
 		"par_GTI_gtiUserP"     => "",
 		"par_GTI_gtiUserI"     => "",
 		"par_GTI_TimeFormat"   => "OBT",
@@ -245,6 +233,8 @@ sub ibisAnalysis {
 		"par_GTI_BTI_Dol"      => "",
 		"par_GTI_BTI_Names"    => "",
 		"par_outputExists"     => "YES",			
+		"par_GTI_attTolerance_X" => "0.5",	#	060627 - Jake - added for SCREW 1872
+		"par_GTI_attTolerance_Z" => "3.0",	#	060627 - Jake - added for SCREW 1872
 		);
 
 	&CorLIB::CopyGTIExtension ( "$grpdol", "IBIS-GNRL-GTI", "MERGED_PICSIT", "picsit_events.fits" );
@@ -549,6 +539,7 @@ sub GTI_Create {
 		"par_ModeTable"  => "",
 		"par_LimitTable" => "$lim_gti",
 		"par_GTI_Index"  => "",
+		"par_Force"      => "no",		#	070921 - Jake - SCREW 2041
 		);
 }
 	

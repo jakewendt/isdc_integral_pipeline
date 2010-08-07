@@ -1,1 +1,8 @@
+.svn/
 versions/
+Makefile
+common_log.txt
+config.log
+config.status
+env_dump.txt
+make_ok.log

@@ -33,7 +33,8 @@ if ( ! $?DO_NOT_RECREATE_DATA ) then
 endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
 
 #	because now cons_ssa_start.csh call fdump instead of dal_dump
-source $LHEASOFT/lhea-init.csh
+source $HEADAS/headas-init.csh
+#source $LHEASOFT/lhea-init.csh
 
 ######################################################################
 #  Now we're ready to run:

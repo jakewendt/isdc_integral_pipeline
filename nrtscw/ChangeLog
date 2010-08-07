@@ -2,7 +2,74 @@
 I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
 
 Linux differences expected.
+LinInt differences expected.
+Compilation fails on Lin64 due to conflict with 32-bit root.
+Compilation fails on Sun64 due to conflict with 32-bit root.
+Compilation fails on Darwin.
 
+Linux differences expected.
+	WARNING: 'ISDC-different' files -->    scw/0025/002500010010.000/L1_0000005.SCW.0000000.alert
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/isgri_events.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/sc_hk.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/spi_oper.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000061.000/spi_oper.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/isgri_events.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/sc_hk.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/spi_oper.fits.gz
+
+LinInt differences expected.
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000033.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000034.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000035.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000037.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000038.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500000051.000/L2_0000039.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500010010.000/L1_0000005.SCW.0000000.alert
+	WARNING: 'ISDC-different' files -->    scw/0025/002500010010.000/L2_0000028.SCW.0000000.alert
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/isgri_events.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/sc_hk.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000051.000/spi_oper.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500000061.000/spi_oper.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/isgri_events.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/sc_hk.fits.gz
+	WARNING: 'Fits-different' files -->    scw/0025/002500010010.000/spi_oper.fits.gz
+
+Compilation fails on Lin64 due to conflict with 32-bit root
+	/usr/bin/ld: skipping incompatible /isdc/sw/root/5.08.00/gcc/4.1.2/i686-pc-linux-gnu/lib/libCore.so when searching for -lCore
+	/usr/bin/ld: skipping incompatible /isdc/sw/root/5.08.00/gcc/4.1.2/i686-pc-linux-gnu/lib/libCore.so when searching for -lCore
+	/usr/bin/ld: cannot find -lCore
+	collect2: ld returned 1 exit status
+	make[3]: *** [param_gui] Error 1
+
+Compilation fails on Darwin ...
+	spi_dp_derived_param.cpp: In function 'int CalcCol(dal_element*, const char*, Data*, PARAMS::TM*, long int, OBTime*, float*, int)':
+	spi_dp_derived_param.cpp:377: error: 'isnanf' was not declared in this scope
+	spi_dp_derived_param.cpp:403: error: 'isnanf' was not declared in this scope
+	spi_dp_derived_param.cpp: In function 'int CalcCol32(dal_element*, const char*, Data*, PARAMS::TM*, long int, OBTime*, float*, int)':
+	spi_dp_derived_param.cpp:517: error: 'isnanf' was not declared in this scope
+	spi_dp_derived_param.cpp:542: error: 'isnanf' was not declared in this scope
+	spi_dp_derived_param.cpp:563: error: 'isnanf' was not declared in this scope
+
+Compilation fails on Sun64 due to conflict with 32-bit root
+	ild: (argument error) can't find library arguments :: -lCore -lCint -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lGui
+	make[3]: *** [param_gui] Error 8
+
+
+20071008 - Jake
+	SPR 4695 - ibis_correction 10.2 parameter updates
+
+---------------------------------------------------------------------------
+20070925 - Jake - deliver nrtscw 8.3 on SCREW 1977 2018 2041
+
+20070921 - Jake
+	SCREW 2041 - gti_create parameter addition
+
+20070725 - Jake
+	SCREW 2018 - par changes for ibis_correction
+
+20070327 - Jake
+	SCREW 1977 - ibis_correction param addition
+	
 ---------------------------------------------------------------------------
 20070227 - Jake - deliver nrtscw 8.2 on SPR 3674 and SCREW 1872
 

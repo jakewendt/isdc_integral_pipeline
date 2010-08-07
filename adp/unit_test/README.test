@@ -12,7 +12,7 @@ source unittest.setup.csh
 if ( $status != 0 ) exit $status
 
 set TEST_DATA_TGZ = "adp-4.4_test_data.tar.gz"
-set OUTREF_TGZ    = "adp-5.0_outref.tar.gz" 
+set OUTREF_TGZ    = "adp-5.2_outref.tar.gz" 
 
 eval `/usr/bin/envv set ADP_UNIT_TEST TRUE`
 echo "#######     ADP_UNIT_TEST now set to ${ADP_UNIT_TEST}"

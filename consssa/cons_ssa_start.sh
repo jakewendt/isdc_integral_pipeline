@@ -290,7 +290,15 @@ done
 
 while [ $# -ne 0 ] ; do
 
-   revno_all=`/usr/bin/printf "%04s" $1`
+#	070921 - Jake - SPR 4735
+#
+#	The printf statement doesn't work correctly on the isdclin machines
+#   revno_all=`/usr/bin/printf "%04s" $1`  gives /usr/bin/printf: %04s: invalid conversion specification
+#   revno_all=`/usr/bin/printf "%04d" $1`  gives converts from octal if $1 has leading 0
+#			/usr/bin/printf "%04d" 0100 yields 0064
+#	Using echo, awk and printf seems to work correctly on all environments tested.
+#
+	revno_all=`echo $1 | awk '{printf "%04d", $1}'`
 
    for revno_dir in `/bin/ls -d ${REP_BASE_PROD}/scw/${revno_all}` ; do
       revno=`/bin/basename ${revno_dir}`

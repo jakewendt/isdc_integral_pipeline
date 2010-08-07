@@ -36,6 +36,7 @@ XPOLL_STATE.00 = OSF_OK   ! All ran sucessfully
 XPOLL_ERROR.FI      = x   ! Extension addition if error
 OSF_PROCESSING.FI    = p  ! set this OSF stage upon being triggered
 OSF_OK.FI            = c  ! Completed keyword generation
+OSF_OK.CL            = o  ! Completed keyword generation
 !
 !===========================================================================
 !

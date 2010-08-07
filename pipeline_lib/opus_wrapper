@@ -1,0 +1,575 @@
+#! /bin/sh
+eval '  exec perl -x $0 ${1+"$@"} '
+#! perl
+#
+#  Perl wrapper for testing pipeline perl scripts outside of OPUS
+#
+use strict;
+use ISDCPipeline;
+
+if (!($ARGV[0])) {
+	print "\nUSAGE:  opus_wrapper <step> [<dataset>] [<log file>]\n\n";
+	print "\twhere <step> is a process name, e.g. \"ddsdir\", or an entire path, e.g. \"arcdd\";  "
+		."and <dataset> is e.g. \"dd_op_000000001_dvd\". (Even for ddipin or any startup step, <dataset> "
+		."is only the root name of the trigger file;   "
+		."the script will use it to construct EVENT_NAME using OPUS_WORK etc.)\n\n";
+	print "You also need to set:\n\t- ISDC_ENV, with the opus components installed;\n\t- REP_BASE_PROD, "
+		."filled as appropriate\n\t- OPUS_WORK, someplace it can use as scratch \n";
+	exit 0;
+}
+
+my @steps;
+my $step;
+my @inputs;
+my $root;
+my $suffix;
+my @osfs;
+
+#  
+##############################################################################
+#
+#  Test if the step given is an entire path;  if so, define set of processes.
+#   Otherwise, only one process.  Either way, loop:
+#
+if ($ARGV[0] =~ /^(adp|(cons|nrt)(input|rev|scw)|consssa|conssa|nrtqla)$/) {
+#if ($ARGV[0] =~ /^(adp|(cons|nrt)(input|rev|scw)|consssa|conssa|nrtqla|conscor)$/) {
+	print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+	print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+	print ">>>>>>>     Step given is an entire path;  looping over corresponding processes.\n>>>>>>>\n";
+	
+	print ">>>>>>>     While the command runs, you will see only STDERR, including Perl warnings such as\n"
+		.">>>>>>>     \t\"Use of uninitialized value\" or \n>>>>>>>     \t\"glob failed\", or other warnings ending \n"
+		.">>>>>>>     \t\"...No such file or directory\".\n>>>>>>>\n";
+	
+	SWITCH: {
+		if ($1 =~ /adp/) {
+			@steps = ("adpst","adp","adpfin") unless ($ARGV[1] =~ /arc_prep/);
+			@steps = ("adpst","adp") if ($ARGV[1] =~ /arc_prep/);
+			last SWITCH;
+		}
+		if ($1 =~ /nrtinput/) {
+			@steps = ("ninpst","ninput","ninpfi");
+			last SWITCH;
+		}
+		if ($1 =~ /consinput/) {
+			@steps = ("cinpst","cinput","cinpfi");
+			last SWITCH;
+		}
+		if ($1 =~ /nrtscw/) {
+			#	SCREW 1354 # 040420 - Jake - Swapped the order of osm and cor - IMPORTANT! (for testing)
+			@steps = ("nswst","nswdp","nswcor","nswosm","nswfin");	
+			last SWITCH;
+		}
+		if ($1 =~ /consscw/) {
+			#	SCREW 1354 # 040420 - Jake - Swapped the order of osm and cor - IMPORTANT! (for testing)
+			@steps = ("cswst","cswdp","cswcor","cswosm","cswfin");
+			last SWITCH;
+		}
+		if ($1 =~ /nrtrev/) {
+			@steps = ("nrvst","nrvgen","nrvfin") unless ($ARGV[1] =~ /ilt/);
+			@steps = ("nrvgen","nrvfin") if ($ARGV[1] =~ /ilt/);
+			last SWITCH;
+		}
+		if ($1 =~ /consrev/) {
+			@steps = ("crvst","crvgen","crvfin");
+			last SWITCH;
+		}
+		#if ($1 =~ /conscor/) {		#	050704 - Jake - SPR 4257
+		#	@steps = ("cscst","csccor","cscfin");
+		#	last SWITCH;
+		#}
+		
+		###  None of these work now, and may never.  They're not linear at all.
+		if ($1 =~ /conssa|nrtqla|arcdd|consssa/) {
+			print ">>>>>>>     ERROR: $ARGV[0] is not implemented.\n";
+			print ">>>>>>>     Due to the non-linear nature of this pipeline, the wrapper can only be used for "
+				."individual processes called by someone or something more intelligent.\n";
+			exit 1;
+		}
+		#    if ($1 =~ /conssa/) {
+		#      # csagen changed later to sw1, sw2, ob1, ob2:
+		#      @steps = ("csast","csagen","csafin");
+		#      last SWITCH;
+		#    }
+		#    if ($1 =~ /arcdd/) {
+		#      @steps = ("ddipin","ddsdir","ddfdir","ddvcpv_or_ddtcpv","ddmnot","ddprcd");
+		#      last SWITCH;
+		#    }
+		
+		
+	} # SWITCH
+}  # if entire path
+else {
+	@steps = ("$ARGV[0]");
+}
+
+foreach $step (@steps) {
+	#############################################################################
+	#
+	#  Set the process name.  
+	#
+	$ENV{PROCESS_NAME} = $step;
+	#
+	#############################################################################
+	#  Now, use process name to determing path;  in ISDC system, only one path
+	#   ever used for a given process.  
+	#
+	
+	# NOTE:  we leave off the ".path" for the moment, will tack it on later.
+	SWITCH:  {
+		
+		#  ADP processes
+		if ($step =~ /^adp/) {
+			$ENV{PATH_FILE_NAME} = "adp";
+			$ENV{OSF_DATA_ID} = "adp";  #yeah, not right, but enough
+			last SWITCH;
+		}
+		
+		#  Input Processes
+		if ($step =~ /^(c|n)inp/) {
+			$ENV{PATH_FILE_NAME} = "consinput" if ($1 =~ /c/);
+			$ENV{PATH_FILE_NAME} = "nrtinput" if ($1 =~ /n/);
+			$ENV{OSF_DATA_ID} = "inp";
+			last SWITCH;
+		}
+		
+		#  Science Window 
+		if ($step =~ /^(c|n)sw/) {
+			$ENV{PATH_FILE_NAME} = "consscw" if ($1 =~ /c/);
+			$ENV{PATH_FILE_NAME} = "nrtscw" if ($1 =~ /n/);
+			$ENV{OSF_DATA_ID} = "scw";
+			last SWITCH;
+		}
+		
+		#  Rerun Correction
+		##if ($step =~ /^csc/) {		#	050704 - Jake - SPR 4257
+		#	$ENV{PATH_FILE_NAME} = "conscor";
+		#	$ENV{OSF_DATA_ID} = "scw";
+		#	last SWITCH;
+		#}
+		
+		# Revolution File
+		if ($step =~ /^(n|c)rv/) {
+			$ENV{PATH_FILE_NAME} = "consrev" if ($1 =~ /c/);
+			$ENV{PATH_FILE_NAME} = "nrtrev" if ($1 =~ /n/);
+			
+			#  For Rev, we turn rvgen into others based on dataset:
+			if ($ARGV[1] =~ /ire/) {
+				$ENV{OSF_DATA_ID} = "ire"; 
+				$ENV{PROCESS_NAME} =~ s/gen/ire/;
+			}
+			elsif ($ARGV[1] =~ /irn/) {
+				$ENV{OSF_DATA_ID} = "idp"; 
+				$ENV{PROCESS_NAME} =~ s/gen/idp/;
+#				$ENV{OSF_DATA_ID} = "irn"; 
+#				$ENV{PROCESS_NAME} =~ s/gen/irn/;
+			}
+			elsif ($ARGV[1] =~ /irv/) {
+				$ENV{OSF_DATA_ID} = "irv"; 
+				$ENV{PROCESS_NAME} =~ s/gen/irv/;
+			}
+			elsif ($ARGV[1] =~ /irc/) {
+				$ENV{OSF_DATA_ID} = "irc"; 
+				$ENV{PROCESS_NAME} =~ s/gen/irc/;
+			}
+			elsif ($ARGV[1] =~ /idp/) {
+				$ENV{OSF_DATA_ID} = "idp"; 
+				$ENV{PROCESS_NAME} =~ s/gen/idp/;
+			}
+			elsif ($ARGV[1] =~ /ilt/) {
+				$ENV{OSF_DATA_ID} = "ilt"; 
+				$ENV{PROCESS_NAME} =~ s/gen/idp/;
+			}
+			elsif ($ARGV[1] =~ /(ssn|ssf)/) {
+				$ENV{OSF_DATA_ID} = $1;
+				$ENV{PROCESS_NAME} =~ s/gen/spi/;
+			}
+			elsif ($ARGV[1] =~ /jm(\d)/) {
+				$ENV{OSF_DATA_ID} = "jm$1";
+				$ENV{PROCESS_NAME} =~ s/gen/jmf/;
+			}
+			elsif ($ARGV[1] =~ /j(\d)e/) {
+				$ENV{OSF_DATA_ID} = "j$1e";
+				$ENV{PROCESS_NAME} =~ s/gen/jme/;
+			}
+			elsif ($ARGV[1] =~ /(sp\w)/) {
+				$ENV{OSF_DATA_ID} = $1;
+				$ENV{PROCESS_NAME} =~ s/gen/spi/;
+			}
+			elsif ($ARGV[1] =~ /_(\w{3})$/) {		#	060515 - Jake - what is this supposed to be for?
+				$ENV{OSF_DATA_ID} = $1;
+			}
+			elsif ($ARGV[1] =~ /\d{4}_(\w{3})_prep/) {	#	060515 - Jake - added for iii_prep and arc_prep ( 0426_iii_prep )
+				my $match = $1;
+				$ENV{PROCESS_NAME} =~ s/gen/$match/;		#	added this
+			}
+			
+			last SWITCH;
+		}
+		
+		#  SA
+		if ($step =~ /^csa/) {
+			$ENV{PATH_FILE_NAME} = "conssa";
+			$ENV{OSF_DATA_ID} = "scw" if ($ARGV[1] =~ /.*(IBIS|SPI|OMC|JMX1|JMX2)_\d{12}$/);
+			$ENV{OSF_DATA_ID} = "obs" if ($ARGV[1] =~ /.*(IBIS|SPI|OMC|JMX1|JMX2)$/);
+			die ">>>>>>>>     ERROR: don't know what OSF_DATA_ID to use for $ENV{OSF_DATASET}\n" unless ($ARGV[1]);
+			last SWITCH;
+		}
+		
+		#  QLA
+		if ($step =~ /^nql/) {
+			$ENV{PATH_FILE_NAME} = "nrtqla";
+			last SWITCH;
+		}
+		
+		#  CSS
+		if ($step =~ /^css/) {
+			$ENV{PATH_FILE_NAME} = "consssa";
+			last SWITCH;
+		}
+		
+		#  ArcDD
+		if ($step =~ /^dd/) {
+			$ENV{PATH_FILE_NAME} = "arcdd";
+			$ENV{OSF_DATA_ID} = "arc";
+			last SWITCH;
+		}
+		
+		die ">>>>>>>     ERROR:  don't recognize step $step or PROCESS_NAME $ENV{PROCESS_NAME}\n";
+		
+	} # end SWITCH
+	
+	#  Only Cons SA and (maybe) NRT QLA use DCF number not "000".  
+	#   And ILT versions.  But it still needs to be set.  
+	#   README.test sets it for nrtrev and conssa.
+	
+	
+	#############################################################################
+	#  Set up workspace, but only if this is a startup step or one by itself:  
+	#
+	if ((scalar(@steps) == 1) || ($step =~ /st$/)) {
+		#    print ">>>>>>>     Setting up OPUS_WORK $ENV{OPUS_WORK}\n";
+		if (!-e "$ENV{OPUS_WORK}") {
+			mkdir 0755, "$ENV{OPUS_WORK}" or die ">>>>>>>     ERROR:  cannot make directory $ENV{OPUS_WORK}\n";
+		}
+		if (!-e "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}") {
+			mkdir "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}",0755 
+				or die ">>>>>>>     ERROR:  cannot make directory $ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}\n";
+		}
+		
+		#    print ">>>>>>>     Creating subdirs in $ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}\n";
+		#
+		# Don't need as much as in isdc_opus_install:
+		#
+		if ($ENV{PATH_FILE_NAME} =~ /arcdd/) {
+			foreach ("queue","stage","distr","count","cron","mail","mdif") {
+				#	print ">>>>>>>     making $_\n";
+				next if (-e "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}/$_");
+				mkdir(0755,"$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}/$_") 
+					or die ">>>>>>>     ERROR:  cannot make subidr $_\n";
+			}
+		}
+		else {
+			foreach ("input", "logs","obs","scratch","pfiles") {
+				next if (-e "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}/$_");
+				#	print ">>>>>>>     making $_\n";
+				mkdir "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}/$_",0755 
+					or die ">>>>>>>     ERROR:  cannot make subidr $_\n";
+			}  
+		} 
+	} # end set up workspace
+	
+	
+	#############################################################################
+	#  Now, get all ENV. entries from resource file and translate them through
+	#   the path file (if necessary) and stretch them (if necessary)
+	#
+	
+	#  The best way (I saw) to do this is parse once the resource and path 
+	#   files, storing all non-commented pairs of "x = y" in a hash.
+	open(DEBUG,">$ENV{OPUS_WORK}/env_debug_${step}_log.txt") 
+		or die ">>>>>>>     ERROR:  cannot open env_debug_log.txt to write\n";
+	my $oldout = select(DEBUG);
+	my %resource;
+	my %path;
+	my @todelete;
+	print  ">>>>>>>     Looking at $ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PROCESS_NAME}.resource\n";
+	
+	open(RES,"$ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PROCESS_NAME}.resource") 
+		or die ">>>>>>>     ERROR:  cannot read $ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PROCESS_NAME}.resource\n";
+	
+	while (<RES>) {
+		next unless /^\s*ENV\./;  # in OPUS 3.2, all start ENV.
+		#  if it looks like:
+		#   stuff  =  more_stuff   possibly more stuff
+		#  then set hash element stuff to more_stuff (which might have : inside)
+		
+		#  With OPUS v3.2, this is:
+		#  (Note: this is sloppy on the comments, which for now we don't mind.)
+		if (/^\s*ENV\.(\S+)\s*=\s*(\S+)\s*.*/) { 
+			$resource{"$1"} = $2;
+			print  ">>>>>>>     Found var $1 with value $2\n";
+			
+			#  Special cases where we want to overwrite things:
+			if ($1 =~ /IDX_WAIT/) {
+				#  This is the time to wait after last mod time before it's safe
+				#   to clean up the indices.  In this context, it's always safe.
+				$resource{IDX_WAIT} = 0;
+				print ">>>>>>>     Resetting IDX_WAIT to 0\n";
+			}
+			if ($1 =~ /ISGRI_ENERGY_RANDOM/) {
+				#  This is the random number fed to ibis_isgr_energy.  In this
+				#   context, we want this repeatable, so we set it:
+				$resource{ISGRI_ENERGY_RANDOM} = 2002.1017;
+				print ">>>>>>>     Resetting ISGRI_ENERGY_RANDOM to 2002.1017\n";
+			}
+			
+			
+		}
+	}
+	close(RES);
+	
+	print  ">>>>>>>     Looking at $ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PATH_FILE_NAME}.path\n";
+	open(PATH,"$ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PATH_FILE_NAME}.path") 
+		or die ">>>>>>>     ERROR:  cannot read $ENV{ISDC_OPUS}/$ENV{PATH_FILE_NAME}/$ENV{PATH_FILE_NAME}.path\n";
+	
+	while (<PATH>) {
+		next if /^\s*!/;  # ignore commented lines
+		#  if it looks like:
+		#   stuff  =  more_stuff   possibly more stuff
+		#  then set hash element stuff to more_stuff
+		if (/^\s*(\S+)\s*=\s*(\S+)\s*.*/) { 
+			$path{"$1"} = $2;
+			print  ">>>>>>>     Found var $1 with value $2\n";
+		}
+	}
+	close(PATH);
+	
+	my $var;
+	my $value;
+	foreach $var (sort(keys(%resource))) {
+		#  OK, this is ugly:  we want to see if the value in the resource file
+		#   for this variable is an entry in the path file, so we look at the 
+		#   value in the resource hash table for this var and see if it is itself
+		#   a key in the path hash table.  Got it?
+		
+		#  (Remember, a resource file may have:
+		#    ENV_VAR = path_entry
+		#   while the path file then has
+		#    path_entry = ANOTHER_ENV_VAR:relative/path/
+		#   or something....)
+		if ($path{"$resource{$var}"}) {
+			# if the value defined in the resource file is in the path file, then
+			#  use it;  rememver $var is the name of the env var we want, and
+			#  then the path hash table entry is the value (almost....)
+			$ENV{$var} = $path{"$resource{$var}"};
+			print  ">>>>>>>     Found value $ENV{$var} for var $var\n";    
+		}  # end if (@search)
+		else {
+			print  ">>>>>>>     Didn't find var $var in path file;  using resource entry $resource{$var} literally.\n";
+			$ENV{$var} = $resource{$var};
+		}
+		
+		push @todelete, $var;
+	}  # end foreach var
+	
+	#  Now, run them all through the stretcher, which converts entries
+	#   of the form "ENV_VAR:relative/path" to "/full/abs/path":
+	ISDCPipeline::EnvStretch(keys(%resource));
+	close DEBUG;
+	select $oldout;
+	
+	
+	
+	#############################################################################
+	#  For startup steps (almost all of which (and only which) end "st", 
+	#   OPUS passes this variable to the process (a file trigger):  
+	#
+	if (($step =~ /st$/) || ($step =~ /ddipin/)) {
+		$ENV{EVENT_NAME} = "$ENV{OPUS_WORK}/$ENV{PATH_FILE_NAME}/input/$ARGV[1].trigger_work" unless ($step =~ /adpst/);
+		
+		$ENV{EVENT_NAME} = "$ENV{ADP_INPUT}/$ARGV[1]_work" if ($step =~ /adpst/);
+		
+		#    print ">>>>>>>     EVENT_NAME is $ENV{EVENT_NAME}\n";
+		($ENV{EVENT_NAME} =~ /^(.*)_work$/) or die ">>>>>>>     Do not recognize event name $ENV{EVENT_NAME}!\n";
+		my $match = $1;
+		@inputs = glob("$match*");
+		if (@inputs) {
+			die ">>>>>>>     ERROR:  confused about inputs $ENV{EVENT_NAME}*\n" if (scalar(@inputs) > 1);
+			#  For ADP, the input file must be there, and it is probably
+			#   not named _work at the moment.
+			`mv $inputs[0] $ENV{EVENT_NAME}`;
+			die ">>>>>>     Cannot move $inputs[0] to $ENV{EVENT_NAME}\n" if ($?);
+		}
+		elsif ($ENV{PATH_FILE_NAME} !~ /adp/) {
+			#  Create it:
+			`touch $ENV{EVENT_NAME}`;
+		}
+		else {
+			die ">>>>>>>     ERROR:  cannot find input ${match}*\n";
+		}
+	} # if event_name
+	else {
+		##########################################################################
+		#
+		#  In subsequent steps, OPUS passes this variable to the processes, set to 
+		#    whatever OSF name you created in startup:
+		#
+		if (($ENV{PATH_FILE_NAME} =~ /adp/) && (scalar(@steps) > 1)) {
+			
+			#  Now the problem here is ADP.  The original trigger name isn't 
+			#   easy to translate into an OSF_DATASET.  So, if we're given only
+			#   one step to run, assume the dataset we're given is the dataset
+			#   as listed by the OSF.  But if we're running all of ADP, we're
+			#   given the input file name and have to figure out what was
+			#   created during adpst, which is a pain.  The root name should
+			#   be the same, so we can use that to find the OSF.
+			($ARGV[1] =~ /(.*)\.(.*)/) or die ">>>>>>     Don't recognize ADP dataset $ARGV[1];  need suffix!\n";
+			$root = $1;
+			$suffix = $2;
+			#  TSFs wierdest of all:  TSF_RRRR_xxxxxxxxxxx_VVVV --> TSF_RRRR_VVVV
+			$root =~ s/(TSF_\d{4}_)\w+_(\d{4})/$1$2/;
+			@osfs = `osf_test -p adp.path -pr dataset | grep $root | sort | grep $suffix` unless ($root =~ /arc_prep/);
+			#  The only ADP trigger whose suffix isn't important is the 
+			#    RRRR_arc_prep.trigger
+			@osfs = `osf_test -p adp.path -pr dataset | grep $root | sort` if ($root =~ /arc_prep/);
+			if ( (scalar(@osfs) > 1) && ($root =~ /orbita/) && ($ENV{ADP_UNIT_TEST} =~ /TRUE/) ) {
+				#  This can happen in the ADP, where we know we have an orbita, but
+				#   there are two in the unit test and we don't know the time stamp, which
+				#   is set by the script to be today (except the second, fudged on more day.)
+				#   We just assume the latest is the right one.  
+				print ">>>>>>>     WARNING:  more than one OSF matches $root and $suffix\n";
+			}
+			elsif (scalar(@osfs) > 1) {
+				die ">>>>>>>      more than one OSF matches $root and $suffix\n";
+			}
+			elsif (scalar(@osfs) != 1) {
+				die ">>>>>>>     Cannot find OSF matching $root and $suffix\n";
+			}
+			#  So after the above, $#osfs is 0 unless it's the second orbita in the
+			#   unit test, in which case it's 1.  
+			chomp $osfs[$#osfs];
+			#  remember, osf_test returns with trailing spaces
+			$osfs[$#osfs] =~ s/\s+//g;
+			$ENV{OSF_DATASET} = $osfs[$#osfs];
+			
+			
+		} # if adp and full path
+		else {
+			$ENV{OSF_DATASET} = "$ARGV[1]" if ($#ARGV >= 1);
+		}
+		
+	} # if not startup
+	
+	
+	#############################################################################
+	#  Now, set the command to call, which is the process name except for the 
+	#   few cons cases using nrt scripts:
+	#
+	my $command;
+	my $script; 
+	
+	#  ArcDD scripts installed under bin and in path;  others maybe not.
+	if ($ENV{PATH_FILE_NAME} !~ /arcdd/) {
+		$script = $ENV{PATH_FILE_NAME}."/".$ENV{PROCESS_NAME}.".pl";
+		
+		if ($ENV{PATH_FILE_NAME} =~ /^cons(scw|input|rev)/) {
+			#  For now, remember, cons scripts are still the nrt versions,
+			#   except for crvmon 
+			if ($ENV{PROCESS_NAME} !~ /crvmon/) {
+				$script =~ s/cons/nrt/;
+				$script =~ s/\/c/\/n/;
+			}
+		}
+		#  Special case in Rev where only one script.
+		if ($ENV{PATH_FILE_NAME} =~ /^(cons|nrt)rev/) {
+			$script = "nrtrev/nrvgen.pl" unless ($ENV{PROCESS_NAME} =~ /rv(st|fin|mon)/);
+		}
+		#  Special case in ConsSA where two processes use one script
+		if ($ENV{PATH_FILE_NAME} =~ /conssa/) {
+			$script =~ s/sw\d/scw/; # csasw1 and csasw2 run csascw.pl
+			$script =~ s/ob\d/obs/; # csaob1 and csaob2 run csaobs.pl
+		}
+		
+		$command = $ENV{ISDC_ENV}."/opus/".$script;
+	}
+	else {
+		$command = $ENV{PROCESS_NAME}.".pl";
+	}
+	
+	#  Here, we tack back on the ".path" 
+	$ENV{PATH_FILE_NAME} .= ".path"; 
+	
+	
+	$ENV{OSF_DCF_NUM} = "000" unless (($step =~ /^(csa|nql|css)/) || ($ENV{OSF_DATASET} =~ /ilt/));
+	#############################################################################
+	#  So we're set to go.  First, say what we got:
+	# 
+	print "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+	if ($ENV{OSF_DATASET}) {
+		print ">>>>>>>     Testing PROCESS $ENV{PROCESS_NAME} with OSF_DATASET $ENV{OSF_DATASET}\n";
+	}
+	elsif ($ENV{EVENT_NAME}) {
+		print ">>>>>>>     Testing PROCESS $ENV{PROCESS_NAME} with EVENT_NAME $ENV{EVENT_NAME}\n";
+	}
+	else {
+		print ">>>>>>>     Testing PROCESS $ENV{PROCESS_NAME} with no OSF or event;  assuming time triggered process.\n";    
+	}
+	
+	#
+	#  Then say what it's going to do:
+	print ">>>>>>>     You will see only STDERR (which may include Perl warnings such as\n"
+		.">>>>>>>     \t\"Use of uninitialized value\" or \n>>>>>>>     \t\"glob failed\", or other warnings ending \n"
+		.">>>>>>>     \t\"...No such file or directory\"):\n" unless (scalar(@steps));
+	print ">>>>>>>     Running command:  \'$command\'\n\n";
+
+	#  Do it:  (remember, can't redirect STDERR or mess up return status)
+	my @result = `$command`;
+
+	#  Note:  must divide by 256 before returning;  that way, unit tests
+	#   will get the right number.  If you return 3*256=768, the unit
+	#   test only gets the lower 8 bits, i.e. 0!
+	my $retval = $? / 256;
+
+	#
+	#  See what happened;  first the status returned by the shell command:
+	print ">>>>>>>     Return status was:  $retval\n";
+	
+	#  If the result was zero and it was a startup, move "trigger" to _processing
+	if (($retval == 0) && ($ENV{EVENT_NAME})) {
+		if ($ENV{PATH_FILE_NAME} =~ /adp/) {
+			#      print ">>>>>>>     Moving $ENV{EVENT_NAME} to\n>>>>>>>       $ENV{ADP_INPUT}/$ARGV[1]_processing\n";
+			`mv $ENV{EVENT_NAME} $ENV{ADP_INPUT}/$ARGV[1]_processing`;    
+		}
+		else {
+			$ENV{EVENT_NAME} =~ /^(.*)_work$/;
+			#      print ">>>>>>>     Moving $ENV{EVENT_NAME} to\n>>>>>>>       ${1}_processing\n";
+			`mv $ENV{EVENT_NAME} ${1}_processing`;
+		}
+	}
+	#  Then the output, only STDOUT unfortunatly.  (If you redirect STDOPUT
+	#   or STDERR, you lose the ability to see the real return status.
+	#   So STDERR comes out of order, on the screen as it runs.)
+	
+	if ($ARGV[2]) {  
+		open(LOG,">>$ARGV[2]") or die ">>>>>>>     ERROR:  cannot open log $ARGV[2] to write\n";
+		print ">>>>>>>     \"Process\" log is in $ARGV[2]\n";
+	}
+	else {
+		open (LOG,">>${step}_log.txt")  or die ">>>>>>>     ERROR:  cannot open log ${step}_log.txt to write.\n";
+		print ">>>>>>>     \"Process\" log is in ${step}_log.txt\n";
+	} # end of if log file
+	print LOG @result;
+	close LOG;
+	#  Don't know why, but sometimes, this doesn't work:
+	exit $retval if ($retval);
+	delete $ENV{EVENT_NAME};
+	foreach (@todelete) { delete $ENV{$_};}
+	
+}  # end foreach step
+
+print ">>>>>>>     DONE.\n";
+#############################################################################
+#
+#  Done.
+exit 0;

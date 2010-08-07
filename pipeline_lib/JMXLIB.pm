@@ -43,7 +43,6 @@ sub JSA {
 	my $startLevel      = "COR";
 	my $endLevel        = "LCR";
 	my $skipLevels      = "BKG,SPE";
-#	my $BKG_simulated   = "n";		#	060925 - j_scripts 4.6
 	my $GTI_TimeFormat  = "IJD";
 	my $LCR_vignCorr    = "yes";
 	my $SPE_vignCorr    = "yes";
@@ -55,12 +54,9 @@ sub JSA {
 	my $viewTime        = "N";
 	my $viewVar         = "N";
 	my $usrCat          = "";
-#	my $skyImagesOut    = "RAW_I,RAW_R,VARIA,RESID,RES+S";
-#	my $skyImagesOut    = "RAW_R,VARIA,RESID,RES+S";	#	used until 061013
 	my $skyImagesOut    = "RECTI,VARIA,RESID,RECON";	#	061013 - Jake - SCREW 1918 - some new stuff for newer jemx
 	my $radiusMin       = "0.0 2.4";
 	my $radiusMax       = "2.4 6.6";
-#	my $mapSelect       = "RAW_RECT";
 	my $mapSelect       = "RECTI";	#	061013 - Jake - SCREW 1918 - some new stuff for newer jemx
 	my $diameter        = "20.";
 	my $BIN_I_rowSelect = "";
@@ -127,11 +123,9 @@ sub JSA {
 	elsif ( ( $ENV{PROCESS_NAME} =~ /cssscw/ ) && ( $att{proctype} =~ /mosaic/ ) ) {
 		$startLevel      = "IMA2";
 		$endLevel        = "IMA2";
-#		$mapSelect       = "RES+SRC";
 		$mapSelect       = "RECON";	#	061013 - Jake - SCREW 1918 - newer stuff for newer jemx
 		$radiusSelect    = "4.8";
 		$diameter        = "-1";
-#		$skyImagesOut    = "RAW_I,RAW_R,VARIA,RESID,RES+S";
 		$skyImagesOut    = "RAWIN,RECTI,VARIA,RESID,RECON";	#	061013 - Jake - SCREW 1918 - newer stuff for newer jemx
 	}
 	elsif ( $ENV{PROCESS_NAME} =~ /nqlobs/ ) {
@@ -202,7 +196,6 @@ sub JSA {
 		"par_nChanBins"             => "$nChanBins",
 		"par_chanHigh"              => "$chanHigh",
 		"par_chanLow"               => "$chanLow",
-#		"par_BKG_simulated"         => "$BKG_simulated",		#	060925 - j_scripts 4.6
 		"par_CAT_I_radiusMin"       => "$radiusMin",		#	" 0 2.4",
 		"par_CAT_I_radiusMax"       => "$radiusMax",		#	"2.4 6.6",
 		"par_CAT_I_refCat"          => "$ENV{ISDC_REF_CAT}",
@@ -223,11 +216,9 @@ sub JSA {
 		"par_SPE_vignCorr"          => "$SPE_vignCorr",
 		"par_BIN_I_rowSelect"       => "$BIN_I_rowSelect",
 
-		"par_BIN_I_backCorr"        => "n",
 		"par_BIN_I_evtType"         => "-1",
 		"par_BIN_I_gtiNames"        => "",
 		"par_BIN_I_shdRes"          => "",
-		"par_BIN_I_shdType"         => "2",
 		"par_BIN_S_evtType"         => "-1",
 		"par_BIN_S_rowSelectEvts"   => "",
 		"par_BIN_S_rowSelectSpec"   => "",
@@ -259,7 +250,6 @@ sub JSA {
 		"par_IMA_relDist"           => "-0.05",
 		"par_IMA_searchRad"         => "0.0",
 		"par_IMA_fluxLimit"         => "0.000",
-		"par_LCR_bgrMethod"         => "0",
 		"par_LCR_evtType"           => "-1",
 		"par_LCR_fluxScaling"       => "2",
 		"par_LCR_precisionLevel"    => "20",
@@ -269,7 +259,6 @@ sub JSA {
 		"par_LCR_tAccuracy"         => "3",
 		"par_LCR_timeStep"          => "-1",
 		"par_LCR_useRaDec"          => "y",
-		"par_SPE_bgrMethod"         => "0",
 		"par_SPE_evtType"           => "-1",
 		"par_SPE_fluxScaling"       => "2",
 		"par_SPE_precisionLevel"    => "20",
@@ -301,7 +290,6 @@ sub JSA {
 		"par_IMA_dolBPL"            => "",
 		"par_IMA_edgeEnhanceFactor" => "1.0",
 		"par_IMA_hotPixelLimit"     => "4.0",
-		"par_IMA_interactionDepth"  => "10.0",
 		"par_IMA_loopLimitPeak"     => "0.025",
 		"par_IMA_makeNewBPL"        => "no",
 		"par_IMA_maxNumSources"     => "10",
@@ -323,6 +311,14 @@ sub JSA {
 		"par_IMA_illumNorm"         => "0",			#	060925 - j_scripts 4.6
 		"par_IMA_signifLim"         => "25",		#	060925 - j_scripts 4.6
 
+		"par_COR_randPos" => "n",		#	070705 - Jake - added for j_scripts 4.6.4
+
+		"par_BIN_I_chanHighDet" => "95 134 178",	#	070824 - Jake - added for j_scripts 5.0.0 - SCREW 2030ish
+		"par_BIN_I_chanLowDet" => "46 96 135",		#	070824 - Jake - added for j_scripts 5.0.0 - SCREW 2030ish
+		"par_IMA_detImagesOut" => "y",				#	070824 - Jake - added for j_scripts 5.0.0 - SCREW 2030ish
+		"par_IMA2_print_ScWs" => "N",					#	070829 - Jake - added for j_scripts 5.0.1 - SCREW 2030ish
+		"par_BIN_I_shdType"         => "2",			#	070824 - Jake - no change
+		"par_IMA_interactionDepth"  => "3.0",		#	070824 - Jake - changed from "10.0" for j_scripts 5.0.0 - SCREW 2030ish
 
 		"stoponerror" => "0",									#	382099 is sorta acceptable
 		);

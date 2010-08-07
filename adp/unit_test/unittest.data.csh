@@ -100,28 +100,16 @@ endif
 #		I did this in a separate script because almost all unit_tests
 #		will need this function.
 #
-#	ic_master_file_20041202131738.fits
-#set ICVersion = "20050510TEST"
-#set ICVersion = "20050528TEST"
-#set ICVersion = "20050626TEST"
-#set ICVersion = "20060321TEST"
-#set ICVersion = "20060518162200"
-#set ICVersion = "20060616TEST"
-#set ICVersion = "20060619TEST"
-#set ICVersion = "20060711TEST"
-#set ICVersion = "20060801OSA6"
-#set ICVersion = "20061010OSA6"
-#set ICVersion = "20061130TEST"
-#set ICVersion = "20070111_OSA6"
-#set ICVersion = "20070123A_OSA6"
-#set ICVersion = "20070123B_OSA6"
-#set ICVersion = "20070208_OSA6"
-#set ICVersion = "20070208A_OSA6"
 #set ICVersion = "20070123"
 #set ICVersion = "20070208"
 #set ICVersion = "20070219"
 #set ICVersion = "20070308"
-set ICVersion = "20070601"
+#set ICVersion = "20070601"
+#set ICVersion = "20070905" # BAD
+#set ICVersion = "20070906"
+#set ICVersion = "20070917A"
+#set ICVersion = "20070919"
+set ICVersion = "20070925B"
 cd $REP_BASE_PROD
 echo "#######   Building IC Tree Version $ICVersion"
 echo "#######    in REP_BASE_PROD +$REP_BASE_PROD+"

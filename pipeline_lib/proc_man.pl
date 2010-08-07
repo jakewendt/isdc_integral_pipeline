@@ -20,8 +20,10 @@ use strict;
 use File::Basename;
 
 #	just for testing because NRT doesn't have ISDCConstants
-use lib "/isdc/integration/isdc_int/sw/dev/prod/opus/pipeline_lib/";
-use lib "/home/wendt/";
+#use lib "/isdc/integration/isdc_int/sw/dev/prod/opus/pipeline_lib/";
+#use lib "/home/wendt/";
+
+use lib "$ENV{ISDC_OPUS}/pipeline_lib/";	#  do I really need this since the libs are in the same place?
 use ISDCPipeline;
 use OPUSLIB;
 use ISDCLIB;
@@ -298,7 +300,8 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 						#	$runcom = "rsh $node /usr/ucb/ps axw | egrep -v grep";
 						$runcom = "rsh $node $myps axw | egrep -v grep";
 					} else {
-						$runcom = "$myssh -1 $node $myps axw | egrep -v grep";
+						$runcom = "$myssh $node $myps axw | egrep -v grep";
+#						$runcom = "$myssh -1 $node $myps axw | egrep -v grep";
 					}
 					print "$prefix1 \n$prefix1 $runcom \n";
 					

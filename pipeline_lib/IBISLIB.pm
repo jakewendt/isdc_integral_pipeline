@@ -67,6 +67,8 @@ sub ISA {
 	my $PICSIT_inCorVar = "1";		#	060104 - Jake - FIX I don't know if this diff is really nec as we don't really proc picsit.  ask NP/Luigi
 	my $GTI_PICsIT      = "ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS";
 	my $levelList       = "PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN";
+	my $xTolerance = "0.5";
+	my $zTolerance = "3.0";
 
 	#####################################################################################
 
@@ -130,7 +132,7 @@ sub ISA {
 	
 	#####################################################################################
 
-	if ( $ENV{REDO_CORRECTION} ) {	#	this is only available in consssa
+	if ( ( $ENV{PROCESS_NAME} =~ /cssscw/ ) && ( $ENV{REDO_CORRECTION} ) ) {	#	this is only available in consssa
 		&Message ( "Redoing Correction step.  Changing startLevel and endLevel." );
 		$startLevel   = "COR";
 		$endLevel     = "DEAD";
@@ -156,13 +158,6 @@ sub ISA {
 			$rebin_corr     = "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_corr_ima.fits[1]";
 			&ISDCPipeline::RunProgram ( "$mycp $ENV{ISDC_OPUS}/nrtqla/rebinned_corr_ima.fits.gz $ENV{REP_BASE_PROD}/$att{instdir}/" )
 				unless ( -e "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_corr_ima.fits.gz" );
-
-#
-#			$rebin_back     = "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_back_ima.fits[1]";
-#			&ISDCPipeline::RunProgram ( "$mycp $ENV{ISDC_OPUS}/nrtqla/rebinned_back_ima.fits.gz $ENV{REP_BASE_PROD}/$att{instdir}/" )
-#				unless ( -e "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_back_ima.fits.gz" );
-#
-
 		}
 	}
 	elsif ( $att{INST} =~ /PICSIT/ ) {
@@ -171,6 +166,30 @@ sub ISA {
 	}
 	else {
 		&Error ( "Unknown INST instrument : $att{INST}!" );
+	}
+
+	#####################################################################################
+
+	if ( ( $ENV{PROCESS_NAME} =~ /cssscw/ ) && ( exists $ENV{W_STAGE} ) ) {	#	this is only available in consssa
+		&Message ( "multi-stage testing.  Stage: $ENV{W_STAGE}.  Changing Tolerance, startLevel and endLevel." );
+		$xTolerance = "0.03";
+		$zTolerance = "0.05";
+		if ( $ENV{W_STAGE} eq ".S01" ) {
+			$startLevel   = "COR";
+			$endLevel     = "BIN_I";
+		} elsif ( $ENV{W_STAGE} eq ".S02" ) {
+			$startLevel   = "BKG_I";
+			$endLevel     = "IMA";
+		} else {
+			&Error ( "\$ENV{W_STAGE} set to :$ENV{W_STAGE}:???" );
+		}
+
+		#	Need to copy in both stages because a previous copy would overwrite it
+		&ISDCLIB::DoOrDie ( "$mychmod +w ./energy_bands.fit*" );
+		&ISDCLIB::DoOrDie ( "$myrm ./energy_bands.fits.gz" );
+		&ISDCLIB::DoOrDie ( "$myrm ./energy_bands.fits" ) if ( -e "./energy_bands.fits" );
+		&ISDCLIB::DoOrDie ( "$mycp $ENV{ISDC_OPUS}/pipeline_lib/energy_test.fits.gz ./energy_bands.fits.gz" );
+		&Error ( "energy_bands.fits.gz does not exist!" ) unless ( -e "energy_bands.fits.gz" );	#	check the copy
 	}
 
 	#####################################################################################
@@ -184,10 +203,10 @@ sub ISA {
 	print "\n========================================================================\n";
 	print "#######     DEBUG:  ISDC_REF_CAT is $ENV{ISDC_REF_CAT}\n";
 
-	my $dal_retry_open_existed = $ENV{DAL_RETRY_OPEN} if ( defined ( $ENV{DAL_RETRY_OPEN} ) );
-	$ENV{DAL_RETRY_OPEN} = 5 unless ( defined ( $ENV{DAL_RETRY_OPEN} ) );		#	060208 - Jake - SCREW 1807
-
-
+	my $dal_retry_open_existed = $ENV{DAL_RETRY_OPEN} if ( exists $ENV{DAL_RETRY_OPEN} );
+	$ENV{DAL_RETRY_OPEN} = 5 unless ( exists $ENV{DAL_RETRY_OPEN} );		#	060208 - Jake - SCREW 1807
+#	my $dal_retry_open_existed = $ENV{DAL_RETRY_OPEN} if ( defined ( $ENV{DAL_RETRY_OPEN} ) );
+#	$ENV{DAL_RETRY_OPEN} = 5 unless ( defined ( $ENV{DAL_RETRY_OPEN} ) );		#	060208 - Jake - SCREW 1807
 
 
 	&ISDCPipeline::PipelineStep (
@@ -216,6 +235,8 @@ sub ISA {
 		"par_PICSIT_inCorVar"         => "$PICSIT_inCorVar",
 		"par_SCW1_GTI_PICsIT"         => "$GTI_PICsIT",		#	"ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS",
 		"par_GENERAL_levelList"       => "$levelList",		#	"PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN",
+		"par_SCW1_GTI_attTolerance_X" => $xTolerance,
+		"par_SCW1_GTI_attTolerance_Z" => $zTolerance,
 
 
 		#	universally different than default (maybe)
@@ -237,23 +258,10 @@ sub ISA {
 		"par_SCW1_GTI_TimeFormat"     => "OBT",
 		"par_SCW2_BKG_P_method"       => "0",
 		"par_SCW2_ISPE_MethodFit"     => "1",
-
-		"par_ModPixShad" => "400",						#	061207 - added for ibis_scripts 9.4
-		"par_brPifThreshold" => "0.0001",			#	061207 - added for ibis_scripts 9.4
-
-
-#		"par_SCW1_ICOR_icDOL"         => "",		#	060705 - Jake - removed for ibis_scripts 8.7
-#		"par_SCW1_GTI_attTolerance"   => "0.5",	#	060705 - Jake - removed for ibis_scripts 8.7
-
-		"par_SCW1_BIN_P_PicsCxt"        => "",		#	060705 - Jake - added for ibis_scripts 8.7
-#		"par_SCW1_BKG_I_brPifThreshold" => "0.1",	#	060705 - Jake - added for ibis_scripts 8.7										#	061129 - SPR 4614 - removed for ibis_scripts 9.3
-#		"par_SCW1_BKG_I_pif"            => "",		#	060705 - Jake - added for ibis_scripts 8.7										#	061129 - SPR 4614 - removed for ibis_scripts 9.3
-		"par_SCW1_GTI_attTolerance_X"   => "0.5",	#	060705 - Jake - added for ibis_scripts 8.7
-		"par_SCW1_GTI_attTolerance_Z"   => "3.0",	#	060705 - Jake - added for ibis_scripts 8.7
-		"par_SCW1_ICOR_protonDOL"       => "",		#	060705 - Jake - added for ibis_scripts 8.7
-		"par_SCW1_ICOR_rtcDOL"          => "",		#	060705 - Jake - added for ibis_scripts 8.7
-		"par_SCW1_ICOR_switDOL"         => "",		#	060705 - Jake - added for ibis_scripts 8.7
-		"par_SCW2_BIN_P_PicsCxt"        => "",		#	060705 - Jake - added for ibis_scripts 8.7
+		"par_ModPixShad"              => "400",
+		"par_brPifThreshold"          => "0.0001",
+		"par_SCW1_BIN_P_PicsCxt"      => "",
+		"par_SCW2_BIN_P_PicsCxt"      => "",
 
 
 		#	still default values (I think)
@@ -368,8 +376,6 @@ sub ISA {
 		"par_SCW2_PIF_filter"         => "",                            
 		"par_SCW2_cat_for_extract"    => "",               
 		"par_SCW2_catalog"            => "",                                       
-#		"par_SCW2_deccolumn"          => "DEC_FIN",		#	060920 - Jake - removed for ibis_scripts 9.0
-#		"par_SCW2_racolumn"           => "RA_FIN",		#	060920 - Jake - removed for ibis_scripts 9.0
 		"par_SCW2_BIN_I_idxNoisy"     => "",
 		"par_SCW2_ISPE_isgrarf"       => "",
 		"par_SWITCH_osimData"         => "NO",
@@ -384,26 +390,13 @@ sub ISA {
 		"par_rebinned_backDol_spe"    => "",
 		"par_rebinned_corrDol_lc"     => "",
 		"par_rebinned_corrDol_spe"    => "",
-
-#		070306 - Changes for ibis_scripts 10.0
-#		"par_OBS1_aluAtt"             => "",
-#		"par_OBS1_leadAtt"            => "",
-#		"par_OBS1_tungAtt"            => "",
-#		"par_SCW1_BKG_I_brSrcDOL"       => "",		#	060705 - Jake - added for ibis_scripts 8.7
-##		"par_SCW1_BKG_I_brSrcDOL" => "$ENV{ISDC_REF_CAT}[NAME==Crab || name==Cyg X-1 || name==GRS 1915+105]",   in par file
-#		"par_SCW1_BKG_aluAtt"           => "",		#	060705 - Jake - added for ibis_scripts 8.7
-#		"par_SCW1_BKG_leadAtt"          => "",		#	060705 - Jake - added for ibis_scripts 8.7
-#		"par_SCW1_BKG_tungAtt"          => "",		#	060705 - Jake - added for ibis_scripts 8.7
-#		"par_SCW2_ISPE_aluAtt"        => "",
-#		"par_SCW2_ISPE_leadAtt"       => "",
-#		"par_SCW2_ISPE_tungAtt"       => "",
-#		"par_pifname" => "",								#	061207 - added for ibis_scripts 9.4
 		"par_aluAtt" => "",
 		"par_brSrcDOL" => "",	#	"$ENV{ISDC_REF_CAT}[ISGRI_FLAG==1&&ISGR_FLUX_1>100]",
 		"par_leadAtt" => "",
 		"par_tungAtt" => "",
-
-		"par_SCW1_RTdriftCor" => "1",		#	070327 - SCREW 1977 - Jake
+		"par_SCW1_ICOR_supGDOL"   => "",		#	070725 - Jake - SCREW 2018: added for 10.2
+		"par_SCW1_ICOR_supODOL"   => "",		#	070725 - Jake - SCREW 2018: added for 10.2
+		"par_protonDOL"           => "",		#	070725 - Jake - SCREW 2018?: added for 10.2
 		);
 
 	delete $ENV{DAL_RETRY_OPEN} unless ( defined ( $dal_retry_open_existed ) );		#	060208 - Jake - SCREW 1807
@@ -411,6 +404,8 @@ sub ISA {
 
 	&ISDCPipeline::RunProgram("$myrm GNRL-REFR-CAT.fits")
 		if ( ( -e "GNRL-REFR-CAT.fits" ) && ( $ENV{PROCESS_NAME} =~ /cssscw|csaob1/ ) );
+
+&Message ( "COMMONLOGFILE :$ENV{COMMONLOGFILE}:" );
 
 	return;
 } # end of ISA

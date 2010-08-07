@@ -1,6 +1,6 @@
 
 COMPONENT_NAME    = pipeline_lib
-COMPONENT_VERS    = 9.5.3
+COMPONENT_VERS    = 9.6
 
 testcommands::  
 	(cd unit_test; ./README.pl)

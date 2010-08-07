@@ -1,0 +1,53 @@
+#!/bin/csh (this tag used for colors in vim)
+#
+#	Generic pipeline script makeisdc1.in file
+#	makeisdc2 include the COMPONENT_NAME and _VERS
+#	makeisdc2 will also override testcommands::
+#		if necessary (like pipeline_lib)
+#
+
+include makeisdc2
+
+TAR_FILE_NAME     = ${COMPONENT_NAME}-${COMPONENT_VERS}
+
+TO_INSTALL_BIN   += ${COMPONENT_NAME}
+TO_INSTALL_HELP  += ${COMPONENT_NAME}.txt
+
+CLEAN_TARGETS    += ${COMPONENT_NAME} ${COMPONENT_NAME}.txt
+ALL_TARGETS      += ${COMPONENT_NAME} ${COMPONENT_NAME}.txt
+
+#	Generate a file that will deal with the options
+#	--v
+#	--h
+${COMPONENT_NAME}:
+	@echo "#!/bin/sh"                                                             > ${COMPONENT_NAME}
+	@echo ""                                                                     >> ${COMPONENT_NAME}
+#	@echo "while [ \$$1 ]; do"                                                   >> ${COMPONENT_NAME}
+	@echo "	if [ \"\$$1\" = \"--v\" ]; then"                                    >> ${COMPONENT_NAME}
+	@echo "		echo Log_1  : Version : ${COMPONENT_NAME} ${COMPONENT_VERS}"     >> ${COMPONENT_NAME}
+	@echo "		exit 0"                                                          >> ${COMPONENT_NAME}
+	@echo "	elif [ \"\$$1\" = \"--h\" ]; then"                                  >> ${COMPONENT_NAME}
+	@echo "		if [ -f \"\$$ISDC_ENV/help/${COMPONENT_NAME}.txt\" ]; then"      >> ${COMPONENT_NAME}
+	@echo "			cat \$$ISDC_ENV/help/${COMPONENT_NAME}.txt"                   >> ${COMPONENT_NAME}
+	@echo "		else"                                                            >> ${COMPONENT_NAME}
+	@echo "			echo \$$ISDC_ENV/help/${COMPONENT_NAME}.txt not found"        >> ${COMPONENT_NAME}
+	@echo "		fi"                                                              >> ${COMPONENT_NAME}
+	@echo "		exit 0"                                                          >> ${COMPONENT_NAME}
+	@echo "	else"                                                               >> ${COMPONENT_NAME}
+	@echo "		echo Unexpected argument: + \$$1 +.  Aborting..."                >> ${COMPONENT_NAME}
+	@echo "		exit 1"                                                          >> ${COMPONENT_NAME}
+	@echo "	fi"                                                                 >> ${COMPONENT_NAME}
+#	@echo "done"                                                                 >> ${COMPONENT_NAME}
+	@echo ""                                                                     >> ${COMPONENT_NAME}
+	@echo "echo The component you have called + \$$0 + is a container for other" >> ${COMPONENT_NAME}
+	@echo "echo executables.  This one does nothing.  Exiting."                  >> ${COMPONENT_NAME}
+	@echo "exit 0"                                                               >> ${COMPONENT_NAME}
+
+	@chmod +x ${COMPONENT_NAME}
+
+	@cat  ${COMPONENT_NAME}.help | sed s/%VERSION%/${COMPONENT_VERS}/            > ${COMPONENT_NAME}.txt
+
+testcommands::	
+	(cd unit_test; ./README.test)
+
+

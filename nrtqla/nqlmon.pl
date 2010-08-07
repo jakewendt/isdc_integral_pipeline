@@ -32,7 +32,7 @@ use OPUSLIB;
 use lib "$ENV{ISDC_ENV}/opus/nrtqla";
 use QLAMOS;
 
-&ISDCPipeline::EnvStretch ( "OUTPATH", "WORKDIR", "LOG_FILES", "MOSAICS" );
+&ISDCPipeline::EnvStretch ( "OUTPATH", "WORKDIR", "LOG_FILES", "MOSAICS", "OBSDIR" );
 
 &ISDCPipeline::BBUpdate (
 	"agelimit"  => "$ENV{OSF_AGELIMIT_DEFAULT}",
@@ -49,6 +49,14 @@ my ( $rev ) = ( $triggers[$#triggers] =~ /.*\/(\d{4})\d{8}\.trigger.*/ );
 
 &QLAMOS::Mosaic ( sprintf ( "%04d", --$rev ) );
 &QLAMOS::Mosaic ( sprintf ( "%04d", ++$rev ) );
+
+#	for nrtqla testing of 0601 and 0605
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev-5 ) );
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev-4 ) );
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev-3 ) );
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev-2 ) );
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev-1 ) );
+#&QLAMOS::Mosaic ( sprintf ( "%04d", $rev ) );
 
 exit 0;
 

@@ -4,6 +4,11 @@ NOTE:  Rev pipeline executables don't all compile in the WCT environment due to 
 I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
 
 
+20070905 - Jake
+	using HEADAS instead of LHEASOFT in unit_test
+
+
+
 20070608 - Jake
 	SCREW 1988 - merged crvidp and crvirn resource files to ensure that all idps are processed before any irns
 

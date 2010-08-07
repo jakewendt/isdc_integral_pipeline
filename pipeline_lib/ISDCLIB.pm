@@ -758,6 +758,8 @@ As it sounds, DoOrDie executes the given command in `'s and returns the result, 
 
 sub DoOrDie {
 	my ( $command ) = @_;
+	&ISDCLIB::dprint ( "$command" );
+#	&ISDCLIB::Message ( "$command" );
 #	`$command`;
 #	die "*******    ERROR:  $command failed with $?" if ( $? );
 	my @result = `$command`;

@@ -4,6 +4,12 @@ Linux gcc differences are expected.  Linux intel compilation will fail.
 Try to implement a way to test cons_sma.sh in the unit test
 
 
+20070921 - Jake
+	SPR 4735 - different printf behaviour on isdclin machines
+
+20070905 - Jake
+	SCREW ???? - change cssfin.resource to trigger cleanup on completion
+
 20070226 - Jake
 	modification of unittest.data.csh to use /isdc/ic_tree/
 

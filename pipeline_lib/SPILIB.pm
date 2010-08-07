@@ -151,24 +151,7 @@ sub SSA {
 		"par_spi_phase_hist_phaseSubtractOff"  => "no",
 		"par_spi_phase_hist_porb"              => "34.29",
 		"par_spi_phase_hist_pporb"             => "0.0",
-		"par_use_flatfields"                   => "yes",
 		"par_use_pointing_filter"              => "yes",
-
-		#	060615 - Jake - removed for spi_scripts-4.0
-		#			"par_cat_extract_fluxDef"        => "1",
-		#			"par_cat_extract_radiusMax"      => "20",		#"8" causes me a core dump in testing, but "20" works
-		#			"par_cat_extract_radiusMin"      => "0",
-		#			"par_chatter"                    => "2",
-		#			"par_run_pha2_converter"         => "NO",
-		#			"par_spi_obs_back_model05"       => "GEDSAT",
-		#			"par_spi_obs_back_mpar05"        => "",
-		#			"par_spi_obs_back_norm05"        => "NO",
-		#			"par_spi_obs_back_npar05"        => "",
-		#			"par_spi_obs_back_scale05"       => "1.0",
-		#			"par_spiros_image-orient"        => "STANDARD",
-		#			"par_spiros_image-pole-lat"      => "90.0",
-		#			"par_spiros_image-pole-long"     => "0.0",
-		#			"par_spiros_solution-constr"     => "NONE",
 
 		#	unchanged from spi_scripts 3.0 defaults
 		"par_IRF_DOL"                    => "",
@@ -207,9 +190,16 @@ sub SSA {
 		"par_spi_obs_back_scale04"       => "1.0",
 		"par_spiros_energy-subset"       => "",
 		"par_spiros_iteration-output"    => "NO",
-#		"par_spiros_location-max-error"  => "0.1",		#	060731 - Jake - SPR 4509 - removed for spi_scripts-4.1
 		"par_spiros_mode"                => "IMAGING",
 		"par_spiros_pointing-subset"     => "",
+
+		"par_run_fullcheck"              => "no",			#	added for spi_scripts-4.5
+		"par_spi_flatfield_single"       => "no",			#	added for spi_scripts-4.5
+		"par_spi_templates_scaling"      => "1",			#	added for spi_scripts-4.5
+		"par_spi_templates_type"         => "GEDSAT",	#	added for spi_scripts-4.5
+		"par_use_background_flatfields"  => "yes",		#	added for spi_scripts-4.5
+		"par_use_background_models"      => "no",			#	added for spi_scripts-4.5
+		"par_use_background_templates"   => "no",			#	added for spi_scripts-4.5
 		);
 	
 	&ISDCPipeline::RunProgram("$mymv Parameters*par logs/")

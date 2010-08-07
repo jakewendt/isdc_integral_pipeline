@@ -8,7 +8,9 @@ Linux differences are expected.
 
 
 
-
+20070803 - Jake
+	added OBSDIR to nqlmon.pl's EnvStretch bc I think that it was causing the 
+	creation of ~/REP_BASE_PROD:obs
 
 --------------------------------------------------------------
 20070605 - Jake - deliver nrtqla 3.4 for SCREW 1983

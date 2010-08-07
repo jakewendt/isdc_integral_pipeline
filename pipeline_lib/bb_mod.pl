@@ -17,7 +17,7 @@ Utility for modifying OSFs outside of OPUS OMG.
 =cut
 
 use strict;
-use lib "$ENV{ISDC_OPUS}/pipeline_lib/";
+use lib "$ENV{ISDC_OPUS}/pipeline_lib/";	#  do I really need this since the libs are in the same place?
 use ISDCPipeline;
 use OPUSLIB;
 use UnixLIB;

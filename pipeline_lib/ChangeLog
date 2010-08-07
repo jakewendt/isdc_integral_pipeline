@@ -1,5 +1,5 @@
 
-This component will fail on Darwin.
+This component will fail on Darwin for reasons which include the lack of OPUS commands on Darwin.
 
 
 Notes:
@@ -15,6 +15,47 @@ Linux ToDo
 Many lines marked with FIX
 
 Check them!
+
+
+20071008 - Jake
+	SPR 4695 - ibis_science_analysis 10.6 parameter updates
+
+--------------------------------------------------------------------------------------
+20070921 - Jake - deliver pipeline_lib 9.6 on SCREW 2003 2018 2030
+
+20070920 - Jake
+	Changed opus_login.csh "OPUS_REMOTE_SHELL" to be ssh and NOT ssh -1
+
+20070829 - Jake
+	SCREW 2030 - JMXLIB.pm - par changes for j_scripts 5.0.0 and 5.0.1
+#     "par_BIN_I_backCorr"        => "n",       #  070824 - Jake - removed for j_scripts 5.0.0
+"par_BIN_I_chanHighDet" => "95 134 178",  #  070824 - Jake - added for j_scripts 5.0.0
+"par_BIN_I_chanLowDet" => "46 96 135",    #  070824 - Jake - added for j_scripts 5.0.0
+"par_IMA_detImagesOut" => "y",            #  070824 - Jake - added for j_scripts 5.0.0
+"par_IMA2_print_ScWs" => "N",             #  070829 - Jake - added for j_scripts 5.0.1
+#     "par_IMA_interactionDepth"  => "10.0",    #  070824 - Jake - changed from "10.0" for j_scripts 5.0.0
+"par_IMA_interactionDepth"  => "3.0",     #  070824 - Jake - changed from "10.0" for j_scripts 5.0.0
+
+20070725 - Jake
+	SCREW 2018 - par changes for ibis_science_analysis
+
+20070719 - Jake
+	???? - SPILIB.pm - par changes for spi_script-4.5
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_run_fullcheck" => "no",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_spi_flatfield_single" => "no",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_spi_templates_scaling" => "1",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_spi_templates_type" => "GEDSAT",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_use_background_flatfields" => "yes",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_use_background_models" => "no",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_use_background_templates" => "no",   in par file
+pipeline_lib/SPILIB.pm    : spi_science_analysis  : "par_use_flatfields" => "yes",   in code.
+
+
+20070705 - Jake
+	???? - JMXLIB.pm - par changes for j_scripts 4.6.4
+pipeline_lib/JMXLIB.pm    : jemx_science_analysis : "par_COR_randPos" => "n",   in par file
+pipeline_lib/JMXLIB.pm    : jemx_science_analysis : "par_LCR_bgrMethod" => "0",   in code.
+pipeline_lib/JMXLIB.pm    : jemx_science_analysis : "par_SPE_bgrMethod" => "0",   in code.
 
 20070625 - Jake
 	SCREW 2003 - IBISLIB.pm / IPMosaic / ip_skymosaic / parameter update

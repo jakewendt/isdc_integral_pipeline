@@ -1,0 +1,10 @@
+
+COMPONENT_NAME  = consrev
+COMPONENT_VERS  = 3.9
+
+consssatest::	
+	(cd unit_test; ./CONSSSA.test)
+
+fullrevtest::	
+	(cd unit_test; ./FULLREV.test)
+

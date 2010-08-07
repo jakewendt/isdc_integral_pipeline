@@ -1,0 +1,113 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING A FULL REVOLUTION III_PREP TO TEST COMPONENT CONSREV"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consrev"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set REV = "0102"
+set iii = "${REV}_iii_prep"
+set arc = "${REV}_arc_prep"
+
+#		set TEST_DATA_TGZ = "consrev-4.0_test_data.tar.gz"
+#		set OUTREF_TGZ    = "consrev-4.0_outref.tar.gz"
+
+echo "#######     ISDC_SITE is now $ISDC_SITE "
+eval `/usr/bin/envv set ISDC_SITE ${PWD}/ISDC_SITE`
+echo "#######     ISDC_SITE is now $ISDC_SITE "
+
+eval `/usr/bin/envv set CONSREV_UNIT_TEST TRUE`
+echo "#######     CONSREV_UNIT_TEST now set to ${CONSREV_UNIT_TEST}"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	/bin/mkdir -p ${PWD}/ISDC_SITE/run/pipelines/cons
+	/bin/ln -s ../../../../opus_work/consssa ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s ../../../../opus_work/opus    ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s /isdc/arc/rev_2/aux test_data/
+	/bin/ln -s /isdc/arc/rev_2/cat test_data/
+	/bin/ln -s /isdc/arc/rev_2/idx/scw test_data/idx
+
+	mkdir -p test_data/scw
+	cd test_data/scw
+	foreach revol ( `/bin/ls -d /isdc/arc/rev_2/scw/*` )
+		ln -s $revol
+	end
+	/bin/rm $REV
+	/bin/mkdir -p $REV/rev.000
+	cd $REV
+	foreach scw ( `/bin/ls -d /isdc/arc/rev_2/scw/$REV/0*` )
+		ln -s $scw
+	end
+	cd rev.000
+	cp -pr /isdc/arc/rev_2/scw/$REV/rev.001/* ./
+	chmod +w aca
+	chmod +w aca/spi*
+	/bin/rm -f aca/spi*
+	chmod -w aca/*
+
+	chmod +w cfg
+	chmod +w cfg/picsit_fault_list*
+	/bin/rm -f cfg/picsit_fault_list*
+
+	chmod +w idx
+	chmod +w idx/picsit_fault_list*
+	/bin/rm -f idx/picsit_fault_list*
+	chmod +w idx/spi_psd*
+	/bin/rm -f idx/spi_psd*
+
+	chmod -R +w osm
+	chmod +w osm/exposure_report*
+	/bin/rm -f osm/exposure_report*
+	chmod +w osm/spi_psd*
+	/bin/rm -f  osm/spi_psd*
+
+	chmod +w logs
+	chmod +w logs/*iii_prep*
+	chmod +w logs/*arc_prep*
+	cd ../../../..
+
+	touch ${OPUS_WORK}/consrev/input/${iii}.trigger
+	touch ${OPUS_WORK}/consrev/input/${arc}.trigger
+	
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+echo "###############################################################################"
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING:  testing consrev for revolution trigger $iii"
+echo "#######"
+echo "#######     You should see no errors"
+echo "#######"
+
+${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev $iii ${OPUS_WORK}/${iii}_consrev.log
+@ exit_status = $status
+echo "#######     exit status of wrapper was $exit_status"
+if ($exit_status != 0) then
+	exit 1
+endif
+
+${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev $arc ${OPUS_WORK}/${arc}_consrev.log
+@ exit_status = $status
+echo "#######     exit status of wrapper was $exit_status"
+if ($exit_status != 0) then
+	exit 1
+endif
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     Done."
+echo "#######"
+
+exit
+
+#	last line

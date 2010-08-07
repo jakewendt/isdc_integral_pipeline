@@ -1,0 +1,392 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE CONSSSA UNIT TEST FOR COMPONENT CONSREV"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consrev"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "consrev-3.8_test_data.tar.gz"
+#set OUTREF_TGZ    = "consrev-3.9_outref.tar.gz"
+
+echo "#######     ISDC_SITE is now $ISDC_SITE "
+eval `/usr/bin/envv set ISDC_SITE ${PWD}/ISDC_SITE`
+echo "#######     ISDC_SITE is now $ISDC_SITE "
+
+eval `/usr/bin/envv set CRV_SSA_UNIT_TEST TRUE`
+echo "#######     CRV_SSA_UNIT_TEST now set to ${CRV_SSA_UNIT_TEST}"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	/bin/mkdir -p ${PWD}/ISDC_SITE/run/pipelines/cons
+	/bin/ln -s ../../../../opus_work/consssa ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s ../../../../opus_work/opus    ${PWD}/ISDC_SITE/run/pipelines/cons/
+	
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+#	Not testing this so don't need it.
+/bin/rm ${OPUS_WORK}/consrev/input/*trigger
+
+#	######################################################################
+#	#  Now we're ready to run:
+#	#
+#	#  Find out what data should be run by looking in opus_work/consrev/input
+#	#	the print $4 requires using opus_work and NOT $OPUS_WORK
+#	foreach trigger (`/bin/ls ${OPUS_WORK}/consrev/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $NF}' | /bin/sort`)
+#		echo "#######"
+#		echo "###############################################################################"
+#		echo "###############################################################################"
+#		echo "#######"
+#		echo "#######     RUNNING:  testing consrev for revolution trigger $trigger"
+#		echo "#######"
+#		echo "#######     You should see no errors"
+#		echo "#######"
+#	
+#	#	if ( ( "$OS" == "Linux" ) && ( ( "$trigger" == "0024_20021226220109_00_ire" ) || ( "$trigger" == "0024_20021226230117_00_ire" ) || ( "$trigger" == "0025_20021227070629_00_ire" ) ) ) then
+#	#		echo "Skipping $trigger for linux unit test"
+#	#		goto NEXTTRIGGER
+#	#	endif
+#	
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev $trigger ${OPUS_WORK}/${trigger}_consrev.log
+#		@ exit_status = $status
+#		echo "#######     exit status of wrapper was $exit_status"
+#		if ($exit_status != 0) then
+#			exit 1
+#		endif
+#		
+#		#  In order that the archive checking work, must update osf
+#		echo "#######     running:  osf_update -p consrev.path -f $trigger -s ccc"
+#		osf_update -p consrev.path -f $trigger -s ccc
+#		
+#	NEXTTRIGGER:
+#	end  # foreach trigger
+
+#	
+#	echo ""
+#	echo "#######     This crvmon call creates 0003, 0004, 0013, 0014, 0024, 0025 and 0036 inp.done files"
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create01.log
+#	
+#	echo ""
+#	echo "#######     This crvmon call creates 0003, 0004, 0013, 0014, 0024, 0025 and 0036 scwdp.started files"
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create02.log
+#	
+#	echo ""
+#	echo "#######     This crvmon call mv's 0003, 0004, 0013, 0014, 0024, 0025 and 0036 scwdp.started files to scwdp.done"
+#	echo "#######     and creates 0003, 0004, 0013, 0014, 0024, 0025 and 0036 iii_prep.trigger files"
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create03.log
+#	
+#	echo ""
+#	echo "#######     This crvmon call shouldn't do anything as there are only unprocessed iii_prep.triggers"
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create04.log
+#	
+#	echo ""
+#	echo "#######     Running opus_wrapper consrev {revno}_iii_prep creates {revno}_rev.done"
+#	foreach revno ( "0003" "0004" "0013" "0014" "0036" )
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper crvst  ${revno}_iii_prep ${OPUS_WORK}/${revno}_iii_prep_consrev.log 
+#		osf_update -p consrev.path -f ${revno}_iii_prep -s ccw           #       skip the nrvgen step
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper crvfin ${revno}_iii_prep ${OPUS_WORK}/${revno}_iii_prep_consrev.log 
+#		osf_update -p consrev.path -f ${revno}_iii_prep -s ccc
+#		/bin/touch ${OPUS_WORK}/consrev/input/${revno}_rev.done
+#	end
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev 0024_iii_prep ${OPUS_WORK}/0024_iii_prep_consrev.log
+#	osf_update -p consrev.path -f 0024_iii_prep -s ccc
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev 0025_iii_prep ${OPUS_WORK}/0025_iii_prep_consrev.log
+#	osf_update -p consrev.path -f 0025_iii_prep -s ccc
+#	
+#	foreach revno ( "0003" "0004" "0013" "0014" "0036" "0024" "0025" )
+#		if (! -e ${OPUS_WORK}/consrev/input/${revno}_rev.done) then
+#			echo "#######     ERROR:  ${revno}_rev.done not written"
+#			exit 1
+#		endif
+#	end	#	foreach
+#	
+#	echo ""
+#	echo "#######     This crvmon call creates 0003, 0004, 0013, 0014, 0024, 0025 and 0036 arc_prep.trigger files"
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create05.log
+#	
+#	#############################################################
+#	
+#	foreach revno ("0003" "0004" "0013" "0014" "0036")
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper crvst  ${revno}_arc_prep ${OPUS_WORK}/${revno}_arc_prep_consrev.log 
+#		osf_update -p consrev.path -f ${revno}_arc_prep -s ccw           #       skip the nrvgen step
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper crvfin ${revno}_arc_prep ${OPUS_WORK}/${revno}_arc_prep_consrev.log 
+#		osf_update -p consrev.path -f ${revno}_arc_prep -s ccc
+#	end
+#	
+#	foreach revno ( "0024" "0025" )
+#		if (-e ${OPUS_WORK}/consrev/input/${revno}_arc_prep.trigger) then
+#			${ISDC_OPUS}/pipeline_lib/opus_wrapper consrev ${revno}_arc_prep ${OPUS_WORK}/${revno}_arc_prep_consrev.log
+#			osf_update -p consrev.path -f ${revno}_arc_prep -s ccc
+#			if ($status > 0) exit 1
+#		else 
+#			echo "#######     ERROR:  ${revno}_arc_prep.trigger not written"
+#			exit 1
+#		endif
+#	end	#	foreach
+#	
+#	echo ""
+#	echo "#######     This crvmon should do nothing."
+#	echo "#######     It should see the arc.done, but CheckIngested should not do anything as it isn't."
+#	${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create06.log
+#	
+#############################################################
+#	
+#	echo ""
+#	echo "#######     Now moving the archive trigger to the completed area to test the cleaning"
+#	/bin/mkdir -p ${OPUS_MISC_REP}/log/ingest/trigger.COMPLETED
+#	foreach revno ( "0003" "0004" "0013" "0014" "0024" "0025" )	#	"0036" )	#	to test not being ingested
+#		if (! -e ${OPUS_MISC_REP}/trigger/cons_rev/scw_${revno}rev0000.trigger ) then
+#			echo "#######     ERROR:  ${OPUS_MISC_REP}/trigger/cons_rev/scw_${revno}rev0000.trigger not found"
+#			exit 1
+#		endif
+#		#	This makes it look like the revolution was ingested
+#		/bin/mv ${OPUS_MISC_REP}/trigger/cons_rev/scw_${revno}rev0000.trigger \
+#			${OPUS_MISC_REP}/log/ingest/trigger.COMPLETED/scw_${revno}rev0000.trigger_TODAYSDATE.COMPLETED
+#	end
+
+echo ""
+echo "#######     This crvmon should CheckIngested and run cons_ssa_start.sh on each ingested revolution"
+echo "#######     This creates the actual triggers, but NOT the osfs"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create07.log
+
+#		#	Now it should run cons_ssa_start.sh on each ingested revolution
+#		${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create08.log
+
+#############################################################
+
+echo ""
+echo "#######     Thinning out the results by removing some of the triggers as"
+echo "#######     cons_ssa_start creates then for the entire revolution."
+/bin/rm ${OPUS_WORK}/consssa/input/00240003*trigger
+/bin/rm ${OPUS_WORK}/consssa/input/00240005*trigger
+/bin/rm ${OPUS_WORK}/consssa/input/002500[0123456]*trigger
+
+echo ""
+echo "#######     Fake consssa completion by moving existing input triggers to done and creating completed OSFs"
+#	$OPUS_WORK/consssa/input/015900910010_omc.trigger_processing
+foreach trigger (`/bin/ls ${OPUS_WORK}/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $NF}'`)
+	/bin/mv ${OPUS_WORK}/consssa/input/${trigger}.trigger \
+		${OPUS_WORK}/consssa/input/${trigger}.trigger_done
+
+	set scwid = `echo ${trigger} | /bin/awk -F_ '{print $1}'`
+	set instr = `echo ${trigger} | /bin/awk -F_ '{print $2}'`
+
+	if ( $instr == "picsit" ) set instr = "ip"
+	if ( $instr == "isgri" )  set instr = "ii"
+	if ( $instr == "jmx1" )   set instr = "j1"
+	if ( $instr == "jmx2" )   set instr = "j2"
+	if ( $instr == "omc" )    set instr = "om"
+	if ( $instr == "spi" )    set instr = "sp"
+
+	osf_create -p consssa.path -f "ss${instr}_${scwid}" -s ccc -t ssa		#	Does the -t TYPE make any difference????
+
+	/bin/touch ${OPUS_MISC_REP}/trigger/cons_ssa/css_ss${instr}_${scwid}0000.trigger
+end
+
+echo ""
+echo "#######     This crvmon should find ssa.started files, check for completion, find only completed OSFs,"
+echo "#######     move ssa.started to ssa.done, and move all archive triggers to ARC_TRIG_INGESTING"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create09.log
+
+#############################################################
+
+echo ""
+echo "#######     Fake consssa ingest done by moving ingest triggers to {OPUS_MISC_REP}/log/ingest/trigger.COMPLETED"
+#	 "OPUS_MISC_REP/trigger/cons_ssa/css_ssom_0156007200100000.trigger"
+#foreach trigger (`/bin/ls ${OPUS_MISC_REP}/trigger/cons_ssa/css_ss*_*0000.trigger | /bin/awk -F/ '{print $NF}'` )
+foreach trigger (`/bin/ls ${OPUS_MISC_REP}/trigger/ingest/css_ss*_*0000.trigger | /bin/awk -F/ '{print $NF}'` )
+	/bin/mv ${OPUS_MISC_REP}/trigger/ingest/${trigger} \
+		${OPUS_MISC_REP}/log/ingest/trigger.COMPLETED/${trigger}_TODAYSDATE.COMPLETED
+end
+
+echo ""
+echo "#######     This crvmon should find ssa.done files, check if completed ssa revolutions are ingested and try to start sma"
+echo "#######     for 0024 and 0025 but won't be able to because no triggers have been created."
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create10.log
+
+#############################################################
+
+#	THERE IS GOING TO BE A PROBLEM DETERMINING WHICH ARE ASSOCIATED WITH WHICH REVOLUTION
+#	CURRENTLY THERE IS NOT CONSSMA, SO CREATE SOME FAKE TRIGGERS
+/bin/cp ${ISDC_OPUS}/consrev/unit_test/mosaictest.trigger ${OPUS_WORK}/consssa/input/002401234567_isgri.trigger
+/bin/cp ${ISDC_OPUS}/consrev/unit_test/mosaictest.trigger ${OPUS_WORK}/consssa/input/002401234567_picsit.trigger
+/bin/cp ${ISDC_OPUS}/consrev/unit_test/mosaictest.trigger ${OPUS_WORK}/consssa/input/002401234567_jmx1.trigger
+/bin/cp ${ISDC_OPUS}/consrev/unit_test/mosaictest.trigger ${OPUS_WORK}/consssa/input/002401234567_jmx2.trigger
+/bin/cp ${ISDC_OPUS}/consrev/unit_test/mosaictest.trigger ${OPUS_WORK}/consssa/input/002401234567_spi.trigger
+
+echo ""
+echo "#######     This crvmon should try to start sma again, but will find the triggers that I've touched and actually"
+echo "#######     start for 0024 and touch 0024_sma.started"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create11.log
+
+echo ""
+echo "This conssma completion by moving existing input triggers to done and creating completed OSFs"
+foreach trigger (`/bin/ls ${OPUS_WORK}/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $NF}'`)
+#	echo "Working on SMA trigger : $trigger"		#	DEBUG
+	/bin/mv ${OPUS_WORK}/consssa/input/${trigger}.trigger \
+		${OPUS_WORK}/consssa/input/${trigger}.trigger_done
+
+	set scwid = `echo ${trigger} | /bin/awk -F_ '{print $1}'`
+	set instr = `echo ${trigger} | /bin/awk -F_ '{print $2}'`
+
+	#	Must correctly name this trigger to test crvmon
+
+	if ( $instr == "picsit" ) set instr = "ip"
+	if ( $instr == "isgri" )  set instr = "ii"
+	if ( $instr == "jmx1" )   set instr = "j1"
+	if ( $instr == "jmx2" )   set instr = "j2"
+	if ( $instr == "omc" )    set instr = "om"
+	if ( $instr == "spi" )    set instr = "sp"
+
+	osf_create -p consssa.path -f "sm${instr}_${scwid}" -s ccc -t sma		#	Does the -t TYPE make any difference????
+
+	/bin/touch ${OPUS_MISC_REP}/trigger/cons_ssa/css_sm${instr}_${scwid}0000.trigger
+	/bin/ls ${OPUS_MISC_REP}/trigger/cons_ssa/css_sm${instr}_${scwid}0000.trigger	#	DEBUG
+end
+
+echo ""
+echo "#######     This crvmon should find 0024_sma.started, check for completion, move sma.started to sma.done,"
+echo "#######     and move all archive triggers to ARC_TRIG_INGESTING"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create12.log
+
+#	Here it should find sma.done files and initiate ingest
+#echo "\n\n\nI don't know what this one will do.  Just testing.\n\n\n"
+#${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create13.log
+
+#############################################################
+
+echo ""
+echo "#######     Fake conssma ingest done by moving ingest triggers to {OPUS_MISC_REP}/log/ingest/trigger.COMPLETED"
+foreach trigger (`/bin/ls ${OPUS_MISC_REP}/trigger/ingest/css_sm*_*0000.trigger | /bin/awk -F/ '{print $NF}'` )
+	/bin/mv ${OPUS_MISC_REP}/trigger/ingest/${trigger} \
+		${OPUS_MISC_REP}/log/ingest/trigger.COMPLETED/${trigger}_TODAYSDATE.COMPLETED
+end
+
+echo ""
+echo "#######     This crvmon should see that conssma is ingested and then mark all the 0024 OSFs for cleaning"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create14.log
+
+
+#echo ""
+#echo "#######     Fake the existance of science windows by touching some"
+#foreach revno ( "0003" "0004" "0013" "0014" ) 
+#	/bin/mv ${OPUS_WORK}/consrev/input/${revno}_pp.done ${OPUS_WORK}/consrev/input/${revno}_pp.done.TESTREMOVED
+#end	#	foreach
+
+
+
+echo ""
+echo "#######     Fake 0024 cleanup by moving all consssa/conssma 0024 triggers to ${OPUS_WORK}/consssa/removed/"
+/bin/mkdir -p ${OPUS_WORK}/consssa/removed/
+/bin/mv ${OPUS_WORK}/consssa/input/0024*trigger* ${OPUS_WORK}/consssa/removed/
+
+#############################################################
+
+#	0024_20021226235627_00_omt o 
+#	0024_iii_prep o 
+#	0024_arc_prep o
+foreach line (`osf_test -p consrev -pr CL dataset | /bin/grep "^0024" | /bin/awk '{print $1"-"$2}'`) 
+	set osf = `echo $line | /bin/awk -F- '{print $1}'`
+	set cl_stat = `echo $line | /bin/awk -F- '{print $2}'`
+	if ($cl_stat != "o") then
+		echo "#######     ERROR:   OSF $osf CL column is $cl_stat and should be 'o'"
+#		exit 1
+	endif
+end
+echo "#######     All OSFs should be marked for cleaning"
+
+
+#
+#	0024 cleans itself up in crvmon.pl
+#
+foreach revno ( "0003" "0004" "0013" "0014" ) #	"0024" )	#	"0025" )		#	"0036" )
+	/bin/mv ${OPUS_WORK}/consrev/input/${revno}_pp.done ${OPUS_WORK}/consrev/input/${revno}_pp.done.TESTREMOVED
+end	#	foreach
+
+echo ""
+#echo "#######     This crvmon should still find nothing as the pp files should've been removed in the cleanup step"
+echo "#######     This crvmon should only find the pp files of 0025 and 0036"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create15.log
+
+echo ""
+#echo "#######     This crvmon should still find nothing as the pp files should've been removed in the cleanup step"
+echo "#######     This crvmon should only find the pp files of 0025 and 0036"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create16.log
+
+echo ""
+#echo "#######     This crvmon should still find nothing as the pp files should've been removed in the cleanup step"
+echo "#######     This crvmon should only find the pp files of 0025 and 0036"
+${ISDC_OPUS}/pipeline_lib/opus_wrapper crvmon - ${OPUS_WORK}/crvmon_create17.log
+
+#############################################################
+
+
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     Processing complete.  Moving results to out..."
+echo "#######"
+
+/bin/mkdir -p out/idx/rev
+/bin/mkdir -p out/opus_misc_rep/log/ingest/trigger.COMPLETED
+/bin/mkdir -p out/opus_work/consrev
+/bin/mkdir -p out/opus_work/consssa
+
+#	/bin/mv opus_misc_rep/log/ingest/trigger.COMPLETED out/opus_misc_rep/log/ingest/
+echo "#######     Touching triggers"
+foreach trigger ( `/bin/ls opus_misc_rep/log/ingest/trigger.COMPLETED/*trigger*` )
+	/bin/touch out/$trigger		#	because some trigger files have directories in them that would differ on WCT
+end
+/bin/mv opus_work/consrev/input   out/opus_work/consrev/
+/bin/mv opus_work/consssa/input   out/opus_work/consssa/
+/bin/mv opus_work/consssa/removed out/opus_work/consssa/
+
+#	#  To avoid unique file errors in dircmp, copy only link, which in fact
+#	#   compies the source file itself.
+#	chdir test_data
+#	foreach index (`/usr/bin/find idx/rev -name \*IDX.fits -print`) 
+#		echo "#######     Copying test_data/$index ../out/${index}"
+#		/bin/cp $index ../out/${index}
+#	end
+#	chdir ..
+#	
+#	echo "#######     Write-enabling test_data and moving test_data/scw to out"
+#	/bin/chmod    +w test_data
+#	/bin/chmod -R +w test_data/scw
+#	/bin/mv test_data/scw out/
+#	
+#	chdir out/scw
+#	foreach revno ( `/bin/ls -d 0*` )
+#		echo "#######     Moving out logs for $revno"
+#		/bin/mkdir -p ../../test_data/scw/$revno/rev.000
+#		/bin/mv $revno/rev.000/logs ../../test_data/scw/$revno/rev.000/
+#		#	only 0024 and 0025 have scws
+#		if ( $revno =~ 002? ) /bin/mv $revno/0*/0*txt     ../../test_data/scw/$revno/
+#	end
+#	chdir ../..
+#	
+#	if (-e out/idx/rev/PICS-FALT-STA-IDX.fits) then
+#		/bin/rm out/idx/rev/PICS-FALT-STA-IDX.fits
+#	else
+#		echo "#######     ERROR:  out/idx/rev/PICS-FALT-STA-IDX.fits not found\!"
+#		exit 1
+#	endif
+
+/bin/chmod -R -w out
+
+echo "#######     "
+echo "#######     NOTE:  isdc_dircmp should find 0 differences between outref and out"
+echo "#######     "
+echo "#######     DONE"
+
+exit
+
+#	last line

@@ -1,0 +1,188 @@
+
+NOTE:  Rev pipeline executables don't all compile in the WCT environment due to root not working on the intel compiler.
+
+I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
+
+
+20070608 - Jake
+	SCREW 1988 - merged crvidp and crvirn resource files to ensure that all idps are processed before any irns
+
+	THIS APPARENTLY MAY REQUIRE MODIFICATION TO pipeline_lib/opus_wrapper
+
+
+
+
+
+
+
+20070516 - Jake
+	separated crvmon.pl subroutines to CRVLIB.pm for possible use elsewhere (SCREW 1983)
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20061107 - Jake
+	created new dataset from Preproc 4.1
+	this has caused different jemx frss files
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+
+20060104 - Jake
+	made new test_data with Preproc-3.8
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20051020 - Jake
+	Had to add source $LHEASOFT/lhea-init.csh to unit test
+		because of addition of fdump to cons_ssa_start.sh
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+----------------------------------------------------------
+20050906 - Jake - delivering 3.9 on SPR 4291
+
+20050829 - Jake
+	removed from SCREW 1704 as there were only changes to unit test
+
+200508-- - Jake
+	SPR 4291 - many mods to help consrev auto trigger and auto clean stuff
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050414 - Jake
+	linux unit test crashes on irem_obt_calc 0024_20021226220109_00_ire, 0024_20021226230117_00_ire, 0025_20021227070629_00_ire
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+----------------------------------------------------------
+20050330 - Jake - delivering 3.8 on SCREW 1637 1647 1654
+
+20050228 - Jake
+	setting CONSREV_UNIT_TEST so that can default auto triggering
+	to false but test anyway
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in crvmon.pl
+
+20050218 - Jake
+	SCREW 1647 - Auto triggering
+	added ENV.USING_AUTO_TRIGGERING = 1 to crvmon.resource
+		and stretched in crvmon.pl as a way of disabling
+		the autotriggering ability of crvmon.pl
+	added "ingest","ssa","ssa_ingest","sma","sma_ingest" to CheckClean list
+
+20050203 - Jake
+	added ssa_input and sma_input to crvmon.resource and consrev.path
+
+20050201 - Jake
+	modified unit_test to correctly make OPUS_MISC_REP subdirs
+
+----------------------------------------------------------
+20050111 - Jake - delivering 3.7 on SCREW 1540 and 1550
+
+20041011 - Jake
+	added ENV.TIMEOUT = 7200 to crviii.resource
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+	SCREW 1540 - code cleanup
+
+----------------------------------------------------------
+20040802 - Jake - delivering 3.6 on SPR 3796
+
+20040730 - Jake
+	SPR  3796 - crvarc.resource TIMEOUT=14400
+
+----------------------------------------------------------
+20040625 - Jake - delivering 3.5 on SPR 3734
+
+20040625 - Jake
+	SPR 3734 - trigger numbers must be sequential and without 
+		gaps arc was #10, sct was #25, commenting #10 out caused 
+		all after #10 to be ignored.
+
+----------------------------------------------------------
+20040624 - Jake - delivering 3.4 on SCREW 1504
+
+20040624 - Jake
+	SCREW 1504 - copied crvgen.resource to crviii and crvarc
+		to parallelize these processes
+		Also add these new processes to consrev.pipeline
+
+----------------------------------------------------------
+20040622 - Jake - delivering 3.3 on SPR 3715
+
+20040622 - Jake
+	SPR 3715 - proper iii_prep triggering in crvmon.pl
+
+----------------------------------------------------------
+20040616 - Jake - delivering 3.2 on SCREW 1347
+
+20040608 - Jake
+	modified crvmon.pl to pass control to nswdp.pl for
+	cons pipeline after rev files done instead of triggering
+	the new iii_prep step (SCREW 1347)
+
+----------------------------------------------------------
+20040604 - Jake - delivering 3.1 on SCREW 1347, SPR 3615
+
+20040604 - Jake
+	modified crvgen.resource for iii_prep step
+	temporarily disabled unit_test
+
+20040525 - Jake
+	changed scw_prep to iii_prep because of uniqueness
+		in crvmon.pl, nrvmon.pl, Archiving.pm, Datasets.pm
+	had to change unit test to deal with new step
+
+20040524 -Jake
+	creating scw_prep step for SPI calibration
+
+20040521 - Jake
+	added variables and removed a 'w' from the osf statuses
+	to correct for the change in number of columns
+
+20040422 - Jake
+	modified unit test to save all scw data from 0024 in out
+		for comparison of RawRemoval function (SCREW 1415)
+
+20040420 - Jake
+	modified README.test to rename isgri_cdte_cor_$TODAYSDATE to 
+		isgri_cdte_cor for testing purposes
+
+20040316 - Jake
+	using new generic component version file
+
+20040309 - Jake
+	added consrev script to simply give version number
+
+20040212 - Jake
+	changed (cd unit_test; README.test)
+   	to   (cd unit_test; ./README.test)
+

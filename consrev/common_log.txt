@@ -1,0 +1,49 @@
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Task am_cp running in SINGLE mode
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Beginning parameters
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Parameter OutDir = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/opus_misc_rep//alert/cons
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Parameter OutDir2 = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data//scw//0040/rev.000/logs/
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Parameter Subsystem = REV
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Parameter DataStream = consolidated
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Parameter ScWIndex = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data/idx/scw/GNRL-SCWG-GRP-IDX.fits[GROUPING]
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Ending parameters
+Log_1   2006-05-15T10:55:16 am_cp 3.4.1: Running in normal mode, default parameter prompting
+Warn_2  2006-05-15T10:55:18 am_cp 3.4.1: About to flush all DAL buffers, however an error has occurred.
+Warn_2  2006-05-15T10:55:18 am_cp 3.4.1: There may be data loss, and the program may crash!
+Error_2 2006-05-15T10:55:18 am_cp 3.4.1: DAL3GEN_INVALID_OBT_STRING : The format of the OBT attribute the user wants to read is not correct
+Error_2 2006-05-15T10:55:18 am_cp 3.4.1: Task am_cp terminating with status -25051
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Task am_cp running in SINGLE mode
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Beginning parameters
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Parameter OutDir = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/opus_misc_rep//alert/cons
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Parameter OutDir2 = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data//scw//0040/rev.000/logs/
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Parameter Subsystem = REV
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Parameter DataStream = consolidated
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Parameter ScWIndex = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data/idx/scw/GNRL-SCWG-GRP-IDX.fits[GROUPING]
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Ending parameters
+Log_1   2006-05-15T10:58:26 am_cp 3.4.1: Running in normal mode, default parameter prompting
+Warn_2  2006-05-15T10:58:27 am_cp 3.4.1: About to flush all DAL buffers, however an error has occurred.
+Warn_2  2006-05-15T10:58:27 am_cp 3.4.1: There may be data loss, and the program may crash!
+Error_2 2006-05-15T10:58:27 am_cp 3.4.1: DAL3GEN_INVALID_OBT_STRING : The format of the OBT attribute the user wants to read is not correct
+Error_2 2006-05-15T10:58:27 am_cp 3.4.1: Task am_cp terminating with status -25051
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Task am_cp running in SINGLE mode
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Beginning parameters
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Parameter OutDir = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/opus_misc_rep//alert/cons
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Parameter OutDir2 = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data//scw//0040/rev.000/logs/
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Parameter Subsystem = REV
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Parameter DataStream = consolidated
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Parameter ScWIndex = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data/idx/scw/GNRL-SCWG-GRP-IDX.fits[GROUPING]
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Ending parameters
+Log_1   2006-05-15T11:14:34 am_cp 3.4.1: Running in normal mode, default parameter prompting
+Warn_2  2006-05-15T11:14:36 am_cp 3.4.1: About to flush all DAL buffers, however an error has occurred.
+Warn_2  2006-05-15T11:14:36 am_cp 3.4.1: There may be data loss, and the program may crash!
+Error_2 2006-05-15T11:14:36 am_cp 3.4.1: DAL3GEN_INVALID_OBT_STRING : The format of the OBT attribute the user wants to read is not correct
+Error_2 2006-05-15T11:14:36 am_cp 3.4.1: Task am_cp terminating with status -25051
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Task am_cp running in SINGLE mode
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Beginning parameters
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Parameter OutDir = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/opus_misc_rep//alert/cons
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Parameter OutDir2 = /isdc/integration/isdc_int/sw/dev/prod/opus/consrev/unit_test/test_data//scw//0040/rev.000/logs/
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Parameter Subsystem = REV
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Parameter DataStream = consolidated
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Parameter ScWIndex = 
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Ending parameters
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Running in normal mode, default parameter prompting
+Log_1   2006-05-15T11:16:21 am_cp 3.4.1: Task am_cp terminating with status 0

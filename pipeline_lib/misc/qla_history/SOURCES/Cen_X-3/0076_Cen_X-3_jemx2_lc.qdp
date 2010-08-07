@@ -1,0 +1,57 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0076 0003 001 0: not detected
+! 0076 0004 001 0: not detected
+! 0076 0004 002 0: not detected
+! 0076 0004 003 0: not detected
+! 0076 0004 004 0: not detected
+! 0076 0004 005 0: not detected
+! 0076 0004 007 0: not detected
+! 0076 0004 008 0: not detected
+! 0076 0004 009 0: not detected
+! 0076 0004 010 0: not detected
+! 0076 0004 011 0: not detected
+! 0076 0004 012 0: not detected
+! 0076 0004 013 0: not detected
+! 0076 0004 014 0: not detected
+! 0076 0004 015 0: not detected
+! 0076 0005 001 0: not detected
+! 0076 0006 001 0: not detected
+! 0076 0021 001 0: not detected
+! 0076 0022 001 0: not detected
+! 0076 0023 001 0: not detected
+! 0076 0024 001 0: not detected
+! 0076 0025 001 0: not detected
+! 0076 0026 001 0: not detected
+! 0076 0027 001 0: not detected
+! 0076 0029 001 0: not detected
+! 0076 0030 001 0: not detected
+ 1245.322169578065 0.0341203894250839     0.9741    0.1369     1.1330    0.2535    5.704   2.67  ! 0076 0031 001 0
+ 1245.385254104300 0.0158622775400090     0.5154    0.0903     0.5563    0.0939    6.485   0.67  ! 0076 0033 001 0
+ 1245.418292317595 0.0158564905549383     0.5292    0.1630     0.4642    0.0900    4.273   1.41  ! 0076 0034 001 0
+! 0076 0035 001 0: not detected
+! 0076 0036 001 0: not detected
+! 0076 0041 001 0: not detected
+! 0076 0042 001 0: not detected
+! 0076 0043 001 0: not detected
+! 0076 0044 001 0: not detected
+! 0076 0045 001 0: not detected
+! 0076 0046 001 0: not detected
+! 0076 0047 001 0: not detected
+! 0076 0048 001 0: not detected
+! 0076 0049 001 0: not detected
+! 0076 0050 001 0: not detected
+! 0076 0052 001 0: not detected
+! 0076 0053 001 0: not detected
+! 0076 0054 001 0: not detected
+! 0076 0055 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx2 ScW=0076*
+cpd /xs

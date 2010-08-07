@@ -1,0 +1,85 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! 0459 0004 001 0: not detected
+! 0459 0005 001 0: not detected
+! 0459 0006 001 0: not detected
+! 0459 0007 001 0: not detected
+! 0459 0008 001 0: not detected
+! 0459 0009 001 0: not detected
+! 0459 0010 001 0: not detected
+! 0459 0011 001 0: not detected
+! 0459 0012 001 0: not detected
+! 0459 0013 001 0: not detected
+! 0459 0014 001 0: not detected
+! 0459 0015 001 0: not detected
+! 0459 0016 001 0: not detected
+! 0459 0017 001 0: not detected
+! 0459 0018 001 0: not detected
+! 0459 0019 001 0: not detected
+! 0459 0020 001 0: not detected
+! 0459 0021 001 0: not detected
+! 0459 0022 001 0: not detected
+! 0459 0023 001 0: not detected
+! 0459 0024 001 0: not detected
+! 0459 0025 001 0: not detected
+! 0459 0026 001 0: not detected
+! 0459 0027 001 0: not detected
+! 0459 0028 001 0: not detected
+! 0459 0029 001 0: not detected
+! 0459 0030 001 0: not detected
+! 0459 0031 001 0: not detected
+! 0459 0032 001 0: not detected
+! 0459 0033 001 0: not detected
+! 0459 0034 001 0: not detected
+! 0459 0035 001 0: not detected
+! 0459 0036 001 0: not detected
+! 0459 0037 001 0: not detected
+! 0459 0038 001 0: not detected
+! 0459 0039 001 0: not detected
+ 2390.505132847620 0.0125579010198180     9.6961    0.8412     1.5985    0.0000   10.781  12.02  ! 0459 0040 001 0
+ 2390.533217377965 0.0125520905751273    12.0142    0.4692     0.1045    0.0000   25.994   5.11  ! 0459 0041 001 0
+ 2390.561301884880 0.0125578776098791    17.6612    0.4884     1.5255    0.0000   35.556   2.40  ! 0459 0042 001 0
+ 2390.589397965880 0.0125520905698977    12.3952    0.6494     0.7347    0.0000   18.273   9.13  ! 0459 0043 001 0
+ 2390.618153769480 0.0132060261100833    14.4968    2.2338     1.6600    0.0000    6.089  16.15  ! 0459 0044 001 0
+! 0459 0045 001 0: not detected
+! 0459 0046 001 0: not detected
+! 0459 0047 001 0: not detected
+! 0459 0048 001 0: not detected
+! 0459 0048 002 0: not detected
+! 0459 0049 001 0: not detected
+! 0459 0050 001 0: not detected
+! 0459 0051 001 0: not detected
+! 0459 0052 001 0: not detected
+! 0459 0053 001 0: not detected
+! 0459 0054 001 0: not detected
+! 0459 0055 001 0: not detected
+! 0459 0056 001 0: not detected
+! 0459 0057 001 0: not detected
+! 0459 0058 001 0: not detected
+! 0459 0059 001 0: not detected
+! 0459 0060 001 0: not detected
+! 0459 0061 001 0: not detected
+! 0459 0062 001 0: not detected
+! 0459 0063 001 0: not detected
+! 0459 0064 001 0: not detected
+! 0459 0065 001 0: not detected
+! 0459 0066 001 0: not detected
+! 0459 0067 001 0: not detected
+! 0459 0068 001 0: not detected
+! 0459 0069 001 0: not detected
+! 0459 0070 001 0: not detected
+! 0459 0071 001 0: not detected
+! 0459 0072 001 0: not detected
+! 0459 0073 001 0: not detected
+! 0459 0074 001 0: not detected
+! 0459 0075 001 0: not detected
+! 0459 0075 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0459*
+cpd /xs

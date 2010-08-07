@@ -1,0 +1,95 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0154 0005 001 0: not detected
+! 0154 0006 001 0: not detected
+! 0154 0007 001 0: not detected
+! 0154 0008 001 0: not detected
+! 0154 0009 001 0: not detected
+ 1477.406287683870 0.0127314883200143     1.6948    0.0000     0.0000    0.0000    1.471  12.55  ! 0154 0010 001 0
+ 1477.434100198885 0.0127314883850431     1.5841    0.0000     0.0000    0.0000    3.018   6.54  ! 0154 0011 001 0
+ 1477.461918501085 0.0127372754850512     0.7542    0.0000     0.0000    0.0000    2.081   0.75  ! 0154 0012 001 0
+ 1477.490390738900 0.0133969980900019     0.8933    0.0000     0.2014    0.0000    2.073   5.49  ! 0154 0013 001 0
+ 1477.535147707900 0.0127372755000579     0.7620    0.0000     0.4549    0.0000    1.063  11.46  ! 0154 0014 001 0
+! 0154 0015 001 0: not detected
+! 0154 0016 001 0: not detected
+! 0154 0018 001 0: not detected
+! 0154 0019 001 0: not detected
+! 0154 0020 001 0: not detected
+! 0154 0020 002 0: not detected
+! 0154 0020 003 0: not detected
+! 0154 0020 004 0: not detected
+! 0154 0029 001 0: not detected
+! 0154 0030 001 0: not detected
+! 0154 0031 001 0: not detected
+! 0154 0032 001 0: not detected
+! 0154 0033 001 0: not detected
+! 0154 0034 001 0: not detected
+! 0154 0035 001 0: not detected
+! 0154 0036 001 0: not detected
+! 0154 0037 001 0: not detected
+! 0154 0038 001 0: not detected
+! 0154 0039 001 0: not detected
+! 0154 0040 001 0: not detected
+! 0154 0041 001 0: not detected
+! 0154 0042 001 0: not detected
+! 0154 0043 001 0: not detected
+! 0154 0044 001 0: not detected
+! 0154 0045 001 0: not detected
+! 0154 0046 001 0: not detected
+! 0154 0047 001 0: not detected
+! 0154 0048 001 0: not detected
+! 0154 0049 001 0: not detected
+! 0154 0050 001 0: not detected
+! 0154 0051 001 0: not detected
+! 0154 0052 001 0: not detected
+! 0154 0053 001 0: not detected
+! 0154 0054 001 0: not detected
+! 0154 0055 001 0: not detected
+! 0154 0056 001 0: not detected
+! 0154 0057 001 0: not detected
+! 0154 0058 001 0: not detected
+! 0154 0059 001 0: not detected
+! 0154 0060 001 0: not detected
+! 0154 0061 001 0: not detected
+! 0154 0062 001 0: not detected
+! 0154 0063 001 0: not detected
+! 0154 0064 001 0: not detected
+! 0154 0065 001 0: not detected
+! 0154 0066 001 0: not detected
+! 0154 0067 001 0: not detected
+! 0154 0068 001 0: not detected
+! 0154 0069 001 0: not detected
+! 0154 0070 001 0: not detected
+! 0154 0071 001 0: not detected
+! 0154 0072 001 0: not detected
+! 0154 0073 001 0: not detected
+! 0154 0074 001 0: not detected
+! 0154 0075 001 0: not detected
+! 0154 0076 001 0: not detected
+! 0154 0077 001 0: not detected
+! 0154 0078 001 0: not detected
+! 0154 0079 001 0: not detected
+! 0154 0080 001 0: not detected
+! 0154 0081 001 0: not detected
+! 0154 0082 001 0: not detected
+! 0154 0083 001 0: not detected
+! 0154 0084 001 0: not detected
+! 0154 0085 001 0: not detected
+! 0154 0086 001 0: not detected
+! 0154 0087 001 0: not detected
+! 0154 0088 001 0: not detected
+! 0154 0089 001 0: not detected
+! 0154 0090 001 0: not detected
+! 0154 0091 001 0: not detected
+! 0154 0092 001 0: not detected
+! 0154 0093 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0154*
+cpd /xs

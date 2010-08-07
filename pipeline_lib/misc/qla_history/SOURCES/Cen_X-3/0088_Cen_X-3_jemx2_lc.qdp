@@ -1,0 +1,92 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0088 0002 001 0: not detected
+! 0088 0003 001 0: not detected
+! 0088 0004 001 0: not detected
+! 0088 0005 001 0: not detected
+! 0088 0006 001 0: not detected
+! 0088 0007 001 0: not detected
+! 0088 0008 001 0: not detected
+! 0088 0009 001 0: not detected
+! 0088 0010 001 0: not detected
+! 0088 0011 001 0: not detected
+! 0088 0012 001 0: not detected
+! 0088 0013 001 0: not detected
+! 0088 0014 001 0: not detected
+! 0088 0015 001 0: not detected
+! 0088 0016 001 0: not detected
+! 0088 0017 001 0: not detected
+! 0088 0018 001 0: not detected
+! 0088 0019 001 0: not detected
+! 0088 0020 001 0: not detected
+! 0088 0021 001 0: not detected
+! 0088 0022 001 0: not detected
+! 0088 0023 001 0: not detected
+ 1280.292575524675 0.0108969963249592     1.0889    0.1742     0.8167    0.1998    4.374   2.72  ! 0088 0024 001 0
+! 0088 0025 001 0: not detected
+! 0088 0026 001 0: not detected
+! 0088 0027 001 0: not detected
+! 0088 0028 001 0: not detected
+! 0088 0029 001 0: not detected
+ 1280.430914715870 0.0108912092799756     0.7137    0.1260     0.9605    0.1786    4.345   2.70  ! 0088 0030 001 0
+! 0088 0031 001 0: not detected
+! 0088 0032 001 0: not detected
+! 0088 0033 001 0: not detected
+! 0088 0034 001 0: not detected
+ 1280.546261997155 0.0108912092849778     0.6665    0.1490     0.8026    0.2216    6.565   2.55  ! 0088 0035 001 0
+! 0088 0036 001 0: not detected
+! 0088 0037 001 0: not detected
+! 0088 0038 001 0: not detected
+! 0088 0039 001 0: not detected
+ 1280.661603491505 0.0108969963249592     0.7240    0.1428     0.5674    0.1184    4.685   2.71  ! 0088 0040 001 0
+! 0088 0041 001 0: not detected
+! 0088 0042 001 0: not detected
+! 0088 0043 001 0: not detected
+! 0088 0044 001 0: not detected
+! 0088 0045 001 0: not detected
+! 0088 0046 001 0: not detected
+! 0088 0047 001 0: not detected
+! 0088 0048 001 0: not detected
+! 0088 0049 001 0: not detected
+! 0088 0050 001 0: not detected
+! 0088 0051 001 0: not detected
+! 0088 0052 001 0: not detected
+! 0088 0053 001 0: not detected
+! 0088 0054 001 0: not detected
+! 0088 0055 001 0: not detected
+! 0088 0056 001 0: not detected
+! 0088 0057 001 0: not detected
+! 0088 0058 001 0: not detected
+! 0088 0059 001 0: not detected
+! 0088 0060 001 0: not detected
+! 0088 0062 001 0: not detected
+! 0088 0063 001 0: not detected
+! 0088 0064 001 0: not detected
+! 0088 0065 001 0: not detected
+! 0088 0067 001 0: not detected
+! 0088 0068 001 0: not detected
+! 0088 0069 001 0: not detected
+! 0088 0070 001 0: not detected
+! 0088 0071 001 0: not detected
+! 0088 0072 001 0: not detected
+! 0088 0073 001 0: not detected
+! 0088 0074 001 0: not detected
+! 0088 0075 001 0: not detected
+! 0088 0076 001 0: not detected
+! 0088 0077 001 0: not detected
+! 0088 0078 001 0: not detected
+! 0088 0079 001 0: not detected
+! 0088 0080 001 0: not detected
+! 0088 0081 001 0: not detected
+! 0088 0082 001 0: not detected
+! 0088 0083 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx2 ScW=0088*
+cpd /xs

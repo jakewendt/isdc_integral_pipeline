@@ -1,0 +1,69 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0275 0002 001 0: not detected
+! 0275 0003 001 0: not detected
+! 0275 0004 001 0: not detected
+! 0275 0005 001 0: not detected
+ 1839.255642968875 0.0127372755050601     9.9713    0.7944     1.3951    0.0000   11.689  11.12  ! 0275 0006 001 0
+ 1839.299167298220 0.0284375155299585    10.4230    0.3519     0.4935    0.0000   27.805   8.04  ! 0275 0007 001 0
+ 1839.342691627490 0.0127372754300268    10.1805    0.4203     0.4217    0.0000   23.717   4.73  ! 0275 0008 001 0
+ 1839.370509929605 0.0127430624550016     9.8871    0.5123     0.4568    0.0000   19.481   7.24  ! 0275 0009 001 0
+ 1839.398328231700 0.0127372754100179    10.0288    0.9033     0.8370    0.0000    9.545  12.42  ! 0275 0010 001 0
+! 0275 0011 001 0: not detected
+! 0275 0012 001 0: not detected
+! 0275 0013 001 0: not detected
+! 0275 0014 001 0: not detected
+! 0275 0014 002 0: not detected
+! 0275 0015 001 0: not detected
+! 0275 0018 001 0: not detected
+! 0275 0019 001 0: not detected
+! 0275 0020 001 0: not detected
+! 0275 0021 001 0: not detected
+! 0275 0022 001 0: not detected
+! 0275 0023 001 0: not detected
+! 0275 0024 001 0: not detected
+! 0275 0025 001 0: not detected
+! 0275 0026 001 0: not detected
+! 0275 0027 001 0: not detected
+! 0275 0028 001 0: not detected
+! 0275 0029 001 0: not detected
+! 0275 0030 001 0: not detected
+! 0275 0030 002 0: not detected
+! 0275 0031 001 0: not detected
+! 0275 0032 001 0: not detected
+! 0275 0033 001 0: not detected
+! 0275 0034 001 0: not detected
+! 0275 0035 001 0: not detected
+! 0275 0036 001 0: not detected
+! 0275 0037 001 0: not detected
+! 0275 0038 001 0: not detected
+! 0275 0039 001 0: not detected
+! 0275 0040 001 0: not detected
+! 0275 0041 001 0: not detected
+! 0275 0042 001 0: not detected
+! 0275 0043 001 0: not detected
+! 0275 0044 001 0: not detected
+! 0275 0045 001 0: not detected
+! 0275 0046 001 0: not detected
+! 0275 0047 001 0: not detected
+! 0275 0048 001 0: not detected
+! 0275 0049 001 0: not detected
+! 0275 0050 001 0: not detected
+! 0275 0051 001 0: not detected
+! 0275 0052 001 0: not detected
+! 0275 0053 001 0: not detected
+! 0275 0054 001 0: not detected
+! 0275 0055 001 0: not detected
+! 0275 0056 001 0: not detected
+! 0275 0057 001 0: not detected
+! 0275 0058 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0275*
+cpd /xs

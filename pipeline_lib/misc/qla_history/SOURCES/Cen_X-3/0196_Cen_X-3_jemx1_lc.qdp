@@ -1,0 +1,71 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0196 0001 001 0: not detected
+! 0196 0002 001 0: not detected
+! 0196 0003 001 0: not detected
+! 0196 0004 001 0: not detected
+! 0196 0005 001 0: not detected
+! 0196 0006 001 0: not detected
+! 0196 0007 001 0: not detected
+! 0196 0008 001 0: not detected
+! 0196 0009 001 0: not detected
+! 0196 0010 001 0: not detected
+! 0196 0011 001 0: not detected
+! 0196 0012 001 0: not detected
+ 1603.372185139390 0.0200636692800344     5.0900    1.0294     6.8616    1.4957   13.136   4.31  ! 0196 0013 001 0
+ 1603.413655071340 0.0200636692899252     4.7183    0.3658     5.8352    0.4906   28.350   3.03  ! 0196 0014 001 0
+ 1603.455234957095 0.0200694563450270     6.6680    0.3010     6.1768    0.3228   39.293   1.51  ! 0196 0015 001 0
+ 1603.496826417015 0.0200636693750766     4.0825    0.3481     4.0418    0.3897   19.881   3.41  ! 0196 0016 001 0
+! 0196 0017 001 0: not detected
+! 0196 0018 001 0: not detected
+! 0196 0019 001 0: not detected
+! 0196 0020 001 0: not detected
+! 0196 0021 001 0: not detected
+! 0196 0022 001 0: not detected
+ 1603.787960849850 0.0200752433299840    11.2817    1.1125     8.3371    0.9646   18.238   3.56  ! 0196 0023 001 0
+ 1603.829558096605 0.0200636692450189    11.9924    0.5523     8.7243    0.4687   48.426   1.83  ! 0196 0024 001 0
+! 0196 0025 001 0: not detected
+! 0196 0026 001 0: not detected
+! 0196 0027 001 0: not detected
+! 0196 0028 001 0: not detected
+! 0196 0029 001 0: not detected
+! 0196 0030 001 0: not detected
+! 0196 0031 001 0: not detected
+ 1604.163742322280 0.0215162163800642     4.5423    0.3802     3.6463    0.3661   24.286   3.41  ! 0196 0032 001 0
+ 1604.223736570590 0.0200868173900517     1.2186    0.1119     1.5799    0.1172   18.468   1.52  ! 0196 0033 001 0
+ 1604.265339604425 0.0200694563350226     2.2255    0.2287     2.3386    0.2423   10.121   3.03  ! 0196 0034 001 0
+ 1604.306815323525 0.0200636693649585     2.2607    0.5534     2.4128    0.6361    4.608   4.31  ! 0196 0035 001 0
+! 0196 0036 001 0: not detected
+! 0196 0037 001 0: not detected
+! 0196 0038 001 0: not detected
+! 0196 0039 001 0: not detected
+! 0196 0040 001 0: not detected
+! 0196 0040 002 0: not detected
+! 0196 0041 001 0: not detected
+! 0196 0042 001 0: not detected
+! 0196 0043 001 0: not detected
+! 0196 0044 001 0: not detected
+! 0196 0045 001 0: not detected
+! 0196 0046 001 0: not detected
+! 0196 0047 001 0: not detected
+! 0196 0048 001 0: not detected
+! 0196 0049 001 0: not detected
+! 0196 0050 001 0: not detected
+! 0196 0051 001 0: not detected
+! 0196 0052 001 0: not detected
+! 0196 0053 001 0: not detected
+! 0196 0053 002 0: not detected
+! 0196 0056 001 0: not detected
+! 0196 0057 001 0: not detected
+! 0196 0058 001 0: not detected
+! 0196 0059 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0196*
+cpd /xs

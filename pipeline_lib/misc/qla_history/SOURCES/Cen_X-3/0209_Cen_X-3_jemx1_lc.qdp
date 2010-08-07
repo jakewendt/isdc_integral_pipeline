@@ -1,0 +1,86 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0209 0004 001 0: not detected
+! 0209 0005 001 0: not detected
+! 0209 0006 001 0: not detected
+ 1641.833873661915 0.0127372755449642     8.9899    1.0947     6.0394    0.8781   16.112   3.46  ! 0209 0007 001 0
+ 1641.861697751390 0.0127372755900979     7.7201    0.7424     5.3461    0.5806   19.193   3.30  ! 0209 0008 001 0
+! 0209 0009 001 0: not detected
+! 0209 0010 001 0: not detected
+! 0209 0011 001 0: not detected
+! 0209 0012 001 0: not detected
+! 0209 0013 001 0: not detected
+! 0209 0014 001 0: not detected
+! 0209 0015 001 0: not detected
+! 0209 0016 001 0: not detected
+! 0209 0016 003 0: not detected
+! 0209 0016 005 0: not detected
+! 0209 0016 007 0: not detected
+! 0209 0016 009 0: not detected
+! 0209 0016 011 0: not detected
+! 0209 0016 013 0: not detected
+! 0209 0016 015 0: not detected
+! 0209 0016 017 0: not detected
+! 0209 0016 019 0: not detected
+! 0209 0016 021 0: not detected
+! 0209 0016 023 0: not detected
+! 0209 0016 025 0: not detected
+! 0209 0016 027 0: not detected
+! 0209 0016 029 0: not detected
+! 0209 0016 031 0: not detected
+! 0209 0016 033 0: not detected
+! 0209 0016 035 0: not detected
+! 0209 0016 037 0: not detected
+! 0209 0016 039 0: not detected
+! 0209 0016 041 0: not detected
+! 0209 0016 043 0: not detected
+! 0209 0016 045 0: not detected
+! 0209 0016 047 0: not detected
+! 0209 0016 049 0: not detected
+! 0209 0016 051 0: not detected
+! 0209 0017 001 0: not detected
+! 0209 0018 001 0: not detected
+! 0209 0019 001 0: not detected
+! 0209 0020 001 0: not detected
+! 0209 0021 001 0: not detected
+! 0209 0022 001 0: not detected
+! 0209 0023 001 0: not detected
+! 0209 0024 001 0: not detected
+! 0209 0025 001 0: not detected
+! 0209 0026 001 0: not detected
+! 0209 0027 001 0: not detected
+! 0209 0028 001 0: not detected
+! 0209 0029 001 0: not detected
+! 0209 0030 001 0: not detected
+! 0209 0031 001 0: not detected
+! 0209 0032 001 0: not detected
+! 0209 0033 001 0: not detected
+! 0209 0034 001 0: not detected
+! 0209 0035 001 0: not detected
+! 0209 0036 001 0: not detected
+! 0209 0037 001 0: not detected
+! 0209 0038 001 0: not detected
+! 0209 0039 001 0: not detected
+! 0209 0040 001 0: not detected
+! 0209 0041 001 0: not detected
+! 0209 0042 001 0: not detected
+! 0209 0043 001 0: not detected
+! 0209 0044 001 0: not detected
+! 0209 0045 001 0: not detected
+! 0209 0046 001 0: not detected
+! 0209 0047 001 0: not detected
+! 0209 0048 001 0: not detected
+! 0209 0049 001 0: not detected
+! 0209 0050 001 0: not detected
+! 0209 0051 001 0: not detected
+! 0209 0052 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0209*
+cpd /xs

@@ -1,0 +1,75 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0327 0001 001 0: not detected
+! 0327 0002 001 0: not detected
+! 0327 0003 001 0: not detected
+! 0327 0004 001 0: not detected
+! 0327 0005 001 0: not detected
+! 0327 0006 001 0: not detected
+! 0327 0007 001 0: not detected
+! 0327 0008 001 0: not detected
+! 0327 0009 001 0: not detected
+! 0327 0010 001 0: not detected
+! 0327 0011 001 0: not detected
+! 0327 0012 001 0: not detected
+! 0327 0013 001 0: not detected
+! 0327 0014 001 0: not detected
+! 0327 0015 001 0: not detected
+! 0327 0016 001 0: not detected
+! 0327 0017 001 0: not detected
+! 0327 0018 001 0: not detected
+! 0327 0019 001 0: not detected
+! 0327 0020 001 0: not detected
+! 0327 0021 001 0: not detected
+! 0327 0022 001 0: not detected
+! 0327 0023 001 0: not detected
+ 1995.514126886195 0.0205150583450404     2.8575    1.3350     2.6254    1.5136    1.359   4.58  ! 0327 0024 001 0
+! 0327 0025 001 0: not detected
+! 0327 0026 001 0: not detected
+! 0327 0027 001 0: not detected
+! 0327 0028 001 0: not detected
+! 0327 0029 001 0: not detected
+! 0327 0030 001 0: not detected
+! 0327 0031 001 0: not detected
+! 0327 0032 001 0: not detected
+! 0327 0033 001 0: not detected
+! 0327 0034 001 0: not detected
+! 0327 0035 001 0: not detected
+! 0327 0036 001 0: not detected
+! 0327 0037 001 0: not detected
+! 0327 0038 001 0: not detected
+! 0327 0039 001 0: not detected
+! 0327 0040 001 0: not detected
+! 0327 0041 001 0: not detected
+! 0327 0042 001 0: not detected
+! 0327 0043 001 0: not detected
+! 0327 0044 001 0: not detected
+! 0327 0045 001 0: not detected
+! 0327 0046 001 0: not detected
+! 0327 0047 001 0: not detected
+! 0327 0048 001 0: not detected
+! 0327 0049 001 0: not detected
+! 0327 0050 001 0: not detected
+! 0327 0051 001 0: not detected
+ 1996.721760725305 0.0205208457349499     1.0654    0.1662     1.2690    0.1867    7.968   2.63  ! 0327 0052 001 0
+ 1996.764243389835 0.0205150586650689     1.1287    0.1715     1.4036    0.1778    6.822   2.32  ! 0327 0053 001 0
+ 1996.806708693175 0.0205150586249374     1.8822    0.3776     1.7015    0.3694    4.847   3.44  ! 0327 0054 001 0
+! 0327 0055 001 0: not detected
+! 0327 0056 001 0: not detected
+! 0327 0057 001 0: not detected
+! 0327 0058 001 0: not detected
+ 1997.018977337955 0.0205266324649074     0.8773    0.1285     1.2922    0.1303    7.602   2.65  ! 0327 0059 001 0
+ 1997.061355835090 0.0205208453700152     1.0167    0.1115     1.1697    0.1037    9.039   0.69  ! 0327 0060 001 0
+! 0327 0061 001 0: not detected
+! 0327 0062 001 0: not detected
+! 0327 0063 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0327*
+cpd /xs

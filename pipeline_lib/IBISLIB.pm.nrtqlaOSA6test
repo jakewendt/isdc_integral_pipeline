@@ -1,0 +1,275 @@
+
+package IBISLIB;
+
+=head1 NAME
+
+I<IBISLIB.pm> - library used by nrtqla, conssa and consssa
+
+=head1 SYNOPSIS
+
+use I<IBISLIB.pm>;
+
+=head1 DESCRIPTION
+
+=item
+
+=head1 SUBROUTINES
+
+=over
+
+=cut
+
+use strict;
+use ISDCPipeline;
+use UnixLIB;
+use ISDCLIB;
+
+sub IBISLIB::ISA;
+sub IBISLIB::IPMosaic;
+
+$| = 1;
+
+=item B<ISA> ( %att )
+
+Wrapper for ibis_science_analysis
+
+=cut
+
+sub ISA {
+	&Carp::croak ( "IBISLIB::ISA: Need even number of args" ) if ( @_ % 2 );
+	
+	my %att = @_;
+	$att{proctype}     = "scw"  unless $att{proctype} =~ /mosaic/;			#	either "scw" or "mosaic"
+	$att{IC_Group}     = "../../idx/ic/ic_master_file.fits[1]" unless ( $att{IC_Group} );
+	$att{instdir}      = "obs" unless ( $att{instdir} );
+
+	my $proc           = &ProcStep();
+	&Message ( "Running IBISLIB::ISA for dataset:$ENV{OSF_DATASET}: process:$ENV{PROCESS_NAME}; proctype:$att{proctype}; INST:$att{INST}." );
+
+	#	set defaults to consssa/scw, cause its easier programmatically
+	my $ogDOL          = "og_ibis.fits[1]";
+	my $disableIsgri   = "no";
+	my $disablePICsIT  = "yes";
+	my $rebin_corr     = "";
+	my $refcat         = "$ENV{ISDC_REF_CAT}";
+	my $startLevel     = "GTI";			#	060612 - SCREW 1871 - "BIN_I";
+	my $endLevel       = "IMA2";
+	my $SearchMode     = "3";
+	my $ToSearch       = "10";
+	my $DoPart2        = "0";
+	my $MapSize        = "40.";
+	my $ICOR_riseDOL   = "";
+	my $II_ChanNum     = "-1";
+	my $SCW1_BKG_I_isgrBkgDol  = "-";
+	my $SCW1_BKG_I_isgrUnifDol = "-";
+	my $PICSIT_inCorVar = "1";		#	060104 - Jake - FIX I don't know if this diff is really nec as we don't really proc picsit.  ask NP/Luigi
+	my $GTI_PICsIT      = "ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS";
+	my $levelList       = "PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN";
+
+	#####################################################################################
+
+	#	differentiate between conssa, consssa and nrtqla with $ENV{PROCESS_NAME}
+	if ( ( $ENV{PROCESS_NAME} =~ /cssscw/ ) && ( $att{proctype} =~ /scw/ ) ) {
+		#	use the defaults
+	}
+	elsif ( ( $ENV{PROCESS_NAME} =~ /cssscw/ ) && ( $att{proctype} =~ /mosaic/ ) ) {
+		$startLevel   = "CAT_I";
+		$endLevel     = "IMA";
+		$SearchMode   = "2";
+		$DoPart2      = "2";
+		$MapSize      = "80";
+	}
+	elsif ( $ENV{PROCESS_NAME} =~ /nqlscw/ ) {
+		$startLevel   = "COR";
+		$endLevel     = "IMA";
+		$ToSearch     = "25";
+		$DoPart2      = "1";
+		$II_ChanNum   = "2";
+		$SCW1_BKG_I_isgrBkgDol  = "";
+		$SCW1_BKG_I_isgrUnifDol = "";
+	}
+	elsif ( $ENV{PROCESS_NAME} =~ /csasw1/ ) {
+		#	Is it ever going to be anything other than .001???
+		$ogDOL        = &ISDCLIB::FindDirVers ( "scw/$att{scwid}" )."/swg_ibis.fits[GROUPING]";
+		$endLevel     = "BKG_I";
+	}
+	elsif ( $ENV{PROCESS_NAME} =~ /csaob1/ ) {
+		$startLevel   = "CAT_I";
+		$endLevel     = "IMA";
+		$DoPart2      = "1";
+		$PICSIT_inCorVar = "0";			#	do I really need this as a variable?  Once this all works, fc!, ask NP.
+	}
+	elsif ( $ENV{PROCESS_NAME} =~ /csasw2/ ) {
+		#	Is it ever going to be anything other than .001???
+		$ogDOL        = &ISDCLIB::FindDirVers ( "scw/$att{scwid}" )."/swg_ibis.fits[GROUPING]";
+		$startLevel   = "IMA2";
+		$PICSIT_inCorVar = "0";			#	do I really need this as a variable?  Once this all works, fc!, ask NP.
+	}
+#	elsif ( $ENV{PROCESS_NAME} =~ /csaob2/ ) { #		Not yet.  #	}
+	else {
+		&Error ( "No match found for PROCESS_NAME: $ENV{PROCESS_NAME}; proctype: $att{proctype}\n" );
+	}
+
+	if ( $ENV{PROCESS_NAME} =~ /csa/ ) {		#	ALL conssa processes
+		$GTI_PICsIT   = "VETO ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS";
+		$levelList    = "COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN";
+	}
+	
+	#####################################################################################
+
+	if ( $ENV{REDO_CORRECTION} ) {	#	this is only available in consssa
+		&Message ( "Redoing Correction step.  Changing startLevel and endLevel." );
+		$startLevel   = "COR";
+		$endLevel     = "DEAD";
+
+		#	This is the parameter to use the Alberto LUT
+		$ICOR_riseDOL = "/isdc/integration/linux_dist/addition/files/ibis_isgr_rt_corr.fits";
+	}
+
+	#####################################################################################
+
+	if ( $att{INST} =~ /ISGRI|IBIS/ ) {
+		$refcat        .= "[ISGRI_FLAG == 1]";	#	only unused for consssa of picsit
+		if ( $ENV{PROCESS_NAME} =~ /cssscw/ ) {	
+			$rebin_corr     = "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_corr_ima.fits[1]";
+			&ISDCPipeline::RunProgram ( "$mycp $ENV{ISDC_OPUS}/consssa/rebinned_corr_ima.fits.gz $ENV{REP_BASE_PROD}/$att{instdir}/" )
+				unless ( -e "$ENV{REP_BASE_PROD}/$att{instdir}/rebinned_corr_ima.fits.gz" );
+		}
+		if ( ( $ENV{PROCESS_NAME} =~ /csasw1|cssscw/ ) && ( ! -e "energy_bands.fits.gz" ) ) {
+			&ISDCPipeline::RunProgram ( "$mycp $ENV{ISDC_OPUS}/pipeline_lib/energy_bands.fits.gz ./" );
+			&Error ( "energy_bands.fits.gz does not exist!" ) unless ( -e "energy_bands.fits.gz" );
+		}
+	}
+	elsif ( $att{INST} =~ /PICSIT/ ) {
+		$disableIsgri   = "yes";
+		$disablePICsIT  = "no";
+	}
+	else {
+		&Error ( "Unknown INST instrument : $att{INST}!" );
+	}
+
+	#####################################################################################
+
+	if ( $att{proctype} =~ /scw/ ) {
+		#	Check to ensure that only 1 child on OG
+		my $numScwInOG = &ISDCLIB::ChildrenIn ( $ogDOL, "GNRL-SCWG-GRP-IDX" );
+		&Error ( "Not 1 child in $ogDOL: $numScwInOG" ) unless ( $numScwInOG == 1 );
+	}
+
+	print "\n========================================================================\n";
+	print "#######     DEBUG:  ISDC_REF_CAT is $ENV{ISDC_REF_CAT}\n";
+
+	my $dal_retry_open_existed = $ENV{DAL_RETRY_OPEN} if ( defined ( $ENV{DAL_RETRY_OPEN} ) );
+	$ENV{DAL_RETRY_OPEN} = 5 unless ( defined ( $ENV{DAL_RETRY_OPEN} ) );		#	060208 - Jake - SCREW 1807
+
+	&ISDCPipeline::PipelineStep (
+		"step"                        => "$proc - IBIS Analysis $att{proctype}",
+		"program_name"                => "ibis_science_analysis",
+		"par_ogDOL"                   => "$ogDOL",
+		"par_startLevel"              => "COR",
+		"par_endLevel"                => "IMA",
+		"par_IC_Group"                => "$att{IC_Group}",
+		"par_CAT_refCat"              => "$refcat",
+#		"par_SWITCH_disableIsgri"     => "$disableIsgri",
+#		"par_SWITCH_disablePICsIT"    => "$disablePICsIT",
+#		"par_SCW1_BKG_I_isgrBkgDol"   => "$SCW1_BKG_I_isgrBkgDol",
+#		"par_SCW1_BKG_I_isgrUnifDol"  => "$SCW1_BKG_I_isgrUnifDol",
+		"par_IBIS_II_ChanNum"         => "2",
+		"par_IBIS_II_E_band_min"      => "20 40",
+		"par_IBIS_II_E_band_max"      => "40 80",
+		"par_OBS1_SearchMode"         => "3",
+		"par_OBS1_DoPart2"            => "1",
+		"par_OBS1_ToSearch"           => "25",
+#		"par_OBS1_MapSize"            => "$MapSize",
+#		"par_SCW1_ICOR_riseDOL"       => "$ICOR_riseDOL",
+#		"par_rebinned_corrDol_ima"    => "$rebin_corr",
+#		"par_IC_Alias"                => "$ENV{IC_ALIAS}",
+		"par_PICSIT_inCorVar"         => "$PICSIT_inCorVar",
+#		"par_SCW1_GTI_PICsIT"         => "$GTI_PICsIT",		#	"ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS",
+#		"par_GENERAL_levelList"       => "$levelList",		#	"PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN",
+		"par_OBS1_MinCatSouSnr"       => "1",
+		"par_OBS1_MinNewSouSnr"       => "5",
+		);
+
+	delete $ENV{DAL_RETRY_OPEN} unless ( defined ( $dal_retry_open_existed ) );		#	060208 - Jake - SCREW 1807
+	$ENV{DAL_RETRY_OPEN} = $dal_retry_open_existed if ( defined ( $dal_retry_open_existed ) );
+
+	&ISDCPipeline::RunProgram("$myrm GNRL-REFR-CAT.fits")
+		if ( ( -e "GNRL-REFR-CAT.fits" ) && ( $ENV{PROCESS_NAME} =~ /cssscw|csaob1/ ) );
+
+	return;
+} # end of ISA
+
+########################################################################
+
+=item B<IPMosaic> ( )
+
+Currently only called from the consssa pipeline when running PICSiT mosaics.
+
+=cut
+
+sub IPMosaic {
+
+	&Carp::croak ( "IBISLIB::IPMosaic: Need even number of args" ) if ( @_ % 2 );
+	
+	#	my %att = @_;	#	no pars just yet
+
+	my $proc = "CSS (Mosaic) PICSIT";
+	print "\n========================================================================\n";
+	
+	&ISDCPipeline::PipelineStep (
+		"step"           => "$proc - cat_extract",
+		"program_name"   => "cat_extract",
+		"par_refCat"     => "$ENV{ISDC_REF_CAT}",
+		"par_instrument" => "PICSIT",
+		"par_inGRP"      => "og_ibis.fits[GROUPING]",
+		"par_outGRP"     => "-",
+		"par_outCat"     => "isgri_catalog.fits(ISGR-SRCL-CAT.tpl)",
+		"par_outExt"     => "ISGR-SRCL-CAT",
+		"par_date"       => "-1.",
+		"par_radiusMin"  => "0",
+		"par_radiusMax"  => "20",
+		"par_fluxDef"    => "",
+		"par_fluxMin"    => "",
+		"par_fluxMax"    => "",
+		"par_class"      => "",
+		"par_clobber"    => "yes",
+		);
+
+	&ISDCPipeline::PipelineStep (
+		"step"             => "$proc - IBIS PICSIT Image Mosaic",
+		"program_name"     => "ip_skymosaic",
+		"par_outOG"        => "og_ibis.fits[GROUPING]",
+		"par_outMosaic"    => "pics_mosa_ima2.fits(PICS-MOSA-IMA-IDX.tpl)",
+		"par_outPicsitCat" => "pics_mosa_res2.fits(PICS-MOSA-RES-IDX.tpl)",
+		"par_inCat"        => "isgri_catalog.fits[1]",
+		"par_detThr"       => "3.0",
+		"par_imgSel"       => "EVT_TYPE=='SINGLE' && E_MIN==252 && E_MAX==336",
+		"par_projSel"      => "-TAN",
+		"par_inOG"         => "",
+		"par_idxScw"       => "",
+		"par_mode"         => "h",
+		);
+}	#	end IPMosaic
+########################################################################
+
+
+=back
+
+=head1 REFERENCES
+
+For further information on the other processes in this pipeline, please run perldoc on each, e.g. C<perldoc nrtdp.pl>.
+
+For further information about B<OPUS> please see C<file:///isdc/software/opus/html/opusfaq.html> on the office network or C<file:///isdc/opus/html/opusfaq.html> on the operations network.  Note that understanding this document requires that you understand B<OPUS> first.
+
+For further information about the NRT pipelines, please see the Top Level Architectural Design Document.
+
+=head1 AUTHORS
+
+Tess Jaffe <theresa.jaffe@obs.unige.ch>
+
+Jake Wendt <Jake.Wendt@obs.unige.ch>
+
+=cut
+
+#	last line

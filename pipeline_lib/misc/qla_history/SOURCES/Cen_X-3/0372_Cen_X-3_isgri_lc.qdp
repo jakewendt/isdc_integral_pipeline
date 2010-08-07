@@ -1,0 +1,94 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+ 2129.293626175385 0.0127372758349793     1.6100    0.0000     0.7952    0.0000    1.431  13.28  ! 0372 0002 001 0
+ 2129.322150497305 0.0125578775648592     3.7995    0.5275     0.2337    0.0000    6.902   7.03  ! 0372 0003 001 0
+ 2129.350425976450 0.0125578775500799     3.0608    0.4005     0.5110    0.0000    7.366   4.46  ! 0372 0004 001 0
+ 2129.378608862925 0.0125578775350732     2.0061    0.6410     0.0000    0.0000    2.800   9.43  ! 0372 0005 001 0
+ 2129.406855406810 0.0125636645700524     0.7906    0.0000     1.6249    0.0000    1.213  14.33  ! 0372 0006 001 0
+! 0372 0007 001 0: not detected
+! 0372 0008 001 0: not detected
+! 0372 0009 001 0: not detected
+! 0372 0010 001 0: not detected
+! 0372 0011 001 0: not detected
+! 0372 0012 001 0: not detected
+! 0372 0013 001 0: not detected
+! 0372 0014 001 0: not detected
+! 0372 0015 001 0: not detected
+! 0372 0016 001 0: not detected
+! 0372 0017 001 0: not detected
+! 0372 0018 001 0: not detected
+! 0372 0019 001 0: not detected
+! 0372 0020 001 0: not detected
+! 0372 0021 001 0: not detected
+! 0372 0022 001 0: not detected
+! 0372 0023 001 0: not detected
+! 0372 0024 001 0: not detected
+! 0372 0025 001 0: not detected
+! 0372 0026 001 0: not detected
+! 0372 0027 001 0: not detected
+! 0372 0028 001 0: not detected
+! 0372 0029 001 0: not detected
+! 0372 0030 001 0: not detected
+! 0372 0031 001 0: not detected
+! 0372 0032 001 0: not detected
+! 0372 0033 001 0: not detected
+! 0372 0034 001 0: not detected
+! 0372 0035 001 0: not detected
+! 0372 0036 001 0: not detected
+! 0372 0037 001 0: not detected
+! 0372 0038 001 0: not detected
+! 0372 0039 001 0: not detected
+! 0372 0040 001 0: not detected
+! 0372 0041 001 0: not detected
+! 0372 0042 001 0: not detected
+! 0372 0043 001 0: not detected
+! 0372 0044 001 0: not detected
+! 0372 0045 001 0: not detected
+! 0372 0046 001 0: not detected
+! 0372 0047 001 0: not detected
+! 0372 0048 001 0: not detected
+! 0372 0049 001 0: not detected
+! 0372 0050 001 0: not detected
+! 0372 0051 001 0: not detected
+! 0372 0052 001 0: not detected
+! 0372 0053 001 0: not detected
+! 0372 0054 001 0: not detected
+! 0372 0055 001 0: not detected
+! 0372 0056 001 0: not detected
+! 0372 0057 001 0: not detected
+! 0372 0058 001 0: not detected
+! 0372 0059 001 0: not detected
+! 0372 0060 001 0: not detected
+! 0372 0061 001 0: not detected
+! 0372 0062 001 0: not detected
+! 0372 0063 001 0: not detected
+! 0372 0064 001 0: not detected
+! 0372 0065 001 0: not detected
+! 0372 0066 001 0: not detected
+! 0372 0067 001 0: not detected
+! 0372 0068 001 0: not detected
+! 0372 0069 001 0: not detected
+! 0372 0070 001 0: not detected
+! 0372 0071 001 0: not detected
+! 0372 0072 001 0: not detected
+! 0372 0073 001 0: not detected
+! 0372 0074 001 0: not detected
+! 0372 0075 001 0: not detected
+! 0372 0076 001 0: not detected
+! 0372 0077 001 0: not detected
+! 0372 0078 001 0: not detected
+! 0372 0079 001 0: not detected
+! 0372 0080 001 0: not detected
+! 0372 0081 001 0: not detected
+! 0372 0082 001 0: not detected
+! 0372 0082 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0372*
+cpd /xs

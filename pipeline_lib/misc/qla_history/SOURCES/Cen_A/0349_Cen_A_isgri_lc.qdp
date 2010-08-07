@@ -1,0 +1,58 @@
+! Source: Cen A
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0349 0002 001 0: not detected
+! 0349 0003 001 0: not detected
+! 0349 0004 001 0: not detected
+! 0349 0005 001 0: not detected
+! 0349 0006 001 0: not detected
+! 0349 0007 001 0: not detected
+! 0349 0008 001 0: not detected
+! 0349 0009 001 0: not detected
+! 0349 0010 001 0: not detected
+! 0349 0011 001 0: not detected
+! 0349 0012 001 0: not detected
+! 0349 0013 001 0: not detected
+! 0349 0014 001 0: not detected
+ 2062.236856979440 0.0173611215500387     2.1014    0.0000     4.2411    0.0000    2.244   5.35  ! 0349 0047 001 0
+ 2062.272921815770 0.0173611213799632     3.7217    0.7123     1.4315    0.0000    4.941   4.61  ! 0349 0048 001 0
+ 2062.309085031465 0.0173553341949173     4.6620    0.7544     3.5225    0.8410    7.125   4.67  ! 0349 0049 001 0
+ 2062.354044548210 0.0261689965300320     3.6067    0.6591     2.3338    0.0000    5.820   5.54  ! 0349 0050 001 0
+! 0349 0051 001 0: not detected
+! 0349 0052 001 0: not detected
+! 0349 0053 001 0: not detected
+! 0349 0054 001 0: not detected
+! 0349 0055 001 0: not detected
+! 0349 0056 001 0: not detected
+! 0349 0057 001 0: not detected
+! 0349 0059 001 0: not detected
+! 0349 0060 001 0: not detected
+! 0349 0061 001 0: not detected
+! 0349 0062 001 0: not detected
+! 0349 0063 001 0: not detected
+! 0349 0064 001 0: not detected
+! 0349 0065 001 0: not detected
+! 0349 0066 001 0: not detected
+! 0349 0067 001 0: not detected
+! 0349 0068 001 0: not detected
+! 0349 0069 001 0: not detected
+! 0349 0070 001 0: not detected
+! 0349 0071 001 0: not detected
+! 0349 0072 001 0: not detected
+! 0349 0073 001 0: not detected
+! 0349 0074 001 0: not detected
+! 0349 0075 001 0: not detected
+! 0349 0076 001 0: not detected
+! 0349 0078 001 0: not detected
+! 0349 0079 001 0: not detected
+! 0349 0080 001 0: not detected
+! 0349 0081 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen A inst=isgri ScW=0349*
+cpd /xs

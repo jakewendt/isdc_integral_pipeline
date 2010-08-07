@@ -1,0 +1,75 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0090 0001 001 0: not detected
+! 0090 0001 002 0: not detected
+! 0090 0002 001 0: not detected
+! 0090 0003 001 0: not detected
+! 0090 0004 001 0: not detected
+! 0090 0005 001 0: not detected
+! 0090 0006 001 0: not detected
+! 0090 0007 001 0: not detected
+! 0090 0008 001 0: not detected
+! 0090 0009 001 0: not detected
+! 0090 0010 001 0: not detected
+! 0090 0011 001 0: not detected
+! 0090 0012 001 0: not detected
+! 0090 0013 001 0: not detected
+! 0090 0014 001 0: not detected
+! 0090 0015 001 0: not detected
+! 0090 0016 001 0: not detected
+! 0090 0017 001 0: not detected
+! 0090 0018 001 0: not detected
+! 0090 0019 001 0: not detected
+! 0090 0020 001 0: not detected
+! 0090 0021 001 0: not detected
+! 0090 0022 001 0: not detected
+! 0090 0023 001 0: not detected
+ 1286.651039460755 0.0202720011549218     2.7975    0.0000     0.2153    0.0000    2.008  14.70  ! 0090 0024 001 0
+ 1286.692723509945 0.0200694547449984     5.0321    1.0566     0.6986    0.0000    4.375  14.03  ! 0090 0025 001 0
+! 0090 0026 001 0: not detected
+! 0090 0027 001 0: not detected
+! 0090 0028 001 0: not detected
+! 0090 0029 001 0: not detected
+! 0090 0030 001 0: not detected
+! 0090 0031 001 0: not detected
+! 0090 0032 001 0: not detected
+! 0090 0033 001 0: not detected
+ 1287.067399634370 0.0207060299200066     3.8467    1.0791     0.2892    0.0000    3.044  13.61  ! 0090 0034 001 0
+ 1287.126629991150 0.0200636685100335     4.6018    1.0326     0.0000    0.0000    3.628  13.45  ! 0090 0035 001 0
+! 0090 0036 001 0: not detected
+! 0090 0037 001 0: not detected
+! 0090 0038 001 0: not detected
+! 0090 0039 001 0: not detected
+! 0090 0040 001 0: not detected
+! 0090 0041 001 0: not detected
+! 0090 0042 001 0: not detected
+ 1287.489859361290 0.0406771064699569     0.9779    0.0000     0.0000    0.0000    1.094  13.48  ! 0090 0043 001 0
+ 1287.552058470720 0.0200636687899305     2.7915    0.0000     0.0000    0.0000    2.202  13.62  ! 0090 0044 001 0
+! 0090 0045 001 0: not detected
+! 0090 0046 001 0: not detected
+! 0090 0047 001 0: not detected
+! 0090 0049 001 0: not detected
+! 0090 0050 001 0: not detected
+! 0090 0051 001 0: not detected
+! 0090 0052 001 0: not detected
+ 1287.926207988045 0.0200694559350723     0.0000    0.0000     0.2640    0.0000    0.232  14.03  ! 0090 0053 001 0
+ 1287.967677919165 0.0200694559050589     1.0045    0.0000     0.0000    0.0000    0.717  14.70  ! 0090 0054 001 0
+! 0090 0055 001 0: not detected
+! 0090 0056 001 0: not detected
+! 0090 0057 001 0: not detected
+! 0090 0058 001 0: not detected
+! 0090 0059 001 0: not detected
+! 0090 0060 001 0: not detected
+! 0090 0061 001 0: not detected
+! 0090 0062 001 0: not detected
+! 0090 0062 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0090*
+cpd /xs

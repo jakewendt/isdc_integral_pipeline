@@ -1,0 +1,123 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0165 0002 001 0: not detected
+ 1510.170055172750 0.0127314883000054     3.8606    1.0788     1.1244    0.0000    3.769  14.22  ! 0165 0003 001 0
+ 1510.198035511780 0.0127372753299824     4.5989    0.5413     1.7434    0.0000    8.335   9.37  ! 0165 0004 001 0
+ 1510.226004276765 0.0127314883150120     6.2828    0.4538     0.0371    0.0000   13.066   6.71  ! 0165 0005 001 0
+ 1510.253845726925 0.0127257013150484     5.7831    0.4184     1.3246    0.0000   14.013   4.96  ! 0165 0006 001 0
+ 1510.281664029005 0.0127314883850431     5.6607    0.5693     1.8206    0.0000   10.602   8.73  ! 0165 0007 001 0
+ 1510.309476544145 0.0127314884349516     5.8108    1.2137     0.2750    0.0000    4.682  14.14  ! 0165 0008 001 0
+! 0165 0009 001 0: not detected
+! 0165 0010 001 0: not detected
+! 0165 0011 001 0: not detected
+! 0165 0012 001 0: not detected
+! 0165 0013 001 0: not detected
+! 0165 0014 001 0: not detected
+! 0165 0015 001 0: not detected
+! 0165 0016 001 0: not detected
+! 0165 0017 001 0: not detected
+! 0165 0018 001 0: not detected
+! 0165 0019 001 0: not detected
+! 0165 0020 001 0: not detected
+! 0165 0021 001 0: not detected
+! 0165 0022 001 0: not detected
+! 0165 0023 001 0: not detected
+! 0165 0024 001 0: not detected
+! 0165 0025 001 0: not detected
+! 0165 0026 001 0: not detected
+! 0165 0027 001 0: not detected
+! 0165 0028 001 0: not detected
+! 0165 0029 001 0: not detected
+! 0165 0030 001 0: not detected
+! 0165 0031 001 0: not detected
+! 0165 0032 001 0: not detected
+! 0165 0033 001 0: not detected
+! 0165 0034 001 0: not detected
+! 0165 0035 001 0: not detected
+! 0165 0036 001 0: not detected
+! 0165 0037 001 0: not detected
+! 0165 0038 001 0: not detected
+! 0165 0039 001 0: not detected
+! 0165 0040 001 0: not detected
+! 0165 0041 001 0: not detected
+! 0165 0042 001 0: not detected
+! 0165 0043 001 0: not detected
+! 0165 0044 001 0: not detected
+! 0165 0045 001 0: not detected
+! 0165 0046 001 0: not detected
+! 0165 0047 001 0: not detected
+! 0165 0048 001 0: not detected
+! 0165 0049 001 0: not detected
+! 0165 0050 001 0: not detected
+! 0165 0051 001 0: not detected
+! 0165 0052 001 0: not detected
+! 0165 0053 001 0: not detected
+! 0165 0054 001 0: not detected
+! 0165 0055 001 0: not detected
+! 0165 0056 001 0: not detected
+! 0165 0057 001 0: not detected
+! 0165 0058 001 0: not detected
+! 0165 0059 001 0: not detected
+! 0165 0060 001 0: not detected
+! 0165 0061 001 0: not detected
+! 0165 0062 001 0: not detected
+! 0165 0063 001 0: not detected
+! 0165 0064 001 0: not detected
+! 0165 0065 001 0: not detected
+! 0165 0066 001 0: not detected
+! 0165 0067 001 0: not detected
+! 0165 0068 001 0: not detected
+! 0165 0069 001 0: not detected
+! 0165 0070 001 0: not detected
+! 0165 0071 001 0: not detected
+! 0165 0072 001 0: not detected
+! 0165 0073 001 0: not detected
+! 0165 0074 001 0: not detected
+! 0165 0075 001 0: not detected
+! 0165 0076 001 0: not detected
+! 0165 0077 001 0: not detected
+! 0165 0078 001 0: not detected
+! 0165 0079 001 0: not detected
+! 0165 0080 001 0: not detected
+! 0165 0081 001 0: not detected
+! 0165 0082 001 0: not detected
+! 0165 0083 001 0: not detected
+! 0165 0084 001 0: not detected
+! 0165 0085 001 0: not detected
+! 0165 0086 001 0: not detected
+! 0165 0087 001 0: not detected
+! 0165 0088 001 0: not detected
+! 0165 0089 001 0: not detected
+! 0165 0090 001 0: not detected
+! 0165 0091 001 0: not detected
+! 0165 0092 001 0: not detected
+! 0165 0093 001 0: not detected
+! 0165 0094 001 0: not detected
+! 0165 0095 001 0: not detected
+! 0165 0096 001 0: not detected
+! 0165 0097 001 0: not detected
+! 0165 0098 001 0: not detected
+! 0165 0099 001 0: not detected
+! 0165 0100 001 0: not detected
+! 0165 0101 001 0: not detected
+! 0165 0102 001 0: not detected
+! 0165 0103 001 0: not detected
+! 0165 0104 001 0: not detected
+! 0165 0105 001 0: not detected
+! 0165 0106 001 0: not detected
+! 0165 0107 001 0: not detected
+! 0165 0108 001 0: not detected
+! 0165 0109 001 0: not detected
+! 0165 0110 001 0: not detected
+! 0165 0111 001 0: not detected
+! 0165 0112 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0165*
+cpd /xs

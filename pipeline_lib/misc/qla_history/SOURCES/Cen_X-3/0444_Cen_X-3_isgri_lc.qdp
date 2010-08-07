@@ -1,0 +1,108 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! 0444 0003 001 0: not detected
+! 0444 0004 001 0: not detected
+! 0444 0005 001 0: not detected
+! 0444 0006 001 0: not detected
+! 0444 0007 001 0: not detected
+! 0444 0008 001 0: not detected
+ 2344.671633790125 0.0125578775248414    18.0264    2.0553     1.5407    0.0000    7.959  15.11  ! 0444 0009 001 0
+ 2344.699724083920 0.0125578775300710    19.3683    0.5850     1.2369    0.0000   30.024   9.18  ! 0444 0010 001 0
+ 2344.736633827240 0.0213657529698139    18.3162    0.3944     1.4784    0.0000   43.939   6.10  ! 0444 0011 001 0
+ 2344.773613015115 0.0125578776048769    19.1401    0.5603     0.7897    0.0000   32.526   6.49  ! 0444 0012 001 0
+ 2344.802467198465 0.0132060261848892    23.5640    1.1222     1.1102    0.0000   20.000  12.02  ! 0444 0013 001 0
+! 0444 0014 001 0: not detected
+! 0444 0015 001 0: not detected
+! 0444 0016 001 0: not detected
+! 0444 0017 001 0: not detected
+! 0444 0018 001 0: not detected
+! 0444 0019 001 0: not detected
+! 0444 0020 001 0: not detected
+! 0444 0021 001 0: not detected
+! 0444 0022 001 0: not detected
+! 0444 0023 001 0: not detected
+! 0444 0024 001 0: not detected
+! 0444 0025 001 0: not detected
+! 0444 0026 001 0: not detected
+! 0444 0027 001 0: not detected
+! 0444 0028 001 0: not detected
+! 0444 0029 001 0: not detected
+! 0444 0030 001 0: not detected
+! 0444 0031 001 0: not detected
+! 0444 0032 001 0: not detected
+! 0444 0033 001 0: not detected
+! 0444 0034 001 0: not detected
+! 0444 0035 001 0: not detected
+! 0444 0036 001 0: not detected
+! 0444 0037 001 0: not detected
+! 0444 0038 001 0: not detected
+! 0444 0039 001 0: not detected
+! 0444 0040 001 0: not detected
+! 0444 0041 001 0: not detected
+! 0444 0042 001 0: not detected
+! 0444 0043 001 0: not detected
+! 0444 0044 001 0: not detected
+! 0444 0045 001 0: not detected
+! 0444 0046 001 0: not detected
+! 0444 0047 001 0: not detected
+! 0444 0048 001 0: not detected
+! 0444 0049 001 0: not detected
+! 0444 0050 001 0: not detected
+! 0444 0051 001 0: not detected
+! 0444 0052 001 0: not detected
+! 0444 0053 001 0: not detected
+! 0444 0054 001 0: not detected
+! 0444 0055 001 0: not detected
+! 0444 0056 001 0: not detected
+! 0444 0057 001 0: not detected
+! 0444 0058 001 0: not detected
+! 0444 0059 001 0: not detected
+! 0444 0060 001 0: not detected
+! 0444 0061 001 0: not detected
+! 0444 0062 001 0: not detected
+! 0444 0063 001 0: not detected
+! 0444 0064 001 0: not detected
+! 0444 0065 001 0: not detected
+! 0444 0066 001 0: not detected
+! 0444 0067 001 0: not detected
+! 0444 0068 001 0: not detected
+! 0444 0069 001 0: not detected
+! 0444 0070 001 0: not detected
+! 0444 0071 001 0: not detected
+! 0444 0072 001 0: not detected
+! 0444 0073 001 0: not detected
+! 0444 0074 001 0: not detected
+! 0444 0075 001 0: not detected
+! 0444 0076 001 0: not detected
+! 0444 0077 001 0: not detected
+! 0444 0078 001 0: not detected
+! 0444 0079 001 0: not detected
+! 0444 0080 001 0: not detected
+! 0444 0081 001 0: not detected
+! 0444 0082 001 0: not detected
+! 0444 0083 001 0: not detected
+! 0444 0084 001 0: not detected
+! 0444 0085 001 0: not detected
+! 0444 0086 001 0: not detected
+! 0444 0087 001 0: not detected
+! 0444 0088 001 0: not detected
+! 0444 0089 001 0: not detected
+! 0444 0090 001 0: not detected
+! 0444 0091 001 0: not detected
+! 0444 0092 001 0: not detected
+! 0444 0093 001 0: not detected
+! 0444 0094 001 0: not detected
+! 0444 0095 001 0: not detected
+! 0444 0096 001 0: not detected
+! 0444 0097 001 0: not detected
+! 0444 0098 001 0: not detected
+! 0444 0098 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0444*
+cpd /xs

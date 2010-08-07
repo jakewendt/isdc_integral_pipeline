@@ -1,0 +1,95 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! 0446 0001 001 0: not detected
+! 0446 0002 001 0: not detected
+! 0446 0003 001 0: not detected
+! 0446 0004 001 0: not detected
+! 0446 0005 001 0: not detected
+! 0446 0006 001 0: not detected
+! 0446 0007 001 0: not detected
+! 0446 0008 001 0: not detected
+! 0446 0009 001 0: not detected
+! 0446 0010 001 0: not detected
+! 0446 0011 001 0: not detected
+ 2350.698883054360 0.0112963026599573     4.1443    0.5234     0.4340    0.0000    7.575   6.46  ! 0446 0012 001 0
+ 2350.722673577025 0.0114641268150990     2.1108    0.5759     0.6185    0.0000    3.790   6.43  ! 0446 0013 001 0
+ 2350.746643497910 0.0114641268100968     2.3964    0.2799     0.0000    0.0000    4.623   6.75  ! 0446 0014 001 0
+ 2350.770596057670 0.0114583397798924     2.9067    0.5391     0.5008    0.0000    5.246   7.04  ! 0446 0015 001 0
+ 2350.796053247945 0.0114641268451123     3.7858    0.7056     0.0000    0.0000    5.025   9.66  ! 0446 0016 001 0
+ 2350.820017381885 0.0114583398349168     4.3127    0.7191     0.0000    0.0000    5.795   9.64  ! 0446 0017 001 0
+ 2350.843975728840 0.0114583398701598     3.8544    0.6779     1.7506    0.0000    5.530   9.95  ! 0446 0018 001 0
+ 2350.867934075925 0.0114583399549701     4.2803    0.7306     0.2798    0.0000    6.198   9.67  ! 0446 0019 001 0
+! 0446 0020 001 0: not detected
+! 0446 0021 001 0: not detected
+! 0446 0022 001 0: not detected
+! 0446 0023 001 0: not detected
+! 0446 0024 001 0: not detected
+! 0446 0025 001 0: not detected
+! 0446 0026 001 0: not detected
+! 0446 0027 001 0: not detected
+! 0446 0028 001 0: not detected
+! 0446 0029 001 0: not detected
+! 0446 0030 001 0: not detected
+! 0446 0031 001 0: not detected
+! 0446 0032 001 0: not detected
+! 0446 0033 001 0: not detected
+! 0446 0034 001 0: not detected
+! 0446 0035 001 0: not detected
+! 0446 0036 001 0: not detected
+! 0446 0037 001 0: not detected
+! 0446 0038 001 0: not detected
+! 0446 0039 001 0: not detected
+! 0446 0040 001 0: not detected
+! 0446 0041 001 0: not detected
+! 0446 0042 001 0: not detected
+! 0446 0043 001 0: not detected
+! 0446 0044 001 0: not detected
+! 0446 0045 001 0: not detected
+! 0446 0046 001 0: not detected
+! 0446 0047 001 0: not detected
+! 0446 0048 001 0: not detected
+! 0446 0049 001 0: not detected
+! 0446 0050 001 0: not detected
+! 0446 0051 001 0: not detected
+! 0446 0052 001 0: not detected
+! 0446 0053 001 0: not detected
+! 0446 0054 001 0: not detected
+! 0446 0055 001 0: not detected
+! 0446 0056 001 0: not detected
+! 0446 0057 001 0: not detected
+! 0446 0058 001 0: not detected
+! 0446 0059 001 0: not detected
+! 0446 0060 001 0: not detected
+! 0446 0061 001 0: not detected
+! 0446 0062 001 0: not detected
+! 0446 0063 001 0: not detected
+! 0446 0064 001 0: not detected
+! 0446 0065 001 0: not detected
+! 0446 0066 001 0: not detected
+! 0446 0067 001 0: not detected
+! 0446 0068 001 0: not detected
+! 0446 0069 001 0: not detected
+! 0446 0070 001 0: not detected
+! 0446 0071 001 0: not detected
+! 0446 0072 001 0: not detected
+! 0446 0073 001 0: not detected
+! 0446 0074 001 0: not detected
+! 0446 0075 001 0: not detected
+! 0446 0076 001 0: not detected
+! 0446 0077 001 0: not detected
+! 0446 0078 001 0: not detected
+! 0446 0079 001 0: not detected
+! 0446 0080 001 0: not detected
+! 0446 0081 001 0: not detected
+! 0446 0082 001 0: not detected
+! 0446 0083 001 0: not detected
+! 0446 0084 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0446*
+cpd /xs

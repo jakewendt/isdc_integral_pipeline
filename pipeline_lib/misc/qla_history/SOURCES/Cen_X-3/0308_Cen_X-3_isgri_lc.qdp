@@ -1,0 +1,111 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0308 0004 001 0: not detected
+! 0308 0005 001 0: not detected
+! 0308 0006 001 0: not detected
+! 0308 0007 001 0: not detected
+! 0308 0008 001 0: not detected
+! 0308 0009 001 0: not detected
+! 0308 0010 001 0: not detected
+! 0308 0011 001 0: not detected
+! 0308 0012 001 0: not detected
+! 0308 0013 001 0: not detected
+! 0308 0014 001 0: not detected
+! 0308 0015 001 0: not detected
+! 0308 0016 001 0: not detected
+ 1938.236788951585 0.0125636643050484    15.4073    0.0000     0.0000    0.0000    3.556  17.12  ! 0308 0017 001 0
+ 1938.264948689280 0.0125636643200551    15.8726    0.6878     2.1392    0.0000   22.132  10.15  ! 0308 0018 001 0
+ 1938.293831807030 0.0132060258000593    12.7758    0.4150     1.1128    0.0000   29.236   3.41  ! 0308 0019 001 0
+! 0308 0020 001 0: not detected
+! 0308 0021 001 0: not detected
+! 0308 0022 001 0: not detected
+! 0308 0023 001 0: not detected
+! 0308 0024 001 0: not detected
+! 0308 0025 001 0: not detected
+! 0308 0026 001 0: not detected
+! 0308 0027 001 0: not detected
+! 0308 0028 001 0: not detected
+! 0308 0029 001 0: not detected
+! 0308 0030 001 0: not detected
+! 0308 0031 001 0: not detected
+! 0308 0032 001 0: not detected
+! 0308 0033 001 0: not detected
+! 0308 0034 001 0: not detected
+! 0308 0035 001 0: not detected
+! 0308 0036 001 0: not detected
+! 0308 0037 001 0: not detected
+! 0308 0038 001 0: not detected
+! 0308 0039 001 0: not detected
+! 0308 0040 001 0: not detected
+! 0308 0041 001 0: not detected
+! 0308 0042 001 0: not detected
+! 0308 0043 001 0: not detected
+! 0308 0044 001 0: not detected
+! 0308 0045 001 0: not detected
+! 0308 0046 001 0: not detected
+! 0308 0047 001 0: not detected
+! 0308 0048 001 0: not detected
+! 0308 0049 001 0: not detected
+! 0308 0050 001 0: not detected
+! 0308 0051 001 0: not detected
+! 0308 0052 001 0: not detected
+! 0308 0053 001 0: not detected
+! 0308 0054 001 0: not detected
+! 0308 0055 001 0: not detected
+! 0308 0056 001 0: not detected
+! 0308 0057 001 0: not detected
+! 0308 0058 001 0: not detected
+! 0308 0059 001 0: not detected
+! 0308 0060 001 0: not detected
+! 0308 0061 001 0: not detected
+! 0308 0062 001 0: not detected
+! 0308 0063 001 0: not detected
+! 0308 0064 001 0: not detected
+! 0308 0065 001 0: not detected
+! 0308 0066 001 0: not detected
+! 0308 0067 001 0: not detected
+! 0308 0068 001 0: not detected
+! 0308 0069 001 0: not detected
+! 0308 0070 001 0: not detected
+! 0308 0071 001 0: not detected
+! 0308 0072 001 0: not detected
+! 0308 0073 001 0: not detected
+! 0308 0074 001 0: not detected
+! 0308 0075 001 0: not detected
+! 0308 0076 001 0: not detected
+! 0308 0077 001 0: not detected
+! 0308 0078 001 0: not detected
+! 0308 0079 001 0: not detected
+! 0308 0080 001 0: not detected
+! 0308 0081 001 0: not detected
+! 0308 0082 001 0: not detected
+! 0308 0083 001 0: not detected
+! 0308 0084 001 0: not detected
+! 0308 0085 001 0: not detected
+! 0308 0086 001 0: not detected
+! 0308 0087 001 0: not detected
+! 0308 0088 001 0: not detected
+! 0308 0089 001 0: not detected
+! 0308 0090 001 0: not detected
+! 0308 0091 001 0: not detected
+! 0308 0092 001 0: not detected
+! 0308 0093 001 0: not detected
+! 0308 0094 001 0: not detected
+! 0308 0095 001 0: not detected
+! 0308 0096 001 0: not detected
+! 0308 0097 001 0: not detected
+! 0308 0098 001 0: not detected
+! 0308 0099 001 0: not detected
+! 0308 0102 001 0: not detected
+! 0308 0103 001 0: not detected
+! 0308 0103 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0308*
+cpd /xs

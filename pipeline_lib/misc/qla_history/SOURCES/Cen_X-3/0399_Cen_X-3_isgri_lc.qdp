@@ -1,0 +1,81 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0399 0001 001 0: not detected
+! 0399 0002 001 0: not detected
+! 0399 0003 001 0: not detected
+! 0399 0004 001 0: not detected
+! 0399 0005 001 0: not detected
+! 0399 0006 001 0: not detected
+! 0399 0007 001 0: not detected
+! 0399 0008 001 0: not detected
+! 0399 0009 001 0: not detected
+! 0399 0010 001 0: not detected
+! 0399 0011 001 0: not detected
+! 0399 0012 001 0: not detected
+! 0399 0013 001 0: not detected
+! 0399 0014 001 0: not detected
+! 0399 0015 001 0: not detected
+! 0399 0016 001 0: not detected
+! 0399 0017 001 0: not detected
+! 0399 0018 001 0: not detected
+! 0399 0019 001 0: not detected
+! 0399 0020 001 0: not detected
+! 0399 0021 001 0: not detected
+! 0399 0022 001 0: not detected
+! 0399 0023 001 0: not detected
+! 0399 0024 001 0: not detected
+! 0399 0025 001 0: not detected
+! 0399 0026 001 0: not detected
+! 0399 0027 001 0: not detected
+! 0399 0028 001 0: not detected
+! 0399 0029 001 0: not detected
+! 0399 0030 001 0: not detected
+! 0399 0031 001 0: not detected
+! 0399 0032 001 0: not detected
+! 0399 0033 001 0: not detected
+! 0399 0034 001 0: not detected
+! 0399 0035 001 0: not detected
+! 0399 0036 001 0: not detected
+! 0399 0037 001 0: not detected
+! 0399 0038 001 0: not detected
+! 0399 0039 001 0: not detected
+! 0399 0040 001 0: not detected
+! 0399 0041 001 0: not detected
+! 0399 0042 001 0: not detected
+! 0399 0043 001 0: not detected
+! 0399 0044 001 0: not detected
+! 0399 0045 001 0: not detected
+! 0399 0046 001 0: not detected
+! 0399 0047 001 0: not detected
+ 2211.927461900350 0.0125636654800019     1.1436    0.0000     0.1979    0.0000    1.953   8.76  ! 0399 0048 001 0
+ 2211.955581131405 0.0125578784550271     1.8620    0.4063     0.0000    0.0000    4.100   2.64  ! 0399 0049 001 0
+ 2211.983671427240 0.0125578784300160     1.1009    0.0000     0.3140    0.0000    2.176   6.05  ! 0399 0050 001 0
+! 0399 0051 001 0: not detected
+! 0399 0052 001 0: not detected
+! 0399 0053 001 0: not detected
+! 0399 0054 001 0: not detected
+! 0399 0055 001 0: not detected
+! 0399 0056 001 0: not detected
+! 0399 0057 001 0: not detected
+! 0399 0058 001 0: not detected
+! 0399 0059 001 0: not detected
+! 0399 0060 001 0: not detected
+ 2212.310129960920 0.0125578777499413     1.8661    0.0000     0.4378    0.0000    0.641  16.80  ! 0399 0061 001 0
+ 2212.338237616290 0.0125636647599094     0.4847    0.0000     0.0113    0.0000    0.673   9.78  ! 0399 0062 001 0
+! 0399 0063 001 0: not detected
+ 2212.394412417610 0.0125578776901420     0.1914    0.0000     0.4618    0.0000    1.002   4.36  ! 0399 0064 001 0
+ 2212.422508498795 0.0125636647151168     1.2072    0.0000     0.0463    0.0000    1.382  11.30  ! 0399 0065 001 0
+ 2212.459458751780 0.0213657531799072     0.0000    0.0000     1.4316    0.0000    0.289  18.38  ! 0399 0066 001 0
+! 0399 0067 001 0: not detected
+! 0399 0068 001 0: not detected
+! 0399 0069 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0399*
+cpd /xs

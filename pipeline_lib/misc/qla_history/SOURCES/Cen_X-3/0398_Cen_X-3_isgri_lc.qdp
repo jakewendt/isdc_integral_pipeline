@@ -1,0 +1,79 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0398 0004 001 0: not detected
+! 0398 0005 001 0: not detected
+! 0398 0006 001 0: not detected
+! 0398 0007 001 0: not detected
+! 0398 0008 001 0: not detected
+ 2207.159015732545 0.0125578779350235     3.3362    0.5959     0.4594    0.0000    4.864   8.94  ! 0398 0009 001 0
+ 2207.187117601350 0.0125578779600346     3.1410    0.4398     0.4409    0.0000    6.528   6.00  ! 0398 0010 001 0
+ 2207.215219470170 0.0125578779500302     3.2456    0.4927     0.0872    0.0000    6.568   6.63  ! 0398 0011 001 0
+ 2207.243309764860 0.0125578779197895     1.8487    0.0000     0.0000    0.0000    1.795  12.24  ! 0398 0012 001 0
+! 0398 0013 001 0: not detected
+! 0398 0014 001 0: not detected
+! 0398 0015 001 0: not detected
+! 0398 0016 001 0: not detected
+! 0398 0017 001 0: not detected
+! 0398 0018 001 0: not detected
+! 0398 0019 001 0: not detected
+! 0398 0020 001 0: not detected
+! 0398 0021 001 0: not detected
+! 0398 0022 001 0: not detected
+! 0398 0023 001 0: not detected
+! 0398 0024 001 0: not detected
+! 0398 0025 001 0: not detected
+! 0398 0026 001 0: not detected
+! 0398 0027 001 0: not detected
+! 0398 0028 001 0: not detected
+! 0398 0029 001 0: not detected
+! 0398 0030 001 0: not detected
+! 0398 0031 001 0: not detected
+! 0398 0032 001 0: not detected
+! 0398 0033 001 0: not detected
+! 0398 0034 001 0: not detected
+! 0398 0035 001 0: not detected
+! 0398 0036 001 0: not detected
+! 0398 0037 001 0: not detected
+! 0398 0038 001 0: not detected
+! 0398 0039 001 0: not detected
+! 0398 0040 001 0: not detected
+! 0398 0041 001 0: not detected
+! 0398 0042 001 0: not detected
+! 0398 0043 001 0: not detected
+! 0398 0044 001 0: not detected
+! 0398 0045 001 0: not detected
+! 0398 0046 001 0: not detected
+! 0398 0047 001 0: not detected
+! 0398 0048 001 0: not detected
+! 0398 0049 001 0: not detected
+! 0398 0050 001 0: not detected
+! 0398 0051 001 0: not detected
+! 0398 0052 001 0: not detected
+! 0398 0053 001 0: not detected
+! 0398 0054 001 0: not detected
+! 0398 0055 001 0: not detected
+! 0398 0056 001 0: not detected
+! 0398 0057 001 0: not detected
+! 0398 0058 001 0: not detected
+! 0398 0059 001 0: not detected
+! 0398 0060 001 0: not detected
+! 0398 0061 001 0: not detected
+! 0398 0062 001 0: not detected
+! 0398 0063 001 0: not detected
+! 0398 0064 001 0: not detected
+! 0398 0065 001 0: not detected
+! 0398 0066 001 0: not detected
+! 0398 0067 001 0: not detected
+! 0398 0068 001 0: not detected
+! 0398 0069 001 0: not detected
+! 0398 0070 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0398*
+cpd /xs

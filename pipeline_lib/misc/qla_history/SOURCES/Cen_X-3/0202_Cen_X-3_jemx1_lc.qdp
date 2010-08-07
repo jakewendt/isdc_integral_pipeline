@@ -1,0 +1,75 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0202 0002 001 0: not detected
+! 0202 0003 001 0: not detected
+! 0202 0004 001 0: not detected
+! 0202 0005 001 0: not detected
+! 0202 0006 001 0: not detected
+! 0202 0007 001 0: not detected
+! 0202 0008 001 0: not detected
+! 0202 0009 001 0: not detected
+! 0202 0010 001 0: not detected
+! 0202 0011 001 0: not detected
+! 0202 0012 001 0: not detected
+! 0202 0013 001 0: not detected
+! 0202 0014 001 0: not detected
+! 0202 0015 001 0: not detected
+! 0202 0016 001 0: not detected
+! 0202 0017 001 0: not detected
+! 0202 0018 001 0: not detected
+! 0202 0019 001 0: not detected
+! 0202 0020 001 0: not detected
+ 1621.412913373190 0.0200636679400077     1.3833    0.1918     1.6888    0.2103    4.607   3.41  ! 0202 0021 001 0
+! 0202 0022 001 0: not detected
+! 0202 0023 001 0: not detected
+! 0202 0024 001 0: not detected
+! 0202 0025 001 0: not detected
+! 0202 0027 001 0: not detected
+! 0202 0028 001 0: not detected
+! 0202 0029 001 0: not detected
+! 0202 0030 001 0: not detected
+! 0202 0031 001 0: not detected
+! 0202 0032 001 0: not detected
+! 0202 0033 001 0: not detected
+! 0202 0034 001 0: not detected
+! 0202 0035 001 0: not detected
+! 0202 0036 001 0: not detected
+! 0202 0037 001 0: not detected
+! 0202 0038 001 0: not detected
+! 0202 0039 001 0: not detected
+! 0202 0040 001 0: not detected
+! 0202 0041 001 0: not detected
+! 0202 0042 001 0: not detected
+! 0202 0043 001 0: not detected
+! 0202 0044 001 0: not detected
+! 0202 0045 001 0: not detected
+! 0202 0046 001 0: not detected
+! 0202 0047 001 0: not detected
+! 0202 0048 001 0: not detected
+! 0202 0049 001 0: not detected
+ 1622.688452263740 0.0200694554899883     3.0014    0.5405     6.7191    1.2740   17.053   4.28  ! 0202 0050 001 0
+ 1622.729916406940 0.0200636684598976     5.1651    0.4062     6.4429    0.5394   21.800   2.99  ! 0202 0051 001 0
+ 1622.771438420575 0.0200694555250038     4.1675    0.2020     5.1609    0.2627   30.229   1.49  ! 0202 0052 001 0
+ 1622.812919924990 0.0200694555600194     2.6317    0.2643     3.2104    0.3100   11.988   3.40  ! 0202 0053 001 0
+! 0202 0054 001 0: not detected
+! 0202 0055 001 0: not detected
+! 0202 0056 001 0: not detected
+! 0202 0057 001 0: not detected
+! 0202 0058 001 0: not detected
+! 0202 0059 001 0: not detected
+ 1623.103689763045 0.0200636685849531     4.0326    0.4578     2.8953    0.3869   17.933   3.57  ! 0202 0060 001 0
+ 1623.145229138040 0.0200636685900690     5.9383    0.2972     4.7027    0.2729   26.848   1.86  ! 0202 0061 001 0
+ 1623.195107638145 0.0284143677649809     4.8374    0.5114     4.0845    0.4845   16.618   3.58  ! 0202 0062 001 0
+! 0202 0063 001 0: not detected
+! 0202 0064 001 0: not detected
+! 0202 0065 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0202*
+cpd /xs

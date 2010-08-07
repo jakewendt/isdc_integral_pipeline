@@ -1,0 +1,81 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0280 0002 001 0: not detected
+! 0280 0003 001 0: not detected
+! 0280 0004 001 0: not detected
+! 0280 0005 001 0: not detected
+! 0280 0006 001 0: not detected
+! 0280 0007 001 0: not detected
+ 1854.273475883730 0.0127372757899593    16.8363    0.8436     1.3686    0.0000   17.757  10.95  ! 0280 0008 001 0
+ 1854.301340483040 0.0127314888100045    17.1390    0.5588     0.0000    0.0000   27.755   7.56  ! 0280 0009 001 0
+ 1854.329164573180 0.0127314888500223    16.2417    0.4492     0.4541    0.0000   35.126   4.17  ! 0280 0010 001 0
+ 1854.357636811925 0.0133912114849863    15.1397    0.5229     0.4440    0.0000   28.097   7.05  ! 0280 0011 001 0
+ 1854.402405356455 0.0127314888749197    14.6820    0.9789     1.0604    0.0000   14.574  12.41  ! 0280 0012 001 0
+! 0280 0013 001 0: not detected
+! 0280 0014 001 0: not detected
+! 0280 0015 001 0: not detected
+! 0280 0016 001 0: not detected
+! 0280 0017 001 0: not detected
+! 0280 0018 001 0: not detected
+! 0280 0019 001 0: not detected
+! 0280 0020 001 0: not detected
+! 0280 0021 001 0: not detected
+! 0280 0022 001 0: not detected
+! 0280 0023 001 0: not detected
+! 0280 0024 001 0: not detected
+! 0280 0025 001 0: not detected
+! 0280 0026 001 0: not detected
+! 0280 0027 001 0: not detected
+! 0280 0028 001 0: not detected
+! 0280 0029 001 0: not detected
+! 0280 0030 001 0: not detected
+! 0280 0031 001 0: not detected
+! 0280 0032 001 0: not detected
+! 0280 0033 001 0: not detected
+! 0280 0034 001 0: not detected
+! 0280 0035 001 0: not detected
+! 0280 0036 001 0: not detected
+! 0280 0037 001 0: not detected
+! 0280 0038 001 0: not detected
+! 0280 0039 001 0: not detected
+! 0280 0040 001 0: not detected
+! 0280 0041 001 0: not detected
+! 0280 0042 001 0: not detected
+! 0280 0043 001 0: not detected
+! 0280 0044 001 0: not detected
+! 0280 0045 001 0: not detected
+! 0280 0046 001 0: not detected
+! 0280 0047 001 0: not detected
+! 0280 0048 001 0: not detected
+! 0280 0049 001 0: not detected
+! 0280 0050 001 0: not detected
+! 0280 0051 001 0: not detected
+! 0280 0052 001 0: not detected
+! 0280 0053 001 0: not detected
+! 0280 0054 001 0: not detected
+! 0280 0055 001 0: not detected
+! 0280 0056 001 0: not detected
+! 0280 0057 001 0: not detected
+! 0280 0058 001 0: not detected
+! 0280 0059 001 0: not detected
+! 0280 0060 001 0: not detected
+! 0280 0061 001 0: not detected
+! 0280 0062 001 0: not detected
+! 0280 0063 001 0: not detected
+! 0280 0064 001 0: not detected
+! 0280 0065 001 0: not detected
+! 0280 0066 001 0: not detected
+! 0280 0067 001 0: not detected
+! 0280 0068 001 0: not detected
+! 0280 0069 001 0: not detected
+! 0280 0070 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0280*
+cpd /xs

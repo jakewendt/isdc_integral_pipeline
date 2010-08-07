@@ -1,0 +1,113 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0267 0000 005 0: not detected
+! 0267 0000 007 0: not detected
+! 0267 0000 009 0: not detected
+! 0267 0000 011 0: not detected
+! 0267 0000 013 0: not detected
+! 0267 0000 015 0: not detected
+! 0267 0000 017 0: not detected
+! 0267 0000 019 0: not detected
+! 0267 0000 021 0: not detected
+! 0267 0000 023 0: not detected
+! 0267 0000 025 0: not detected
+! 0267 0000 027 0: not detected
+! 0267 0000 029 0: not detected
+! 0267 0000 031 0: not detected
+! 0267 0000 033 0: not detected
+! 0267 0000 035 0: not detected
+! 0267 0000 037 0: not detected
+! 0267 0000 039 0: not detected
+! 0267 0000 041 0: not detected
+! 0267 0000 043 0: not detected
+! 0267 0000 045 0: not detected
+! 0267 0000 047 0: not detected
+! 0267 0000 049 0: not detected
+! 0267 0000 051 0: not detected
+! 0267 0000 053 0: not detected
+! 0267 0001 001 0: not detected
+! 0267 0002 001 0: not detected
+! 0267 0003 001 0: not detected
+! 0267 0004 001 0: not detected
+! 0267 0005 001 0: not detected
+! 0267 0006 001 0: not detected
+! 0267 0007 001 0: not detected
+! 0267 0008 001 0: not detected
+! 0267 0009 001 0: not detected
+! 0267 0010 001 0: not detected
+! 0267 0011 001 0: not detected
+! 0267 0012 001 0: not detected
+! 0267 0013 001 0: not detected
+! 0267 0014 001 0: not detected
+! 0267 0015 001 0: not detected
+! 0267 0016 001 0: not detected
+! 0267 0017 001 0: not detected
+! 0267 0018 001 0: not detected
+! 0267 0019 001 0: not detected
+! 0267 0020 001 0: not detected
+! 0267 0021 001 0: not detected
+! 0267 0022 001 0: not detected
+! 0267 0023 001 0: not detected
+! 0267 0024 001 0: not detected
+! 0267 0025 001 0: not detected
+! 0267 0026 001 0: not detected
+! 0267 0027 001 0: not detected
+! 0267 0028 001 0: not detected
+! 0267 0029 001 0: not detected
+! 0267 0030 001 0: not detected
+! 0267 0031 001 0: not detected
+! 0267 0032 001 0: not detected
+! 0267 0033 001 0: not detected
+! 0267 0034 001 0: not detected
+! 0267 0035 001 0: not detected
+! 0267 0036 001 0: not detected
+! 0267 0037 001 0: not detected
+! 0267 0038 001 0: not detected
+! 0267 0039 001 0: not detected
+! 0267 0040 001 0: not detected
+! 0267 0041 001 0: not detected
+! 0267 0042 001 0: not detected
+! 0267 0043 001 0: not detected
+! 0267 0044 001 0: not detected
+! 0267 0045 001 0: not detected
+! 0267 0046 001 0: not detected
+! 0267 0047 001 0: not detected
+! 0267 0048 001 0: not detected
+! 0267 0049 001 0: not detected
+! 0267 0050 001 0: not detected
+! 0267 0051 001 0: not detected
+ 1817.078575746015 0.0034490759049959     2.6801    0.0000     0.0000    0.0000    0.792  13.36  ! 0267 0052 001 0
+ 1817.096422977705 0.0130671365650414     3.4835    0.0000     0.7098    0.0000    2.203  13.36  ! 0267 0053 001 0
+ 1817.124600075980 0.0127372752799602     2.6084    0.5691     0.2416    0.0000    4.610   8.14  ! 0267 0054 001 0
+ 1817.152447312985 0.0127372752749579     2.4975    0.4303     0.0000    0.0000    5.337   5.06  ! 0267 0055 001 0
+ 1817.180265614780 0.0127314882399787     3.3566    0.4689     0.1726    0.0000    6.741   7.60  ! 0267 0056 001 0
+ 1817.208089703615 0.0127314882349765     2.7254    0.6981     0.3781    0.0000    3.906  10.36  ! 0267 0057 001 0
+! 0267 0058 001 0: not detected
+! 0267 0059 001 0: not detected
+! 0267 0060 001 0: not detected
+! 0267 0060 003 0: not detected
+! 0267 0060 005 0: not detected
+! 0267 0060 007 0: not detected
+! 0267 0060 009 0: not detected
+! 0267 0060 011 0: not detected
+! 0267 0060 013 0: not detected
+! 0267 0060 015 0: not detected
+! 0267 0060 016 0: not detected
+! 0267 0060 017 0: not detected
+! 0267 0060 018 0: not detected
+! 0267 0060 020 0: not detected
+! 0267 0061 001 0: not detected
+! 0267 0062 001 0: not detected
+! 0267 0063 001 0: not detected
+! 0267 0064 001 0: not detected
+! 0267 0064 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0267*
+cpd /xs

@@ -1,0 +1,77 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+ 2198.051632028200 0.0127257017800275     8.3857    1.5164     2.6527    0.0000    5.202  15.04  ! 0395 0001 001 0
+ 2198.079924868545 0.0125578775648592    12.2400    0.6064     0.0000    0.0000   19.394   8.09  ! 0395 0002 001 0
+ 2198.108020949425 0.0125636645750546    10.9984    0.4490     1.1912    0.0000   24.110   1.84  ! 0395 0003 001 0
+ 2198.136117030225 0.0125578774948281    11.5851    0.5197     0.1193    0.0000   21.556   6.27  ! 0395 0004 001 0
+ 2198.164207323910 0.0125578774700443    11.6459    1.2394     0.0000    0.0000    9.534  13.17  ! 0395 0005 001 0
+! 0395 0006 001 0: not detected
+! 0395 0007 001 0: not detected
+! 0395 0008 001 0: not detected
+! 0395 0009 001 0: not detected
+! 0395 0010 001 0: not detected
+! 0395 0011 001 0: not detected
+! 0395 0012 001 0: not detected
+! 0395 0013 001 0: not detected
+! 0395 0014 001 0: not detected
+! 0395 0015 001 0: not detected
+! 0395 0016 001 0: not detected
+! 0395 0017 001 0: not detected
+! 0395 0018 001 0: not detected
+! 0395 0019 001 0: not detected
+! 0395 0020 001 0: not detected
+! 0395 0021 001 0: not detected
+! 0395 0022 001 0: not detected
+! 0395 0023 001 0: not detected
+! 0395 0024 001 0: not detected
+! 0395 0025 001 0: not detected
+! 0395 0026 001 0: not detected
+! 0395 0027 001 0: not detected
+! 0395 0028 001 0: not detected
+! 0395 0029 001 0: not detected
+! 0395 0030 001 0: not detected
+! 0395 0031 001 0: not detected
+! 0395 0032 001 0: not detected
+! 0395 0033 001 0: not detected
+! 0395 0034 001 0: not detected
+! 0395 0035 001 0: not detected
+! 0395 0036 001 0: not detected
+! 0395 0037 001 0: not detected
+! 0395 0038 001 0: not detected
+! 0395 0039 001 0: not detected
+! 0395 0040 001 0: not detected
+! 0395 0041 001 0: not detected
+! 0395 0042 001 0: not detected
+! 0395 0043 001 0: not detected
+! 0395 0044 001 0: not detected
+! 0395 0045 001 0: not detected
+! 0395 0046 001 0: not detected
+! 0395 0047 001 0: not detected
+! 0395 0048 001 0: not detected
+! 0395 0049 001 0: not detected
+! 0395 0050 001 0: not detected
+! 0395 0051 001 0: not detected
+! 0395 0052 001 0: not detected
+! 0395 0053 001 0: not detected
+! 0395 0054 001 0: not detected
+! 0395 0055 001 0: not detected
+! 0395 0056 001 0: not detected
+! 0395 0057 001 0: not detected
+! 0395 0058 001 0: not detected
+! 0395 0059 001 0: not detected
+! 0395 0060 001 0: not detected
+! 0395 0061 001 0: not detected
+! 0395 0062 001 0: not detected
+! 0395 0063 001 0: not detected
+! 0395 0063 002 0: not detected
+! 0395 0063 003 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0395*
+cpd /xs

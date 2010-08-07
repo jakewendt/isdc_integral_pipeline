@@ -1,0 +1,78 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0335 0002 001 0: not detected
+ 2018.646975769325 0.0125636648350564     7.3667    1.1774     0.6048    0.0000    5.752  12.83  ! 0335 0003 001 0
+ 2018.675089211940 0.0125636648899672     2.8233    0.5505     0.0000    0.0000    4.906   8.44  ! 0335 0004 001 0
+ 2018.703196867620 0.0125578778900035     3.7652    0.4095     0.3465    0.0000    8.802   4.80  ! 0335 0005 001 0
+ 2018.731107763985 0.0127372761650122     2.8501    0.5072     0.0000    0.0000    5.210   8.52  ! 0335 0006 001 0
+ 2018.759203845650 0.0127314891100241     5.0690    0.0000     0.0000    0.0000    2.140  14.84  ! 0335 0007 001 0
+! 0335 0008 001 0: not detected
+! 0335 0009 001 0: not detected
+! 0335 0010 001 0: not detected
+! 0335 0011 001 0: not detected
+! 0335 0012 001 0: not detected
+! 0335 0013 001 0: not detected
+! 0335 0014 001 0: not detected
+! 0335 0015 001 0: not detected
+! 0335 0016 001 0: not detected
+! 0335 0017 001 0: not detected
+! 0335 0018 001 0: not detected
+! 0335 0019 001 0: not detected
+! 0335 0020 001 0: not detected
+! 0335 0021 001 0: not detected
+! 0335 0022 001 0: not detected
+! 0335 0023 001 0: not detected
+! 0335 0024 001 0: not detected
+! 0335 0025 001 0: not detected
+! 0335 0026 001 0: not detected
+! 0335 0027 001 0: not detected
+! 0335 0028 001 0: not detected
+! 0335 0029 001 0: not detected
+! 0335 0030 001 0: not detected
+! 0335 0031 001 0: not detected
+! 0335 0032 001 0: not detected
+! 0335 0033 001 0: not detected
+! 0335 0034 001 0: not detected
+! 0335 0035 001 0: not detected
+! 0335 0036 001 0: not detected
+! 0335 0037 001 0: not detected
+! 0335 0038 001 0: not detected
+! 0335 0039 001 0: not detected
+! 0335 0040 001 0: not detected
+! 0335 0041 001 0: not detected
+! 0335 0042 001 0: not detected
+! 0335 0043 001 0: not detected
+! 0335 0044 001 0: not detected
+! 0335 0045 001 0: not detected
+! 0335 0046 001 0: not detected
+! 0335 0047 001 0: not detected
+! 0335 0048 001 0: not detected
+! 0335 0049 001 0: not detected
+! 0335 0050 001 0: not detected
+! 0335 0051 001 0: not detected
+! 0335 0052 001 0: not detected
+! 0335 0053 001 0: not detected
+! 0335 0054 001 0: not detected
+! 0335 0055 001 0: not detected
+! 0335 0056 001 0: not detected
+! 0335 0057 001 0: not detected
+! 0335 0058 001 0: not detected
+! 0335 0059 001 0: not detected
+! 0335 0060 001 0: not detected
+! 0335 0061 001 0: not detected
+! 0335 0062 001 0: not detected
+! 0335 0063 001 0: not detected
+! 0335 0064 001 0: not detected
+! 0335 0065 001 0: not detected
+! 0335 0066 001 0: not detected
+! 0335 0066 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0335*
+cpd /xs

@@ -1,0 +1,83 @@
+
+NAME
+
+	pipeline_lib v-9.2.1
+
+
+USAGE
+
+
+DESCRIPTION
+
+	bb_mod.pl
+	bb_sum.pl
+	cleanup.pl
+	proc_man.pl
+
+	CleanLIB.pm
+	CorLIB.pm
+	Datasets.pm
+	IBISLIB.pm
+	ISDCLIB.pm
+	ISDCPipeline.pm
+	JMXLIB.pm
+	OMCLIB.pm
+	OPUSLIB.pm
+	SPILIB.pm
+	SSALIB.pm
+	TimeLIB.pm
+	UnixLIB.pm
+
+	cleanopus.resource
+	cleanosf.resource
+	cleanprp.resource
+
+	adpOMG.ini
+	adpPMG.ini
+	arcOMG.ini
+	arcPMG.ini
+	consOMG.ini
+	consPMG.ini
+	energy_bands.fits.gz
+	ignored_errors.cfg
+	irem_raw_20021226220109_00.fits
+	isdc_opus_install.csh
+	makeisdc1.in
+	makeisdc2
+	nrtOMG.ini
+	nrtPMG.ini
+	omg.dat
+	opus_login.csh
+	opus_wrapper
+	opus.env
+	pipeline_lib.help
+	pmg.dat
+	pmg_restrictions.dat
+
+	unit_test/README.pl
+
+   
+PARAMETERS
+
+
+EXAMPLES
+
+
+ERROR
+
+
+BUGS
+
+
+
+AUTHOR
+
+	Tess Jaffe, ISDC
+	
+	George "Jake" Wendt, ISDC
+	Jake.Wendt@obs.unige.ch
+
+
+SEE ALSO
+	perldoc <filename>
+

@@ -1,0 +1,78 @@
+! Source: Cen A
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+ 1288.739125114505 0.0127546368150888     5.3097    0.9796     1.6536    0.0000    4.802  13.41  ! 0091 0001 001 0
+! 0091 0002 001 0: not detected
+! 0091 0003 001 0: not detected
+! 0091 0004 001 0: not detected
+! 0091 0005 001 0: not detected
+! 0091 0006 001 0: not detected
+! 0091 0007 001 0: not detected
+! 0091 0008 001 0: not detected
+! 0091 0009 001 0: not detected
+! 0091 0010 001 0: not detected
+! 0091 0011 001 0: not detected
+! 0091 0012 001 0: not detected
+! 0091 0013 001 0: not detected
+! 0091 0014 001 0: not detected
+! 0091 0015 001 0: not detected
+! 0091 0016 001 0: not detected
+! 0091 0017 001 0: not detected
+! 0091 0018 001 0: not detected
+! 0091 0019 001 0: not detected
+! 0091 0020 001 0: not detected
+! 0091 0021 001 0: not detected
+! 0091 0022 001 0: not detected
+! 0091 0023 001 0: not detected
+! 0091 0024 001 0: not detected
+! 0091 0025 001 0: not detected
+! 0091 0026 001 0: not detected
+! 0091 0027 001 0: not detected
+! 0091 0028 001 0: not detected
+! 0091 0029 001 0: not detected
+! 0091 0030 001 0: not detected
+! 0091 0031 001 0: not detected
+! 0091 0032 001 0: not detected
+! 0091 0033 001 0: not detected
+! 0091 0034 001 0: not detected
+! 0091 0035 001 0: not detected
+! 0091 0036 001 0: not detected
+! 0091 0037 001 0: not detected
+! 0091 0038 001 0: not detected
+! 0091 0039 001 0: not detected
+! 0091 0040 001 0: not detected
+! 0091 0041 001 0: not detected
+! 0091 0042 001 0: not detected
+! 0091 0043 001 0: not detected
+! 0091 0044 001 0: not detected
+! 0091 0045 001 0: not detected
+! 0091 0045 002 0: not detected
+! 0091 0046 001 0: not detected
+! 0091 0047 001 0: not detected
+ 1290.626093731180 0.0200694554099528     7.4383    0.0000     7.0306    0.0000    3.906  17.26  ! 0091 0048 001 0
+ 1290.667679402100 0.0200694554600886     1.1162    0.0000     1.5655    0.0000    0.862  16.33  ! 0091 0049 001 0
+ 1290.709270860155 0.0200636684550091     9.3462    2.1857     4.2349    0.0000    4.393  15.59  ! 0091 0050 001 0
+! 0091 0051 001 0: not detected
+! 0091 0052 001 0: not detected
+ 1290.834033660550 0.0200694555200016    12.3034    2.3690     6.1590    0.0000    5.193  15.06  ! 0091 0053 001 0
+ 1290.875613544565 0.0200636684350002     7.3559    2.1305     3.0451    0.0000    3.576  15.60  ! 0091 0054 001 0
+ 1290.917199215540 0.0200636684101028     5.0783    0.0000     4.9192    0.0000    3.060  16.33  ! 0091 0055 001 0
+ 1290.958779099430 0.0200694554299616     7.5118    0.0000     1.2838    0.0000    2.718  17.26  ! 0091 0056 001 0
+! 0091 0057 001 0: not detected
+! 0091 0058 001 0: not detected
+! 0091 0059 001 0: not detected
+! 0091 0060 001 0: not detected
+! 0091 0061 001 0: not detected
+! 0091 0062 001 0: not detected
+! 0091 0063 001 0: not detected
+! 0091 0064 001 0: not detected
+! 0091 0064 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen A inst=isgri ScW=0091*
+cpd /xs

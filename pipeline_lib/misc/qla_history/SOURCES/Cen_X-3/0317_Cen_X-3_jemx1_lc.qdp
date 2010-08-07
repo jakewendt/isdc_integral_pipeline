@@ -1,0 +1,75 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0317 0004 001 0: not detected
+! 0317 0005 001 0: not detected
+! 0317 0006 001 0: not detected
+! 0317 0007 001 0: not detected
+! 0317 0008 001 0: not detected
+! 0317 0009 001 0: not detected
+! 0317 0010 001 0: not detected
+ 1965.041301470600 0.0132060257600415     4.4960    0.3920     3.5030    0.3506   18.817   3.08  ! 0317 0011 001 0
+! 0317 0012 001 0: not detected
+! 0317 0013 001 0: not detected
+! 0317 0014 001 0: not detected
+! 0317 0015 001 0: not detected
+! 0317 0016 001 0: not detected
+! 0317 0017 001 0: not detected
+! 0317 0018 001 0: not detected
+! 0317 0019 001 0: not detected
+! 0317 0020 001 0: not detected
+! 0317 0021 001 0: not detected
+! 0317 0022 001 0: not detected
+! 0317 0023 001 0: not detected
+! 0317 0024 001 0: not detected
+! 0317 0025 001 0: not detected
+! 0317 0026 001 0: not detected
+! 0317 0027 001 0: not detected
+! 0317 0028 001 0: not detected
+! 0317 0029 001 0: not detected
+! 0317 0030 001 0: not detected
+! 0317 0031 001 0: not detected
+! 0317 0032 001 0: not detected
+! 0317 0033 001 0: not detected
+! 0317 0034 001 0: not detected
+! 0317 0035 001 0: not detected
+! 0317 0036 001 0: not detected
+! 0317 0037 001 0: not detected
+! 0317 0038 001 0: not detected
+! 0317 0039 001 0: not detected
+! 0317 0040 001 0: not detected
+! 0317 0041 001 0: not detected
+! 0317 0042 001 0: not detected
+! 0317 0043 001 0: not detected
+! 0317 0044 001 0: not detected
+! 0317 0045 001 0: not detected
+! 0317 0046 001 0: not detected
+! 0317 0047 001 0: not detected
+! 0317 0048 001 0: not detected
+! 0317 0049 001 0: not detected
+! 0317 0050 001 0: not detected
+! 0317 0051 001 0: not detected
+! 0317 0052 001 0: not detected
+! 0317 0053 001 0: not detected
+! 0317 0054 001 0: not detected
+! 0317 0055 001 0: not detected
+! 0317 0056 001 0: not detected
+! 0317 0057 001 0: not detected
+! 0317 0058 001 0: not detected
+! 0317 0059 001 0: not detected
+! 0317 0060 001 0: not detected
+! 0317 0061 001 0: not detected
+! 0317 0062 001 0: not detected
+! 0317 0063 001 0: not detected
+! 0317 0064 001 0: not detected
+! 0317 0065 001 0: not detected
+! 0317 0066 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0317*
+cpd /xs

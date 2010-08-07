@@ -1,0 +1,78 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+ 2027.593201957275 0.0127430634850043     0.0000    0.0000     0.0705    0.0000    0.062  12.68  ! 0338 0001 001 0
+ 2027.621483224860 0.0125636652099956     2.2307    0.5358     0.2745    0.0000    3.871   6.27  ! 0338 0002 001 0
+ 2027.649579307105 0.0125578781450031     2.0008    0.4353     0.4136    0.0000    4.323   4.00  ! 0338 0003 001 0
+ 2027.677681176315 0.0125578781050990     1.3647    0.0000     0.5243    0.0000    2.208   9.55  ! 0338 0004 001 0
+! 0338 0005 001 0: not detected
+! 0338 0006 001 0: not detected
+! 0338 0007 001 0: not detected
+! 0338 0008 001 0: not detected
+! 0338 0009 001 0: not detected
+! 0338 0010 001 0: not detected
+! 0338 0011 001 0: not detected
+! 0338 0012 001 0: not detected
+! 0338 0013 001 0: not detected
+! 0338 0014 001 0: not detected
+! 0338 0015 001 0: not detected
+! 0338 0016 001 0: not detected
+! 0338 0017 001 0: not detected
+! 0338 0018 001 0: not detected
+! 0338 0019 001 0: not detected
+! 0338 0020 001 0: not detected
+! 0338 0021 001 0: not detected
+! 0338 0022 001 0: not detected
+! 0338 0023 001 0: not detected
+! 0338 0024 001 0: not detected
+! 0338 0025 001 0: not detected
+! 0338 0026 001 0: not detected
+! 0338 0027 001 0: not detected
+! 0338 0028 001 0: not detected
+! 0338 0029 001 0: not detected
+! 0338 0030 001 0: not detected
+! 0338 0031 001 0: not detected
+! 0338 0032 001 0: not detected
+! 0338 0033 001 0: not detected
+! 0338 0034 001 0: not detected
+! 0338 0035 001 0: not detected
+! 0338 0036 001 0: not detected
+! 0338 0037 001 0: not detected
+! 0338 0038 001 0: not detected
+! 0338 0039 001 0: not detected
+! 0338 0040 001 0: not detected
+! 0338 0041 001 0: not detected
+! 0338 0042 001 0: not detected
+! 0338 0043 001 0: not detected
+! 0338 0044 001 0: not detected
+! 0338 0045 001 0: not detected
+! 0338 0046 001 0: not detected
+! 0338 0048 001 0: not detected
+! 0338 0049 001 0: not detected
+! 0338 0050 001 0: not detected
+! 0338 0051 001 0: not detected
+! 0338 0052 001 0: not detected
+! 0338 0053 001 0: not detected
+! 0338 0054 001 0: not detected
+! 0338 0055 001 0: not detected
+! 0338 0056 001 0: not detected
+! 0338 0057 001 0: not detected
+! 0338 0058 001 0: not detected
+! 0338 0059 001 0: not detected
+! 0338 0060 001 0: not detected
+! 0338 0061 001 0: not detected
+! 0338 0062 001 0: not detected
+! 0338 0063 001 0: not detected
+! 0338 0064 001 0: not detected
+! 0338 0065 001 0: not detected
+! 0338 0066 001 0: not detected
+! 0338 0066 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0338*
+cpd /xs

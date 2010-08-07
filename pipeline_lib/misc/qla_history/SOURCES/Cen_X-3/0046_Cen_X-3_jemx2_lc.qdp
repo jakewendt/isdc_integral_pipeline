@@ -1,0 +1,97 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0046 0003 001 0: not detected
+! 0046 0004 001 0: not detected
+! 0046 0005 001 0: not detected
+! 0046 0006 001 0: not detected
+! 0046 0007 001 0: not detected
+! 0046 0008 001 0: not detected
+! 0046 0009 001 0: not detected
+! 0046 0010 001 0: not detected
+! 0046 0011 001 0: not detected
+! 0046 0012 001 0: not detected
+! 0046 0013 001 0: not detected
+! 0046 0014 001 0: not detected
+! 0046 0015 001 0: not detected
+! 0046 0016 001 0: not detected
+! 0046 0017 001 0: not detected
+! 0046 0018 001 0: not detected
+! 0046 0019 001 0: not detected
+! 0046 0020 001 0: not detected
+! 0046 0021 001 0: not detected
+! 0046 0022 001 0: not detected
+! 0046 0023 001 0: not detected
+! 0046 0024 001 0: not detected
+! 0046 0025 001 0: not detected
+! 0046 0026 001 0: not detected
+! 0046 0027 001 0: not detected
+! 0046 0028 001 0: not detected
+! 0046 0029 001 0: not detected
+! 0046 0030 001 0: not detected
+! 0046 0031 001 0: not detected
+! 0046 0032 001 0: not detected
+! 0046 0033 001 0: not detected
+! 0046 0034 001 0: not detected
+! 0046 0035 001 0: not detected
+! 0046 0036 001 0: not detected
+! 0046 0037 001 0: not detected
+! 0046 0038 001 0: not detected
+! 0046 0039 001 0: not detected
+! 0046 0040 001 0: not detected
+! 0046 0041 001 0: not detected
+! 0046 0042 001 0: not detected
+! 0046 0043 001 0: not detected
+! 0046 0044 001 0: not detected
+! 0046 0045 001 0: not detected
+! 0046 0046 001 0: not detected
+! 0046 0047 001 0: not detected
+! 0046 0048 001 0: not detected
+! 0046 0049 001 0: not detected
+! 0046 0050 001 0: not detected
+! 0046 0051 001 0: not detected
+! 0046 0052 001 0: not detected
+! 0046 0053 001 0: not detected
+! 0046 0054 001 0: not detected
+! 0046 0055 001 0: not detected
+! 0046 0056 001 0: not detected
+! 0046 0057 001 0: not detected
+! 0046 0058 001 0: not detected
+! 0046 0059 001 0: not detected
+! 0046 0060 001 0: not detected
+! 0046 0061 001 0: not detected
+! 0046 0062 001 0: not detected
+! 0046 0063 001 0: not detected
+! 0046 0064 001 0: not detected
+! 0046 0064 002 0: not detected
+! 0046 0071 001 0: not detected
+! 0046 0072 001 0: not detected
+! 0046 0073 001 0: not detected
+! 0046 0074 001 0: not detected
+! 0046 0075 001 0: not detected
+! 0046 0076 001 0: not detected
+! 0046 0077 001 0: not detected
+! 0046 0078 001 0: not detected
+! 0046 0079 001 0: not detected
+! 0046 0080 001 0: not detected
+! 0046 0081 001 0: not detected
+! 0046 0082 001 0: not detected
+! 0046 0083 001 0: not detected
+! 0046 0084 001 0: not detected
+! 0046 0085 001 0: not detected
+! 0046 0086 001 0: not detected
+! 0046 0087 001 0: not detected
+! 0046 0088 001 0: not detected
+! 0046 0089 001 0: not detected
+ 1156.550659452685 0.0127257005050296     0.7551    0.1385     0.5628    0.1579    5.234   2.01  ! 0046 0090 001 0
+! 0046 0091 001 0: not detected
+! 0046 0092 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx2 ScW=0046*
+cpd /xs

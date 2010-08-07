@@ -1,0 +1,82 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0347 0002 001 0: not detected
+! 0347 0003 001 0: not detected
+! 0347 0004 001 0: not detected
+! 0347 0005 001 0: not detected
+! 0347 0006 001 0: not detected
+ 2054.657720356155 0.0125578773750021     8.7431    1.5603     8.4737    1.6653   25.463   4.22  ! 0347 0007 001 0
+ 2054.685868519990 0.0125578773599955     9.5905    5.9518    10.0855    7.1325    3.511   4.94  ! 0347 0008 001 0
+! 0347 0009 001 0: not detected
+! 0347 0010 001 0: not detected
+! 0347 0011 001 0: not detected
+! 0347 0012 001 0: not detected
+! 0347 0013 001 0: not detected
+! 0347 0014 001 0: not detected
+! 0347 0015 001 0: not detected
+! 0347 0016 001 0: not detected
+! 0347 0017 001 0: not detected
+! 0347 0018 001 0: not detected
+! 0347 0019 001 0: not detected
+! 0347 0020 001 0: not detected
+! 0347 0021 001 0: not detected
+! 0347 0022 001 0: not detected
+! 0347 0023 001 0: not detected
+! 0347 0024 001 0: not detected
+! 0347 0025 001 0: not detected
+! 0347 0026 001 0: not detected
+! 0347 0027 001 0: not detected
+! 0347 0028 001 0: not detected
+! 0347 0029 001 0: not detected
+! 0347 0030 001 0: not detected
+! 0347 0031 001 0: not detected
+! 0347 0032 001 0: not detected
+! 0347 0033 001 0: not detected
+! 0347 0034 001 0: not detected
+! 0347 0035 001 0: not detected
+! 0347 0036 001 0: not detected
+! 0347 0037 001 0: not detected
+! 0347 0038 001 0: not detected
+! 0347 0039 001 0: not detected
+! 0347 0040 001 0: not detected
+! 0347 0041 001 0: not detected
+! 0347 0042 001 0: not detected
+! 0347 0043 001 0: not detected
+! 0347 0044 001 0: not detected
+! 0347 0045 001 0: not detected
+! 0347 0046 001 0: not detected
+! 0347 0047 001 0: not detected
+! 0347 0048 001 0: not detected
+! 0347 0049 001 0: not detected
+! 0347 0050 001 0: not detected
+! 0347 0051 001 0: not detected
+! 0347 0052 001 0: not detected
+! 0347 0053 001 0: not detected
+! 0347 0054 001 0: not detected
+! 0347 0055 001 0: not detected
+! 0347 0056 001 0: not detected
+! 0347 0057 001 0: not detected
+! 0347 0058 001 0: not detected
+! 0347 0059 001 0: not detected
+! 0347 0060 001 0: not detected
+! 0347 0061 001 0: not detected
+! 0347 0062 001 0: not detected
+! 0347 0063 001 0: not detected
+! 0347 0064 001 0: not detected
+! 0347 0065 001 0: not detected
+! 0347 0066 001 0: not detected
+! 0347 0067 001 0: not detected
+! 0347 0068 001 0: not detected
+! 0347 0069 001 0: not detected
+! 0347 0070 001 0: not detected
+! 0347 0071 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0347*
+cpd /xs

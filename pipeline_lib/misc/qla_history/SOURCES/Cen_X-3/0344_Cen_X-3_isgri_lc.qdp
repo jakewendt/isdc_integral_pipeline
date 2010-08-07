@@ -1,0 +1,76 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0344 0002 001 0: not detected
+! 0344 0003 001 0: not detected
+! 0344 0004 001 0: not detected
+! 0344 0005 001 0: not detected
+! 0344 0006 001 0: not detected
+! 0344 0007 001 0: not detected
+! 0344 0008 001 0: not detected
+! 0344 0009 001 0: not detected
+! 0344 0010 001 0: not detected
+! 0344 0011 001 0: not detected
+! 0344 0012 001 0: not detected
+! 0344 0013 001 0: not detected
+! 0344 0014 001 0: not detected
+! 0344 0015 001 0: not detected
+! 0344 0016 001 0: not detected
+! 0344 0017 001 0: not detected
+! 0344 0018 001 0: not detected
+! 0344 0019 001 0: not detected
+! 0344 0020 001 0: not detected
+! 0344 0021 001 0: not detected
+! 0344 0022 001 0: not detected
+! 0344 0023 001 0: not detected
+! 0344 0024 001 0: not detected
+! 0344 0025 001 0: not detected
+! 0344 0026 001 0: not detected
+! 0344 0027 001 0: not detected
+! 0344 0028 001 0: not detected
+! 0344 0029 001 0: not detected
+! 0344 0030 001 0: not detected
+! 0344 0031 001 0: not detected
+! 0344 0032 001 0: not detected
+! 0344 0033 001 0: not detected
+! 0344 0034 001 0: not detected
+! 0344 0035 001 0: not detected
+! 0344 0036 001 0: not detected
+! 0344 0037 001 0: not detected
+! 0344 0038 001 0: not detected
+! 0344 0039 001 0: not detected
+! 0344 0040 001 0: not detected
+! 0344 0041 001 0: not detected
+! 0344 0042 001 0: not detected
+! 0344 0043 001 0: not detected
+! 0344 0044 001 0: not detected
+! 0344 0045 001 0: not detected
+! 0344 0046 001 0: not detected
+! 0344 0047 001 0: not detected
+! 0344 0048 001 0: not detected
+! 0344 0049 001 0: not detected
+! 0344 0050 001 0: not detected
+! 0344 0051 001 0: not detected
+! 0344 0052 001 0: not detected
+! 0344 0053 001 0: not detected
+! 0344 0054 001 0: not detected
+! 0344 0055 001 0: not detected
+! 0344 0056 001 0: not detected
+! 0344 0057 001 0: not detected
+! 0344 0058 001 0: not detected
+! 0344 0059 001 0: not detected
+! 0344 0060 001 0: not detected
+! 0344 0061 001 0: not detected
+! 0344 0062 001 0: not detected
+! 0344 0063 001 0: not detected
+ 2048.111998653110 0.0034143537400269    13.9611    3.2162     6.9593    0.0000    4.811  12.56  ! 0344 0064 001 0
+ 2048.168885258695 0.0520949362648935    14.5166    0.0000     0.0000    0.0000    2.362  12.17  ! 0344 0065 001 0
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0344*
+cpd /xs

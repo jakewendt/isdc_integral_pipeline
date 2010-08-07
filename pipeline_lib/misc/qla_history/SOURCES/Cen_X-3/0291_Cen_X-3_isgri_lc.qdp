@@ -1,0 +1,83 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0291 0002 001 0: not detected
+ 1887.031607629140 0.0125636644200995     7.6107    0.6356     0.0000    0.0000   11.651  10.32  ! 0291 0003 001 0
+ 1887.059796302300 0.0125578774000132     7.5787    0.4029     0.5800    0.0000   18.433   4.36  ! 0291 0004 001 0
+ 1887.087932892165 0.0125578774349151     7.2349    0.4562     0.2642    0.0000   15.552   5.38  ! 0291 0005 001 0
+ 1887.116057908030 0.0125578774799351     9.7069    0.7942     0.0000    0.0000   11.667  11.75  ! 0291 0006 001 0
+ 1887.144188711045 0.0125636645650502    12.4406    2.3499     0.0000    0.0000    5.091  17.07  ! 0291 0007 001 0
+! 0291 0008 001 0: not detected
+! 0291 0009 001 0: not detected
+! 0291 0010 001 0: not detected
+! 0291 0011 001 0: not detected
+! 0291 0012 001 0: not detected
+! 0291 0013 001 0: not detected
+! 0291 0014 001 0: not detected
+! 0291 0015 001 0: not detected
+! 0291 0016 001 0: not detected
+! 0291 0017 001 0: not detected
+! 0291 0018 001 0: not detected
+! 0291 0019 001 0: not detected
+! 0291 0020 001 0: not detected
+! 0291 0021 001 0: not detected
+! 0291 0023 001 0: not detected
+! 0291 0024 001 0: not detected
+! 0291 0025 001 0: not detected
+! 0291 0026 001 0: not detected
+! 0291 0027 001 0: not detected
+! 0291 0028 001 0: not detected
+! 0291 0029 001 0: not detected
+! 0291 0030 001 0: not detected
+! 0291 0031 001 0: not detected
+! 0291 0032 001 0: not detected
+! 0291 0033 001 0: not detected
+! 0291 0034 001 0: not detected
+! 0291 0035 001 0: not detected
+! 0291 0036 001 0: not detected
+! 0291 0037 001 0: not detected
+! 0291 0038 001 0: not detected
+! 0291 0039 001 0: not detected
+! 0291 0040 001 0: not detected
+! 0291 0041 001 0: not detected
+! 0291 0042 001 0: not detected
+! 0291 0043 001 0: not detected
+! 0291 0044 001 0: not detected
+! 0291 0045 001 0: not detected
+! 0291 0046 001 0: not detected
+! 0291 0047 001 0: not detected
+! 0291 0048 001 0: not detected
+! 0291 0049 001 0: not detected
+! 0291 0050 001 0: not detected
+! 0291 0051 001 0: not detected
+! 0291 0052 001 0: not detected
+! 0291 0053 001 0: not detected
+! 0291 0054 001 0: not detected
+! 0291 0055 001 0: not detected
+! 0291 0056 001 0: not detected
+! 0291 0057 001 0: not detected
+! 0291 0058 001 0: not detected
+! 0291 0059 001 0: not detected
+! 0291 0060 001 0: not detected
+! 0291 0061 001 0: not detected
+! 0291 0062 001 0: not detected
+! 0291 0063 001 0: not detected
+! 0291 0064 001 0: not detected
+! 0291 0065 001 0: not detected
+! 0291 0066 001 0: not detected
+! 0291 0067 001 0: not detected
+! 0291 0068 001 0: not detected
+! 0291 0069 001 0: not detected
+! 0291 0070 001 0: not detected
+! 0291 0071 001 0: not detected
+! 0291 0072 001 0: not detected
+! 0291 0073 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0291*
+cpd /xs

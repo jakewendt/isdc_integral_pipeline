@@ -1,0 +1,577 @@
+
+This component will fail on Darwin.
+
+
+Notes:
+	osf_test only returns a non-zero value for bad syntax or missing path files
+		NOT when the osf in question does not exist!
+
+Linux ToDo
+	line  348 of proc_man.pl ( rsh/ps/egrep )	- I'm gonna leave this one alone.
+
+	Add a --FAST to cleanup.pl that doesn't do osf_test or anything ????
+
+
+Many lines marked with FIX
+
+Check them!
+
+20070625 - Jake
+	SCREW 2003 - IBISLIB.pm / IPMosaic / ip_skymosaic / parameter update
+
+--------------------------------------------------------------------------------------
+20070601 - Jake - deliver pipeline_lib 9.5.3 on SCREW 1977 1983
+
+20070511 - Jake
+	SCREW 1983 - CleanLIB.pm
+
+20070509 - Jake
+	SCREW 1983 - IBISLIB.pm and JMXLIB.pm
+
+20070327 - Jake
+	SCREW 1977 - IBISLIB.pm
+
+--------------------------------------------------------------------------------------
+20070307 - Jake - deliver pipeline_lib 9.5.2 on SPR 4648 4656
+
+20070306 - Jake
+	SPR 4648, 4656 - added and removed some parameters for ibis_scripts 10.0
+
+20061212 - Jake
+	Modifying perldoc info on bb_mod.pl, bb_sum.pl, proc_man.pl
+
+--------------------------------------------------------------------------------------
+20061211 - Jake - deliver pipeline_lib 9.5.1 on SPR 4614
+
+20060705 - Jake 
+	SCREW 1872 - ibis_science_analysis SCW1_GTI_attTolerance parameter change to
+		SCW1_GTI_attTolerance_X and SCW1_GTI_attTolerance_Z
+
+--------------------------------------------------------------------------------------
+20061026 - Jake - deliver pipeline_lib 9.5 on SCREW 1918 and SPR 4509 4595
+
+20061020 - Jake
+	SPR 4595
+
+20060925 - Jake
+	added and removed some parameters for j_scripts 4.6
+
+--------------------------------------------------------------------------------------
+20060710 - Jake - deliver pipeline_lib 9.4 on SCREW 1731 1768 1799 1831 1833 1871
+
+20060627 - Jake
+	SCREW 1831 - omc_science_analysis parameter changes
+	SCREW 1833 - omc_science_analysis parameter changes
+
+20060615 - Jake
+	SCREWs 1731, 1768, 1799 and 1831 - spi_science_analysis par changes
+
+20060612 - Jake
+	SCREW 1871 - changed startLevel to GTI from BIN_I for IBIS (conssa and consssa)
+
+20060515 - Jake
+	added cssst = 1 to pmg_restrictions.dat
+	minor mod to opus_wrapper for iii_prep and arc_prep
+
+--------------------------------------------------------------------------------------
+20060508 - Jake - deliver pipeline_lib 9.3 on SPR 4447 4456 and SCREW 1815 1832 1836 1838 1856
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060411 - Jake
+	SCREW 1838 - Increase PSTAT PROC_STAT.SIZE from 15 to 40
+
+20060405 - Jake
+	SCREW 1836
+		modify opus_login.csh to also work with 5v4b
+		modify isdc_opus_install.csh to also work with 5v4b
+		modify opus.env to also work with 5v4b
+
+20060404 - Jake
+	SPR 4456 - parameter updates
+	SCREW 1832 - ParseConfigFile subroutine
+
+20060328 - Jake
+	SPR 4447 : cleanup.pl does not always remove the nrtqla trigger (CleanLIB.pm)
+	SCREW 1815 : versioning of the obs_INST_OSA directory (SSALIB.pm)
+
+--------------------------------------------------------------------------------------
+20060224 - Jake - deliver pipeline_lib 9.2.1 on SCREW 1819
+
+20060224 - Jake
+	SCREW 1819 - gti_create and gti_merge simplification and minimization
+
+--------------------------------------------------------------------------------------
+20060215 - Jake - delivered pipeline_lib 9.2 on SPR 4375 4390 4427 4429 4430 and SCREW 1788 1807
+
+20060215 - Jake
+	SCREW 1788 - effectively simplified as much as possible
+
+20060210 - Jake
+	SPR 4429 - QLA parameters for JEMX
+	SPR 4375 - cleanup.pl does not cleanup /reproc/cons/ops_sa/scratch/
+
+20060209 - Jake
+	SPR 4427 - set SouFit to 0 for nrtqla/IBIS (missed this in SPR 4426)
+	SPR 4430 - change $BIN_I_shdType from 3 to 2 for nrtqla JMX
+
+20060208 - Jake
+	SPR 4390 - local disk cleanup (ana*)
+	SCREW 1807 - DAL_RETRY_OPEN setting in IBISLIB.pm
+
+--------------------------------------------------------------------------------------
+20060207 - Jake - delivered pipeline_lib 9.1.2 on SPR 4418 4426 and SCREW 1796
+
+20060207 - Jake
+	SPR 4418 - pass usrCat to jemx_science_analysis
+	SPR 4426 - ibis par updates for nrtqla
+
+20060203 - Jake
+	some cleanup.pl/CleanLIB.pm mods to allow for multi-rev removal (sweet)
+
+--------------------------------------------------------------------------------------
+20060117 - Jake - delivered pipeline_lib 9.1.1 on SPR 4417
+	SPR 4417 - fcalc PARFILES fix
+
+--------------------------------------------------------------------------------------
+20060116 - Jake - delivered pipeline_lib 9.1 on SPR 4409 and SCREW 1804
+
+	SCREW 1783 rejected so changing back
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+	SPR 4409 - writing to /dev/null now instead of /tmp/$$
+
+20060110 - Jake
+	ISDCPipeline.pm cleanup
+	setting ISGRI_FLAG == 1 in all analysis pipelines.  This will cause diffs in conssa.
+
+20060109 - Jake
+	SCREW 1796 - moved energy_bands.fits.gz to pipeline_lib for conssa and consssa
+		moved QLALIB.pm back to nrtqla as all things in it are only called from nrtqla now
+
+20060105 - Jake
+	SCREW 1796 - using ibis_science_analysis instead of ibis_obs1_analysis
+	SCREW 1796 - using omc_science_analysis instead of omc_obs_analysis
+
+--------------------------------------------------------------------------------------
+20060103 - Jake - delivered pipeline_lib 9.0 on SPR 4375 4390 4409 and SCREW 1788 1796
+
+20051214 - Jake
+	Many changes have been made now.
+		CleanLIB.pm contains all cleanup.pl functions.  
+			Much cleaner, clearer and smaller, but still not finished.
+	SCREW 1796 - 
+		Created OMCLIB.pm to be used by conssa
+
+20051208 - Jake
+	SCREW 1796 - 
+		Created IBISLIB.pm to be used by consssa and nrtqla ( and maybe conssa )
+		Created JMXLIB.pm to be used by consssa and nrtqla ( and maybe conssa )
+		Created SPILIB.pm to be used by consssa ( and maybe conssa )
+
+--------------------------------------------------------------------------------------
+20051207 - Jake - deliver pipeline_lib 8.9 SPR 4365 4384 4394 and SCREW 1769 1791
+
+	Added SSALIB.pm (was CssGEN.pm) and Datasets.pm to pipeline_lib
+
+20051206 - Jake
+	Function moves that may cause problems in other scripts
+		ProcStep from ISDCPipeline to ISDCLIB
+		LogMessage from ISDCPipeline to ISDCLIB
+		LogError from ISDCPipeline to ISDCLIB
+		ParseOSF from ISDCPipeline to OPUSLIB
+		ParsePSTAT from ISDCPipeline to OPUSLIB
+	SPR 4384
+
+20051205 - Jake
+	SPR 4392	(do I mean 4394 here?)
+
+20051202 - Jake
+	began classifying and dividing some of the functions into OPUSLIB.pm and ISDCLIB.pm
+
+20051125 - Jake
+	Changed much more of cleanup.pl
+
+20051114 - Jake
+	cleaning up cleanup.pl
+		- deglobalizing variables
+		- breaking code into smaller subroutines even if only called once
+			to make more readable
+		- trying to find redundant and reusable code
+	SPR 4365 - check ownership for conssa (and consssa)
+	updated unit test to use consrev-3.9_outref.tar.gz
+
+20051114 - Jake
+	SCREW 1791 - case desensitize machine name (and correct for anaB* and anaS*)
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+--------------------------------------------------------------------------------------
+20051028 - Jake - deliver pipeline_lib 8.8 on SPRs 4271 4317 4327 4343
+
+20051028 - Jake
+	SPR 4343
+
+20050927 - Jake
+	SPR 4327 - cleanup.pl
+
+20050916 - Jake
+	changed ISDCConstants.pm myps to /usr/ucb/ps
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+20050912 - Jake
+	SPR 4317 - proc_man.pl to skip process if the current pstat and 
+		the new pstat are the same
+
+--------------------------------------------------------------------------------------
+20050907 - Jake - deliver pipeline_lib 8.7.1 on SPRs 4314 4315
+
+20050907 - Jake
+	SPR 4314 and 4315
+
+20050905 - Jake
+	added eval `envv set MSG_TRL_REPORT_LEVEL MSG_INFO` just after the same
+		for MSG_REPORT_LEVEL
+
+--------------------------------------------------------------------------------------
+20050905 - Jake - deliver pipeline_lib 8.7 on SPRs 4279 4282 4291 4293 4297 and SCREW 1756
+
+20050831 - Jake
+	added donotconfirm parameter to BBUpdate as called from bb_mod.pl for unit testing
+	added --donotconfirm parameter to bb_mod.pl for unit testing
+
+20050829 - Jake
+	SPR 4307 - cleanup --path=revol_scw doesn't remove rev logs - WITHDRAWN
+
+--------------------------------------------------------------------------------------
+20050825 - Jake - deliver pipeline_lib 8.7 on SPRs 4279 4282 4291 4293 4297 and SCREW 1756
+
+20050825 - Jake
+	SCREW 1756 - shortened matching in bb_sum.pl, bb_mod.pl and proc_man.pl for
+		shortest unambiguous string for parameters.  I didn't do this for options
+		like --delete.
+
+20050822 - Jake
+	corrected conssa matching as $match was not defined there
+	more fine tuning of SPR 4297.
+
+20050817 - Jake
+	SPR 4297 - modification to cleanup.pl to make cleanup conssa opus stuff
+
+20050816 - Jake
+	SPR 4279 - opus_login.csh detects OS
+		opus_login.csh uses ssh -1 only on linux
+		proc_man.pl uses ssh -1 only on linux
+	SPR 4291 - changes to help consssa cleanup.pl
+
+20050815 - Jake
+	SPR 4293 - FindDOL adjustments
+
+20050811 - Jake
+	had to add CssGEN::Trigger2OSF in ISDCPipeline::OSFstatus
+
+20050802 - Jake
+	SPR 4282 - cleanup.pl change to remove $OPUS_WORK/consssa/scratch stuff
+	proc_man.pl - changed /usr/ucb/ps to $myps
+	proc_man.pl - changed rsh to $myssh -1
+
+20050719 - Jake
+	SPR 4271 - more robust adp arc_prep rerun
+
+20050711 - Jake
+	tried to undo all SPR 4257 changes to include conscor stuff
+	we will probably be using a modified consssa pipeline
+
+20050704 - Jake
+	SPR 4257 - edit ISDCPipeline.pm, ISDCConstants.pm, opus_login.csh and opus_wrapper for conscor pipeline
+
+--------------------------------------------------------------------------------------
+20050704 - Jake - deliver pipeline_lib 8.6 on SPRs 4196 4242
+
+20050617 - Jake
+	SPR 4242 - debuging prints and retry osf_create
+
+20050602 - Jake
+	SPR 4196 - add sort to osf_test for adp in opus_wrapper
+
+--------------------------------------------------------------------------------------
+20050419 - Jake - delivering pipeline_lib 8.5 on SPRs 4071 4083 and SCREWs 1702 1704
+
+20050414 - Jake
+	added myptree and mypstree
+	both only used when TIMEOUT exceeded
+
+20050413 - Jake 
+	unit test work on linux with no differences
+
+20050413 - Jake 
+	SPR 4083 - cleanup.pl not matching mosaics properly
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		ISDCConstants.pm - /usr/bin/ to /bin/
+		unit_test changes
+
+	SCREW 1702 - bb_sum.pl to see multiple blackboards
+
+20050405 - Jake
+	SPR 4071 - eliminate Perl warning of use of uninitialized string
+
+--------------------------------------------------------------------------------------
+20050329 - Jake - delivering pipeline_lib 8.4 on SCREWs 1647 1674
+
+20050311 - Jake
+	SCREW 1647 - added $att{match} to ISDCPipeline::OSFstatus
+		added some other stuff to ISDCPipeline::OSFstatus to discriminate
+			between ssa and sma
+
+20050309 - Jake
+	removing all refs to conssma pipeline
+
+20050307 - Jake
+	SCREW 1674 - made testing mods to proc_man.pl and put on ops net
+
+--------------------------------------------------------------------------------------
+20050302 - Jake - delivering pipeline_lib 8.3 on SCREW 1667
+
+20050301 - Jake
+	SCREW 1667 - changed unix system $root in ISDCConstants.pm to /usr/bin/
+	SCREW 1667 - chmod -R fix in cleanup.pl
+
+--------------------------------------------------------------------------------------
+20050224 - Jake - delivering pipeline_lib 8.2 on SPR 4020
+
+20050224 - Jake
+	SPR 4020 - Set ISDC_OPUS in unit_test
+	had to change versions of consrev test_data and conssa outref
+	had to add SOGS_DISK environment variable
+	added use lib for pipeline_lib in unit_test
+	added use lib for pipeline_lib in cleanup.pl
+	added use lib for pipeline_lib in bb_sum.pl
+	had to give full path to bb_sum.pl
+
+--------------------------------------------------------------------------------------
+20050223 - Jake - delivering pipeline_lib 8.1 on 
+	SCREW 1629 1646 1654 and SPR 3977 3988 3989 4005
+
+20050222 - Jake
+	SCREW 1654 - added all $ISDCPipeline::my* to ISDCConstants and exported
+	modified bb_mod.pl, ISDCPipeline.pm, ISDCConstants, cleanup.pl, proc_man.pl
+	will have to add all pipelines to this SCREW and replace all $ISDCPipeline::
+
+20050220 - Jake
+	SPR 4005 - check ownership before trying chmod
+
+20050218 - Jake
+	added "ingest","ssa","ssa_ingest","sma","sma_ingest" to cleanup.pl list
+
+20050214 - Jake
+	SCREW 1629 - Added "par_checkDupl" => "1", to both idx_merge calls
+
+20050200 - Jake
+	SPR 3988 - cleanup.pl to work with consssa
+	SPR 3989 - cleanup.pl to work with conssa
+
+20050207 - Jake
+	began cleaning up cleanup.pl
+	began creating a unit test which tests cleanup.pl
+
+20050204 - Jake
+	Added conssma to isdc_opus_install.csh
+
+20050131 - Jake
+	SPR 3977 - undid accidental SCREW 1484 change to remove OPUS_WORK log files
+
+20050121 - Jake
+	added "all" to switch in isdc_opus_install.csh and opus_login.csh (same as nrt)
+	ran properindent.pl on isdc_opus_install.csh and opus_login.csh
+
+--------------------------------------------------------------------------------------
+20050110 - Jake - delivering pipeline_lib 8.0 on SCREW 1623 and SPR 3887
+
+20050106 - Jake
+	modified SCREW 1559 change cuz doesn't revno parse doesn't work
+	in the adp pipeline
+	SCREW 1623
+
+20041008 - Jake
+	SPR 3887 - made bb_{mod,sum}.pl --revno work with consssa
+
+--------------------------------------------------------------------------------------
+20041006 - Jake - delivering pipeline_lib 7.9 on SCREW 1568
+
+20041005 - Jake
+	SCREW 1568 - dal_dump wrapper GetColumn
+
+--------------------------------------------------------------------------------------
+20041001 - Jake - delivering pipeline_lib 7.8 on SPR 3858
+
+20040929 - Jake
+	SPR 3858 - few changes to opus_login.csh and cleanup.pl
+
+--------------------------------------------------------------------------------------
+20040928 - Jake - delivering pipeline_lib 7.7 on SCREW 1556 1559 1563
+
+	SCREW 1563 - added consssa stuff to ISDCPipeline.pm, opus_wrapper
+		and isdc_opus_install.csh
+
+20040921 - Jake
+	SCREW 1559 - bb_sum.pl to check if log file exist before grep
+
+20040915 - jake 
+	SCREW 1556 - new functions FindDOL, GetColumn, ChildrenIn
+
+--------------------------------------------------------------------------------------
+20040907 - Jake - delivering pipeline_lib 7.6 on SCREW 1550
+
+20040906 - Jake
+	created ISDCConstants to house the osf_stati hash
+	could very easily be used for other stuff later
+	Note that there aren't actually constants
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+--------------------------------------------------------------------------------------
+20040902 - Jake - delivering pipeline_lib 7.5 on SCREW 1533, 1540 and SPR 3798, 3799, 3808
+
+20040824 - Jake
+	SCREW 1533 - added print OBSTRAILER copies of some print statements
+	SCREW 1540 - a little clean up, splitting of lines, comment removal
+
+20040820 - Jake
+	SCREW 1533 - added LogError and LogMessage
+
+20040809 - Jake
+	SPR 3808 - proc_man.pl deals with absent OSFs
+
+20040804 - Jake
+	SPR 3798 - proc_man.pl starts ALL machines
+	SPR 3799 - proc_man.pl uses $0
+
+--------------------------------------------------------------------------------------
+20040802 - Jake - delivering 7.4 on SPR 3778, 3784, 3786, 3791
+											and SCREW 1523, 1524, 1525
+
+20040729 - Jake
+	SPR 3791 - nrtOMG.ini and consOMG.ini update
+
+20040728 - Jake
+	SPR 3786 - arc.done and scwdp.done in cleanup.pl
+
+20040727 - Jake
+	SPR 3784 - pmg_restrictions.dat update
+
+20040726 - Jake
+	SCREW 1524 and 1525 on proc_man.pl
+
+r0040723 - Jake
+	ran properindent.pl on proc_man.pl
+
+20040722 - Jake
+	SPR 3778 - bb_sum.pl last_exec 
+	SCREW 1523 - bb_sum.pl output formats
+	bb_sum.pl code cleanup
+	
+20040701 - Jake 
+	added some comments to ISDCPipeline.pm
+
+--------------------------------------------------------------------------------------
+20040624 - Jake - delivering 7.3 on SPR 3725
+
+20040624 - Jake
+	SPR 3725 - added ISDCPipeline::RowsIn function
+
+20040616 - Jake
+	very minor perldoc format updates of ISDCPipline.pm
+
+--------------------------------------------------------------------------------------
+20040604 - Jake - delivering 7.2 on SCREW 1484
+
+20040603 - Jake
+	SCREW 1484 - moved logs from ./logs/ to ./
+
+--------------------------------------------------------------------------------------
+20040601 - Jake - delivering 7.1 on SPR 3650
+
+20040528 - Jake
+	SPR 3650 - ignored errors for nrtscw|consscw
+
+--------------------------------------------------------------------------------------
+20040526 - Jake - delivered 7.0 on SPR 3596
+
+20040521 - Jake
+	SPR 3596 - added chmod's to before 4 different mv's to ensure that
+	the removal of the source can occur at the end of the mv
+
+20040513 - Jake
+	added COR to ProcStep possibilities
+
+--------------------------------------------------------------------------------------
+	delivered 6.9
+
+20040511 - Jake
+	had to undo some stuff in the unit_test that I was testing
+
+20040505 - Jake
+	properindent.pl on cleanup.pl
+	changed cleanup.pl "restatus" values to match the appropriate columns in the scw pipelines
+	changed a line in ISDCPipeline.pm::PipelineStart to use $osf_status_defaultstart
+	changed obs cleanup/obs
+	removed ref to idx/prp/GNRL...
+	removed ref to idx/prp/GNRL...
+	added ref to idx/GNRL...
+
+20040420 - Jake
+	had to correct opus_wrapper order of the @steps for nrtscw and consscw
+	should not affect anything else, just my testing
+
+20040408 - Jake
+	began SCREW 1437 change, but it appears that this will require
+	a lot of thought and mods throughout all code
+	added a lot of code that is commented out
+	
+20040316 - Jake
+	using new generic component version file
+
+20040309 - Jake
+	ran properindent.pl on ISDCPipeline.pm
+
+20040309 - Jake
+	added pipeline_lib script simply to give version number
+
+--------------------------------------------------------------------------------------
+20040305 - Jake - delivering 6.8
+	changed this file and makeisdc1.in file
+
+20040301 - Jake
+	SCREW 1390 - changed line from swg_prp to swg and remove swg_osm in cleanup.pl
+
+20040225 - Jake
+	SCREW 1390 - changed line from swg_prp to swg in ISDCPipeline.pm
+
+20040212 - Jake
+	changed (cd unit_test; README.pl)
+   	to   (cd unit_test; ./README.pl)
+
+started with version 6.7
+

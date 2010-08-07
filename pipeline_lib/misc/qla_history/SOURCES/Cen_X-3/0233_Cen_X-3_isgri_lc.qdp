@@ -1,0 +1,116 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0233 0004 001 0: not detected
+! 0233 0005 001 0: not detected
+! 0233 0006 001 0: not detected
+! 0233 0007 001 0: not detected
+! 0233 0008 001 0: not detected
+! 0233 0009 001 0: not detected
+! 0233 0010 001 0: not detected
+! 0233 0011 001 0: not detected
+! 0233 0012 001 0: not detected
+! 0233 0013 001 0: not detected
+! 0233 0014 001 0: not detected
+! 0233 0015 001 0: not detected
+! 0233 0016 001 0: not detected
+! 0233 0017 001 0: not detected
+! 0233 0018 001 0: not detected
+! 0233 0019 001 0: not detected
+! 0233 0020 001 0: not detected
+! 0233 0021 001 0: not detected
+! 0233 0022 001 0: not detected
+! 0233 0023 001 0: not detected
+! 0233 0024 001 0: not detected
+! 0233 0025 001 0: not detected
+! 0233 0026 001 0: not detected
+! 0233 0027 001 0: not detected
+! 0233 0028 001 0: not detected
+! 0233 0029 001 0: not detected
+ 1714.274900116320 0.0127257014199813    10.0702    0.7925     1.0471    0.0000   12.695  11.22  ! 0233 0030 001 0
+ 1714.302839946415 0.0127372754649286     8.9183    0.4392     0.1616    0.0000   19.946   5.51  ! 0233 0031 001 0
+! 0233 0032 001 0: not detected
+! 0233 0033 001 0: not detected
+! 0233 0034 001 0: not detected
+! 0233 0035 001 0: not detected
+! 0233 0036 001 0: not detected
+! 0233 0037 001 0: not detected
+! 0233 0038 001 0: not detected
+! 0233 0039 001 0: not detected
+! 0233 0040 001 0: not detected
+! 0233 0041 001 0: not detected
+! 0233 0042 001 0: not detected
+! 0233 0043 001 0: not detected
+! 0233 0044 001 0: not detected
+! 0233 0045 001 0: not detected
+! 0233 0046 001 0: not detected
+! 0233 0047 001 0: not detected
+! 0233 0049 001 0: not detected
+! 0233 0050 001 0: not detected
+! 0233 0051 001 0: not detected
+! 0233 0052 001 0: not detected
+! 0233 0053 001 0: not detected
+! 0233 0054 001 0: not detected
+! 0233 0055 001 0: not detected
+! 0233 0056 001 0: not detected
+! 0233 0057 001 0: not detected
+! 0233 0058 001 0: not detected
+! 0233 0059 001 0: not detected
+! 0233 0060 001 0: not detected
+! 0233 0061 001 0: not detected
+! 0233 0062 001 0: not detected
+! 0233 0063 001 0: not detected
+! 0233 0064 001 0: not detected
+! 0233 0065 001 0: not detected
+! 0233 0066 001 0: not detected
+! 0233 0067 001 0: not detected
+! 0233 0068 001 0: not detected
+! 0233 0069 001 0: not detected
+! 0233 0070 001 0: not detected
+! 0233 0071 001 0: not detected
+! 0233 0072 001 0: not detected
+! 0233 0073 001 0: not detected
+! 0233 0074 001 0: not detected
+! 0233 0075 001 0: not detected
+! 0233 0076 001 0: not detected
+! 0233 0077 001 0: not detected
+! 0233 0078 001 0: not detected
+! 0233 0079 001 0: not detected
+! 0233 0080 001 0: not detected
+! 0233 0081 001 0: not detected
+! 0233 0082 001 0: not detected
+! 0233 0083 001 0: not detected
+! 0233 0084 001 0: not detected
+! 0233 0085 001 0: not detected
+! 0233 0086 001 0: not detected
+! 0233 0087 001 0: not detected
+! 0233 0088 001 0: not detected
+! 0233 0089 001 0: not detected
+! 0233 0090 001 0: not detected
+! 0233 0091 001 0: not detected
+! 0233 0092 001 0: not detected
+! 0233 0093 001 0: not detected
+! 0233 0094 001 0: not detected
+! 0233 0095 001 0: not detected
+! 0233 0096 001 0: not detected
+! 0233 0097 001 0: not detected
+! 0233 0098 001 0: not detected
+! 0233 0099 001 0: not detected
+! 0233 0100 001 0: not detected
+! 0233 0101 001 0: not detected
+! 0233 0102 001 0: not detected
+! 0233 0103 001 0: not detected
+! 0233 0104 001 0: not detected
+! 0233 0105 001 0: not detected
+! 0233 0106 001 0: not detected
+! 0233 0107 001 0: not detected
+! 0233 0108 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0233*
+cpd /xs

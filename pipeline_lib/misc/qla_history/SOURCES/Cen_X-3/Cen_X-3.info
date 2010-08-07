@@ -1,0 +1,40 @@
+Cen X-3, V* V779 Cen, 4U 1118-60 
+
+HMXB with 2.1 days orbital period, eclipsing time: ~0.6 day
+Pulsar with 4.8 s spin
+O6.5II companion star
+
+Literature references e.g. Kohmura & Kitamoto, 2001, ApJ, 562, 943.
+
+* 2003-06-26, rev 85 [JR]:
+ ASM (1.2-12 keV) light curve overview shows high variability from quiescence
+ to a flaring level of about 350 mCrab (1.2-12 keV)
+
+* 2004-05-12, rev 192 [PK]:
+ Quoting from a proposal of Andrea Santangelo (with us as CoIs):
+ "The X-ray luminosity ... has been observed to vary by a factor of 8-10
+ on a timescale of of 170 days ...".
+ The high luminosity state is 4.3E37 ergs/s for an assumed distance of 8 kpc.
+ If I haven't made a mistake right now, this should cover the 500-600 mCrab nicely.
+  
+* 2004-05-30, rev 198 [PF]
+ about 15 cps in isgri 20-60 keV, steady during about 2 days, then eclipsed 
+ about 13 cps in jemx1 3-10 keV
+
+* 2004-06-02, rev 199, [PL]
+  5-20 cps in 20-60 keV and 0-1 cps in 60-200 keV ISGRI bands
+  2-25 cps in 3-10 keV and 3-14 cps in 10-30 keV JEM-X 1 bands
+  
+* 2004-06-13, rev 203, [PK]
+  Again visible in IGSRI (and 1 ptg JEM-X) in GPS
+
+* 2004-07-26, rev 217, [PL]
+  ISGRI flux in expected range, not detected by JEM-X 1.
+  
+* 2004-09-12, Rev 233, GPS [PL]
+  ISGRI 20-60 keV: 8-11 cps,
+  not detected by JEM-X 1.
+  
+* 2005-02-03, Rev. 281, GPS [PL]
+  ISGRI flux: 5-6 cps, not detected by JEM-X 1 (out of FOV).
+  

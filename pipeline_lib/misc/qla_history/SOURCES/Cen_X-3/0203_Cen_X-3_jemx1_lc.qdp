@@ -1,0 +1,93 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0203 0002 001 0: not detected
+! 0203 0003 001 0: not detected
+! 0203 0004 001 0: not detected
+! 0203 0005 001 0: not detected
+! 0203 0006 001 0: not detected
+! 0203 0007 001 0: not detected
+! 0203 0008 001 0: not detected
+! 0203 0009 001 0: not detected
+! 0203 0010 001 0: not detected
+! 0203 0011 001 0: not detected
+ 1624.099390546635 0.0127430623249438     5.8491    1.3515     5.6312    1.4844   10.711   4.24  ! 0203 0012 001 0
+! 0203 0013 001 0: not detected
+! 0203 0014 001 0: not detected
+! 0203 0015 001 0: not detected
+! 0203 0016 001 0: not detected
+! 0203 0017 001 0: not detected
+! 0203 0018 001 0: not detected
+! 0203 0019 001 0: not detected
+! 0203 0020 001 0: not detected
+ 1624.385322415445 0.0200636686549842    20.3885    1.4837    14.0746    1.1587   22.683   3.40  ! 0203 0021 001 0
+ 1624.426792346135 0.0200752427749649    20.5988    0.8198    13.2590    0.6121   35.910   1.49  ! 0203 0022 001 0
+ 1624.468273850980 0.0200636687200131    18.1104    1.2226    12.5974    0.9644   45.767   2.99  ! 0203 0023 001 0
+ 1624.509737994755 0.0200578817049291    14.3377    2.5815    11.9877    2.5375   18.744   4.28  ! 0203 0024 001 0
+! 0203 0025 001 0: not detected
+! 0203 0026 001 0: not detected
+! 0203 0027 001 0: not detected
+! 0203 0028 001 0: not detected
+! 0203 0029 001 0: not detected
+! 0203 0030 001 0: not detected
+! 0203 0031 001 0: not detected
+ 1624.841879386395 0.0200694557349834     4.2856    1.6999     3.4670    1.5447    8.044   4.86  ! 0203 0032 001 0
+! 0203 0035 001 0: not detected
+! 0203 0036 001 0: not detected
+! 0203 0037 001 0: not detected
+! 0203 0038 001 0: not detected
+! 0203 0039 001 0: not detected
+! 0203 0040 001 0: not detected
+! 0203 0041 001 0: not detected
+! 0203 0042 001 0: not detected
+! 0203 0043 001 0: not detected
+! 0203 0044 001 0: not detected
+! 0203 0045 001 0: not detected
+! 0203 0046 001 0: not detected
+! 0203 0047 001 0: not detected
+! 0203 0048 001 0: not detected
+! 0203 0049 001 0: not detected
+! 0203 0050 001 0: not detected
+! 0203 0051 001 0: not detected
+! 0203 0052 001 0: not detected
+! 0203 0053 001 0: not detected
+! 0203 0054 001 0: not detected
+! 0203 0055 001 0: not detected
+! 0203 0056 001 0: not detected
+! 0203 0057 001 0: not detected
+! 0203 0058 001 0: not detected
+! 0203 0059 001 0: not detected
+! 0203 0060 001 0: not detected
+! 0203 0061 001 0: not detected
+! 0203 0062 001 0: not detected
+! 0203 0063 001 0: not detected
+! 0203 0064 001 0: not detected
+! 0203 0065 001 0: not detected
+! 0203 0066 001 0: not detected
+! 0203 0067 001 0: not detected
+! 0203 0068 001 0: not detected
+! 0203 0069 001 0: not detected
+! 0203 0070 001 0: not detected
+! 0203 0071 001 0: not detected
+! 0203 0072 001 0: not detected
+! 0203 0073 001 0: not detected
+! 0203 0074 001 0: not detected
+! 0203 0075 001 0: not detected
+! 0203 0076 001 0: not detected
+! 0203 0077 001 0: not detected
+! 0203 0078 001 0: not detected
+! 0203 0079 001 0: not detected
+! 0203 0080 001 0: not detected
+! 0203 0081 001 0: not detected
+! 0203 0082 001 0: not detected
+! 0203 0082 002 0: not detected
+! 0203 0082 003 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0203*
+cpd /xs

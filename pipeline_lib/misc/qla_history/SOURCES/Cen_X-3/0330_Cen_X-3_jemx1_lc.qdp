@@ -1,0 +1,84 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0330 0001 001 0: not detected
+! 0330 0002 001 0: not detected
+! 0330 0003 001 0: not detected
+! 0330 0004 001 0: not detected
+! 0330 0005 001 0: not detected
+! 0330 0006 001 0: not detected
+! 0330 0007 001 0: not detected
+! 0330 0008 001 0: not detected
+! 0330 0009 001 0: not detected
+! 0330 0011 001 0: not detected
+! 0330 0012 001 0: not detected
+! 0330 0013 001 0: not detected
+! 0330 0014 001 0: not detected
+! 0330 0015 001 0: not detected
+! 0330 0016 001 0: not detected
+! 0330 0017 001 0: not detected
+ 2004.189485048070 0.0147685275600224    16.7224    8.5553    10.3868    6.1539    3.979   4.64  ! 0330 0018 001 0
+ 2004.220468863310 0.0147685275400136    17.1193    7.6393     9.0543    4.5485   12.430   4.70  ! 0330 0019 001 0
+ 2004.313183040205 0.0149016294350304    15.3418    2.4916     9.9350    1.7935   18.064   3.84  ! 0330 0022 001 0
+! 0330 0023 001 0: not detected
+! 0330 0024 001 0: not detected
+! 0330 0025 001 0: not detected
+ 2004.468073180395 0.0148148237350370    13.4505    0.9545     8.8489    0.7216   43.357   2.92  ! 0330 0027 001 0
+ 2004.499103291650 0.0147685273900606     9.1929    0.4290     7.1203    0.3803   29.936   1.03  ! 0330 0028 001 0
+ 2004.529988726820 0.0147743143900243     8.8492    0.4229     7.6017    0.4241   23.741   1.25  ! 0330 0029 001 0
+ 2004.560573235830 0.0147685273299203     8.8080    0.4928     7.1771    0.4648   27.124   1.85  ! 0330 0030 001 0
+! 0330 0032 001 0: not detected
+! 0330 0033 001 0: not detected
+! 0330 0034 001 0: not detected
+! 0330 0035 001 0: not detected
+! 0330 0036 001 0: not detected
+ 2004.777141651115 0.0147743142549643     2.1217    0.3762     1.8618    0.3929    3.091   3.47  ! 0330 0037 001 0
+ 2004.808131252680 0.0147801012900572     1.9420    0.2449     2.4845    0.2860    9.780   2.64  ! 0330 0038 001 0
+! 0330 0039 001 0: not detected
+! 0330 0040 001 0: not detected
+! 0330 0041 001 0: not detected
+! 0330 0042 001 0: not detected
+! 0330 0043 001 0: not detected
+! 0330 0044 001 0: not detected
+! 0330 0045 001 0: not detected
+! 0330 0046 001 0: not detected
+! 0330 0047 001 0: not detected
+! 0330 0048 001 0: not detected
+! 0330 0049 001 0: not detected
+! 0330 0050 001 0: not detected
+! 0330 0051 001 0: not detected
+! 0330 0052 001 0: not detected
+! 0330 0053 001 0: not detected
+! 0330 0054 001 0: not detected
+! 0330 0055 001 0: not detected
+! 0330 0056 001 0: not detected
+! 0330 0057 001 0: not detected
+! 0330 0058 001 0: not detected
+! 0330 0059 001 0: not detected
+! 0330 0060 001 0: not detected
+! 0330 0061 001 0: not detected
+! 0330 0062 001 0: not detected
+! 0330 0063 001 0: not detected
+! 0330 0064 001 0: not detected
+! 0330 0065 001 0: not detected
+! 0330 0066 001 0: not detected
+! 0330 0067 001 0: not detected
+! 0330 0068 001 0: not detected
+! 0330 0069 001 0: not detected
+! 0330 0070 001 0: not detected
+! 0330 0071 001 0: not detected
+! 0330 0072 001 0: not detected
+ 2005.909920102670 0.0147743142199488     2.6049    0.7194     3.6152    1.0431    7.580   4.24  ! 0330 0073 001 0
+! 0330 0074 001 0: not detected
+! 0330 0075 001 0: not detected
+! 0330 0075 002 0: not detected
+! 0330 0082 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0330*
+cpd /xs

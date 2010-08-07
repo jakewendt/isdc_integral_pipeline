@@ -1,0 +1,72 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0195 0001 001 0: not detected
+! 0195 0002 001 0: not detected
+! 0195 0003 001 0: not detected
+! 0195 0004 001 0: not detected
+! 0195 0005 001 0: not detected
+! 0195 0006 001 0: not detected
+! 0195 0007 001 0: not detected
+! 0195 0008 001 0: not detected
+! 0195 0009 001 0: not detected
+! 0195 0010 001 0: not detected
+! 0195 0011 001 0: not detected
+! 0195 0012 001 0: not detected
+! 0195 0013 001 0: not detected
+! 0195 0014 001 0: not detected
+! 0195 0015 001 0: not detected
+! 0195 0016 001 0: not detected
+! 0195 0017 001 0: not detected
+! 0195 0018 001 0: not detected
+! 0195 0019 001 0: not detected
+! 0195 0020 001 0: not detected
+! 0195 0021 001 0: not detected
+! 0195 0022 001 0: not detected
+! 0195 0023 001 0: not detected
+! 0195 0024 001 0: not detected
+! 0195 0025 001 0: not detected
+! 0195 0026 001 0: not detected
+! 0195 0027 001 0: not detected
+! 0195 0028 001 0: not detected
+! 0195 0029 001 0: not detected
+! 0195 0030 001 0: not detected
+! 0195 0031 001 0: not detected
+! 0195 0032 001 0: not detected
+! 0195 0033 001 0: not detected
+! 0195 0034 001 0: not detected
+ 1601.316830904415 0.0200694564949799    20.4763    1.8322    13.5486    1.4111   24.657   3.56  ! 0195 0035 001 0
+ 1601.358428151595 0.0200694564749710    15.7131    0.7021    11.6893    0.6074   27.785   1.82  ! 0195 0036 001 0
+ 1601.408341376005 0.0283854337350249    16.8097    1.5082    11.7933    1.2331   30.827   3.56  ! 0195 0037 001 0
+! 0195 0038 001 0: not detected
+! 0195 0039 001 0: not detected
+! 0195 0040 001 0: not detected
+! 0195 0041 001 0: not detected
+! 0195 0042 001 0: not detected
+! 0195 0043 001 0: not detected
+ 1601.717768645605 0.0200694564150581    15.6361    1.1960    10.7755    0.9364   20.915   3.41  ! 0195 0044 001 0
+ 1601.759365892640 0.0200694564199466    13.1672    0.5496     9.6545    0.4716   36.698   1.51  ! 0195 0045 001 0
+ 1601.800951565605 0.0200694564249488    20.1030    1.4323    13.9731    1.1600   36.222   3.03  ! 0195 0046 001 0
+ 1601.842543025660 0.0200636694301011    14.3285    2.8463    11.3072    2.6460   14.990   4.30  ! 0195 0047 001 0
+! 0195 0048 001 0: not detected
+! 0195 0049 001 0: not detected
+! 0195 0050 001 0: not detected
+! 0195 0051 001 0: not detected
+! 0195 0052 001 0: not detected
+! 0195 0053 001 0: not detected
+! 0195 0054 001 0: not detected
+ 1602.175263132445 0.0200636693350589    22.1122   12.0009    13.6674    9.2524   10.274   4.91  ! 0195 0055 001 0
+! 0195 0056 001 0: not detected
+! 0195 0057 001 0: not detected
+! 0195 0058 001 0: not detected
+! 0195 0059 001 0: not detected
+! 0195 0060 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0195*
+cpd /xs

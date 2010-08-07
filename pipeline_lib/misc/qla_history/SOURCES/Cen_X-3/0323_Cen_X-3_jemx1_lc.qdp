@@ -1,0 +1,76 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0323 0002 001 0: not detected
+! 0323 0003 001 0: not detected
+! 0323 0004 001 0: not detected
+! 0323 0005 001 0: not detected
+! 0323 0006 001 0: not detected
+! 0323 0007 001 0: not detected
+! 0323 0008 001 0: not detected
+! 0323 0009 001 0: not detected
+! 0323 0010 001 0: not detected
+! 0323 0011 001 0: not detected
+! 0323 0012 001 0: not detected
+! 0323 0013 001 0: not detected
+! 0323 0014 001 0: not detected
+! 0323 0015 001 0: not detected
+! 0323 0016 001 0: not detected
+ 1983.187800017420 0.0037557891599818     8.6931    0.9781     6.6970    0.9516   12.371   3.12  ! 0323 0017 001 0
+ 1983.213025726305 0.0204282524650807     8.3658    0.7737     5.9617    0.6266   28.021   3.11  ! 0323 0018 001 0
+! 0323 0019 001 0: not detected
+! 0323 0020 001 0: not detected
+! 0323 0021 001 0: not detected
+! 0323 0022 001 0: not detected
+! 0323 0023 001 0: not detected
+! 0323 0024 001 0: not detected
+ 1983.509229608755 0.0204282536050187     5.5937    0.8046     4.4054    0.7300   17.492   3.60  ! 0323 0025 001 0
+ 1983.551550237360 0.0204340407500467     3.9349    0.2729     3.3966    0.2755   22.067   2.14  ! 0323 0026 001 0
+ 1983.593865079110 0.0204224667299968     8.0963    1.4415     5.4586    1.1358   18.408   3.98  ! 0323 0027 001 0
+! 0323 0028 001 0: not detected
+! 0323 0029 001 0: not detected
+! 0323 0030 001 0: not detected
+! 0323 0031 001 0: not detected
+! 0323 0032 001 0: not detected
+! 0323 0033 001 0: not detected
+! 0323 0034 001 0: not detected
+! 0323 0035 001 0: not detected
+! 0323 0036 001 0: not detected
+! 0323 0037 001 0: not detected
+! 0323 0038 001 0: not detected
+! 0323 0039 001 0: not detected
+! 0323 0040 001 0: not detected
+! 0323 0041 001 0: not detected
+! 0323 0042 001 0: not detected
+! 0323 0043 001 0: not detected
+! 0323 0044 001 0: not detected
+! 0323 0045 001 0: not detected
+! 0323 0046 001 0: not detected
+! 0323 0047 001 0: not detected
+! 0323 0048 001 0: not detected
+! 0323 0049 001 0: not detected
+! 0323 0050 001 0: not detected
+! 0323 0051 001 0: not detected
+! 0323 0052 001 0: not detected
+! 0323 0053 001 0: not detected
+! 0323 0054 001 0: not detected
+! 0323 0055 001 0: not detected
+! 0323 0056 001 0: not detected
+! 0323 0057 001 0: not detected
+! 0323 0058 001 0: not detected
+! 0323 0059 001 0: not detected
+! 0323 0060 001 0: not detected
+! 0323 0061 001 0: not detected
+! 0323 0062 001 0: not detected
+! 0323 0063 001 0: not detected
+! 0323 0064 001 0: not detected
+! 0323 0065 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0323*
+cpd /xs

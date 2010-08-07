@@ -1,0 +1,106 @@
+! Source: Cen A
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0048 0002 001 0: not detected
+! 0048 0003 001 0: not detected
+! 0048 0004 001 0: not detected
+! 0048 0005 001 0: not detected
+! 0048 0006 001 0: not detected
+! 0048 0007 001 0: not detected
+! 0048 0008 001 0: not detected
+! 0048 0009 001 0: not detected
+! 0048 0010 001 0: not detected
+! 0048 0011 001 0: not detected
+! 0048 0012 001 0: not detected
+! 0048 0013 001 0: not detected
+! 0048 0014 001 0: not detected
+! 0048 0015 001 0: not detected
+! 0048 0016 001 0: not detected
+! 0048 0017 001 0: not detected
+! 0048 0018 001 0: not detected
+! 0048 0019 001 0: not detected
+! 0048 0020 001 0: not detected
+! 0048 0021 001 0: not detected
+! 0048 0022 001 0: not detected
+! 0048 0023 001 0: not detected
+! 0048 0024 001 0: not detected
+! 0048 0025 001 0: not detected
+! 0048 0026 001 0: not detected
+! 0048 0027 001 0: not detected
+! 0048 0028 001 0: not detected
+! 0048 0029 001 0: not detected
+! 0048 0030 001 0: not detected
+! 0048 0031 001 0: not detected
+! 0048 0032 001 0: not detected
+! 0048 0033 001 0: not detected
+! 0048 0034 001 0: not detected
+! 0048 0035 001 0: not detected
+! 0048 0036 001 0: not detected
+! 0048 0037 001 0: not detected
+! 0048 0038 001 0: not detected
+! 0048 0039 001 0: not detected
+! 0048 0040 001 0: not detected
+! 0048 0041 001 0: not detected
+! 0048 0042 001 0: not detected
+! 0048 0043 001 0: not detected
+! 0048 0044 001 0: not detected
+! 0048 0045 001 0: not detected
+! 0048 0046 001 0: not detected
+! 0048 0047 001 0: not detected
+! 0048 0048 001 0: not detected
+! 0048 0049 001 0: not detected
+! 0048 0050 001 0: not detected
+! 0048 0051 001 0: not detected
+! 0048 0052 001 0: not detected
+! 0048 0053 001 0: not detected
+! 0048 0054 001 0: not detected
+! 0048 0055 001 0: not detected
+! 0048 0056 001 0: not detected
+! 0048 0057 001 0: not detected
+ 1161.687201290910 0.0126215340799263     1.2849    0.1562     1.0541    0.1570   12.329   2.84  ! 0048 0058 001 0
+ 1161.713688572750 0.0126388952899106     1.1797    0.1162     1.1478    0.1736    9.598   2.00  ! 0048 0059 001 0
+ 1161.740193215875 0.0126388953749483     1.4436    0.1920     0.9979    0.1844   10.872   2.84  ! 0048 0060 001 0
+! 0048 0061 001 0: not detected
+! 0048 0062 001 0: not detected
+ 1161.824898121365 0.0176215371849366     1.1472    0.1032     0.8884    0.1132   11.110   2.00  ! 0048 0063 001 0
+ 1161.856385406785 0.0126388957249901     1.4866    0.0941     1.0052    0.0964   16.310   0.00  ! 0048 0064 001 0
+ 1161.882895837855 0.0126331087550398     1.2348    0.1258     0.9736    0.1552   13.630   2.01  ! 0048 0065 001 0
+! 0048 0066 001 0: not detected
+! 0048 0067 001 0: not detected
+ 1161.962699122845 0.0126331089550149     1.4408    0.1658     1.0950    0.2303    8.922   2.83  ! 0048 0068 001 0
+ 1161.989203767450 0.0126331090199301     1.1481    0.1186     1.1259    0.2383   12.394   1.99  ! 0048 0069 001 0
+! 0048 0070 001 0: not detected
+! 0048 0071 001 0: not detected
+! 0048 0072 001 0: not detected
+! 0048 0073 001 0: not detected
+! 0048 0074 001 0: not detected
+! 0048 0075 001 0: not detected
+! 0048 0076 001 0: not detected
+! 0048 0077 001 0: not detected
+! 0048 0078 001 0: not detected
+! 0048 0079 001 0: not detected
+! 0048 0080 001 0: not detected
+! 0048 0081 001 0: not detected
+ 1162.334435453920 0.0126446836400191     0.8586    0.1326     1.1775    0.3422    4.142   2.80  ! 0048 0082 001 0
+ 1162.361154220225 0.0127314892549748     1.2446    0.1338     1.1685    0.1570   12.916   2.00  ! 0048 0083 001 0
+! 0048 0084 001 0: not detected
+! 0048 0085 001 0: not detected
+! 0048 0086 001 0: not detected
+ 1162.467554748165 0.0126273225349678     1.3233    0.1406     1.1477    0.1601    9.162   2.01  ! 0048 0087 001 0
+ 1162.499024674840 0.0176041774500391     1.5430    0.0854     0.9441    0.0814   20.716   0.00  ! 0048 0088 001 0
+ 1162.530506175615 0.0126388966349396     0.9498    0.0970     0.8829    0.1626   11.185   1.99  ! 0048 0089 001 0
+! 0048 0090 001 0: not detected
+! 0048 0091 001 0: not detected
+ 1162.610245807805 0.0126331095849537    13.3386    1.9708     2.4250    0.5517    5.441   2.86  ! 0048 0092 001 0
+! 0048 0093 001 0: not detected
+! 0048 0094 001 0: not detected
+! 0048 0095 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen A inst=jemx2 ScW=0048*
+cpd /xs

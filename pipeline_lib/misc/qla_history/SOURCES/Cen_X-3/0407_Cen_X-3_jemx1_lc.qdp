@@ -1,0 +1,85 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0407 0001 001 0: not detected
+! 0407 0002 001 0: not detected
+! 0407 0003 001 0: not detected
+! 0407 0004 001 0: not detected
+! 0407 0005 001 0: not detected
+! 0407 0006 001 0: not detected
+! 0407 0007 001 0: not detected
+! 0407 0008 001 0: not detected
+! 0407 0009 001 0: not detected
+! 0407 0010 001 0: not detected
+! 0407 0011 001 0: not detected
+! 0407 0012 001 0: not detected
+! 0407 0013 001 0: not detected
+! 0407 0014 001 0: not detected
+! 0407 0015 001 0: not detected
+! 0407 0016 001 0: not detected
+! 0407 0017 001 0: not detected
+! 0407 0018 001 0: not detected
+! 0407 0019 001 0: not detected
+! 0407 0020 001 0: not detected
+ 2234.443695940335 0.0125578774950554    11.2609    1.7906     5.9722    1.0414   20.446   4.12  ! 0407 0021 001 0
+! 0407 0022 001 0: not detected
+! 0407 0023 001 0: not detected
+! 0407 0024 001 0: not detected
+! 0407 0025 001 0: not detected
+! 0407 0026 001 0: not detected
+! 0407 0027 001 0: not detected
+! 0407 0028 001 0: not detected
+! 0407 0029 001 0: not detected
+! 0407 0030 001 0: not detected
+! 0407 0031 001 0: not detected
+! 0407 0032 001 0: not detected
+! 0407 0033 001 0: not detected
+! 0407 0034 001 0: not detected
+! 0407 0035 001 0: not detected
+! 0407 0036 001 0: not detected
+! 0407 0037 001 0: not detected
+! 0407 0038 001 0: not detected
+! 0407 0039 001 0: not detected
+! 0407 0040 001 0: not detected
+! 0407 0041 001 0: not detected
+! 0407 0042 001 0: not detected
+! 0407 0043 001 0: not detected
+! 0407 0044 001 0: not detected
+! 0407 0045 001 0: not detected
+! 0407 0046 001 0: not detected
+! 0407 0047 001 0: not detected
+! 0407 0048 001 0: not detected
+! 0407 0049 001 0: not detected
+! 0407 0050 001 0: not detected
+! 0407 0051 001 0: not detected
+! 0407 0052 001 0: not detected
+! 0407 0053 001 0: not detected
+! 0407 0054 001 0: not detected
+! 0407 0055 001 0: not detected
+! 0407 0056 001 0: not detected
+! 0407 0057 001 0: not detected
+! 0407 0058 001 0: not detected
+! 0407 0059 001 0: not detected
+! 0407 0060 001 0: not detected
+! 0407 0061 001 0: not detected
+! 0407 0062 001 0: not detected
+! 0407 0063 001 0: not detected
+! 0407 0064 001 0: not detected
+! 0407 0065 001 0: not detected
+! 0407 0066 001 0: not detected
+! 0407 0067 001 0: not detected
+! 0407 0068 001 0: not detected
+! 0407 0069 001 0: not detected
+! 0407 0070 001 0: not detected
+! 0407 0071 001 0: not detected
+! 0407 0072 001 0: not detected
+! 0407 0073 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0407*
+cpd /xs

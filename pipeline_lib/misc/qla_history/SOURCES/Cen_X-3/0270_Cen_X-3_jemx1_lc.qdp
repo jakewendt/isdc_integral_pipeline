@@ -1,0 +1,100 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0270 0002 001 0: not detected
+! 0270 0003 001 0: not detected
+! 0270 0004 001 0: not detected
+! 0270 0005 001 0: not detected
+! 0270 0006 001 0: not detected
+! 0270 0007 001 0: not detected
+! 0270 0008 001 0: not detected
+! 0270 0009 001 0: not detected
+! 0270 0010 001 0: not detected
+! 0270 0011 001 0: not detected
+! 0270 0012 001 0: not detected
+! 0270 0013 001 0: not detected
+! 0270 0014 001 0: not detected
+! 0270 0015 001 0: not detected
+! 0270 0016 001 0: not detected
+! 0270 0017 001 0: not detected
+! 0270 0018 001 0: not detected
+! 0270 0019 001 0: not detected
+! 0270 0020 001 0: not detected
+! 0270 0021 001 0: not detected
+! 0270 0022 001 0: not detected
+! 0270 0023 001 0: not detected
+! 0270 0024 001 0: not detected
+! 0270 0025 001 0: not detected
+! 0270 0026 001 0: not detected
+! 0270 0027 001 0: not detected
+! 0270 0028 001 0: not detected
+! 0270 0029 001 0: not detected
+! 0270 0030 001 0: not detected
+! 0270 0031 001 0: not detected
+! 0270 0032 001 0: not detected
+! 0270 0033 001 0: not detected
+! 0270 0034 001 0: not detected
+! 0270 0035 001 0: not detected
+! 0270 0036 001 0: not detected
+! 0270 0037 001 0: not detected
+! 0270 0038 001 0: not detected
+! 0270 0039 001 0: not detected
+! 0270 0040 001 0: not detected
+! 0270 0041 001 0: not detected
+! 0270 0042 001 0: not detected
+! 0270 0043 001 0: not detected
+! 0270 0044 001 0: not detected
+! 0270 0045 001 0: not detected
+! 0270 0046 001 0: not detected
+! 0270 0047 001 0: not detected
+! 0270 0048 001 0: not detected
+! 0270 0049 001 0: not detected
+! 0270 0050 001 0: not detected
+! 0270 0051 001 0: not detected
+! 0270 0052 001 0: not detected
+! 0270 0053 001 0: not detected
+! 0270 0054 001 0: not detected
+! 0270 0055 001 0: not detected
+! 0270 0056 001 0: not detected
+! 0270 0057 001 0: not detected
+! 0270 0058 001 0: not detected
+! 0270 0059 001 0: not detected
+! 0270 0060 001 0: not detected
+! 0270 0061 001 0: not detected
+! 0270 0062 001 0: not detected
+ 1825.721879282060 0.0127314886899512     0.8000    0.1051     0.6889    0.0885    6.237   0.75  ! 0270 0063 001 0
+! 0270 0064 001 0: not detected
+! 0270 0066 001 0: not detected
+! 0270 0067 001 0: not detected
+! 0270 0068 001 0: not detected
+! 0270 0069 001 0: not detected
+! 0270 0070 001 0: not detected
+! 0270 0071 001 0: not detected
+! 0270 0072 001 0: not detected
+! 0270 0073 001 0: not detected
+! 0270 0074 001 0: not detected
+! 0270 0075 001 0: not detected
+! 0270 0076 001 0: not detected
+! 0270 0077 001 0: not detected
+! 0270 0078 001 0: not detected
+! 0270 0079 001 0: not detected
+! 0270 0080 001 0: not detected
+! 0270 0081 001 0: not detected
+! 0270 0082 001 0: not detected
+! 0270 0083 001 0: not detected
+! 0270 0084 001 0: not detected
+! 0270 0085 001 0: not detected
+! 0270 0086 001 0: not detected
+! 0270 0087 001 0: not detected
+! 0270 0088 001 0: not detected
+! 0270 0090 001 0: not detected
+! 0270 0091 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0270*
+cpd /xs

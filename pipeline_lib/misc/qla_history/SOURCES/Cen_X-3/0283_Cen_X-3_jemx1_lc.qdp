@@ -1,0 +1,76 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0283 0002 001 0: not detected
+! 0283 0003 001 0: not detected
+! 0283 0004 001 0: not detected
+! 0283 0005 001 0: not detected
+! 0283 0006 001 0: not detected
+! 0283 0007 001 0: not detected
+! 0283 0008 001 0: not detected
+! 0283 0009 001 0: not detected
+! 0283 0010 001 0: not detected
+ 1863.327665096735 0.0133912136450363     2.2412    0.1357     3.1830    0.1671   17.023   0.41  ! 0283 0011 001 0
+! 0283 0012 001 0: not detected
+! 0283 0013 001 0: not detected
+! 0283 0014 001 0: not detected
+! 0283 0015 001 0: not detected
+! 0283 0016 001 0: not detected
+! 0283 0017 001 0: not detected
+! 0283 0018 001 0: not detected
+! 0283 0019 001 0: not detected
+! 0283 0020 001 0: not detected
+! 0283 0021 001 0: not detected
+! 0283 0022 001 0: not detected
+! 0283 0023 001 0: not detected
+! 0283 0024 001 0: not detected
+! 0283 0025 001 0: not detected
+! 0283 0026 001 0: not detected
+! 0283 0027 001 0: not detected
+! 0283 0028 001 0: not detected
+! 0283 0029 001 0: not detected
+! 0283 0030 001 0: not detected
+! 0283 0031 001 0: not detected
+! 0283 0032 001 0: not detected
+! 0283 0033 001 0: not detected
+! 0283 0034 001 0: not detected
+! 0283 0035 001 0: not detected
+! 0283 0036 001 0: not detected
+! 0283 0037 001 0: not detected
+! 0283 0038 001 0: not detected
+! 0283 0039 001 0: not detected
+! 0283 0040 001 0: not detected
+! 0283 0041 001 0: not detected
+! 0283 0042 001 0: not detected
+! 0283 0043 001 0: not detected
+! 0283 0044 001 0: not detected
+! 0283 0045 001 0: not detected
+! 0283 0046 001 0: not detected
+! 0283 0047 001 0: not detected
+! 0283 0048 001 0: not detected
+! 0283 0049 001 0: not detected
+! 0283 0050 001 0: not detected
+! 0283 0051 001 0: not detected
+! 0283 0052 001 0: not detected
+! 0283 0053 001 0: not detected
+! 0283 0054 001 0: not detected
+! 0283 0055 001 0: not detected
+! 0283 0056 001 0: not detected
+! 0283 0057 001 0: not detected
+! 0283 0058 001 0: not detected
+! 0283 0059 001 0: not detected
+! 0283 0060 001 0: not detected
+! 0283 0061 001 0: not detected
+! 0283 0062 001 0: not detected
+! 0283 0063 001 0: not detected
+! 0283 0064 001 0: not detected
+! 0283 0065 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0283*
+cpd /xs

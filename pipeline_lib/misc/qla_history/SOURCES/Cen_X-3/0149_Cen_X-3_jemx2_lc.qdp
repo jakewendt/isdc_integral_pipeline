@@ -1,0 +1,77 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0149 0001 001 0: not detected
+! 0149 0001 002 0: not detected
+! 0149 0002 001 0: not detected
+! 0149 0003 001 0: not detected
+! 0149 0004 001 0: not detected
+! 0149 0005 001 0: not detected
+! 0149 0006 001 0: not detected
+! 0149 0007 001 0: not detected
+ 1462.563751006080 0.0127372750999939     0.9178    0.1633     2.2220    0.2016   12.244   2.48  ! 0149 0008 001 0
+! 0149 0009 001 0: not detected
+! 0149 0010 001 0: not detected
+! 0149 0011 001 0: not detected
+! 0149 0012 001 0: not detected
+! 0149 0013 001 0: not detected
+! 0149 0014 001 0: not detected
+! 0149 0015 001 0: not detected
+! 0149 0016 001 0: not detected
+! 0149 0017 001 0: not detected
+! 0149 0018 001 0: not detected
+! 0149 0019 001 0: not detected
+! 0149 0020 001 0: not detected
+! 0149 0021 001 0: not detected
+! 0149 0022 001 0: not detected
+! 0149 0023 001 0: not detected
+! 0149 0024 001 0: not detected
+! 0149 0025 001 0: not detected
+! 0149 0026 001 0: not detected
+! 0149 0027 001 0: not detected
+! 0149 0028 001 0: not detected
+! 0149 0029 001 0: not detected
+! 0149 0030 001 0: not detected
+! 0149 0031 001 0: not detected
+! 0149 0032 001 0: not detected
+! 0149 0033 001 0: not detected
+! 0149 0034 001 0: not detected
+! 0149 0035 001 0: not detected
+! 0149 0036 001 0: not detected
+! 0149 0037 001 0: not detected
+! 0149 0038 001 0: not detected
+! 0149 0039 001 0: not detected
+! 0149 0040 001 0: not detected
+! 0149 0041 001 0: not detected
+! 0149 0041 002 0: not detected
+! 0149 0041 003 0: not detected
+! 0149 0049 001 0: not detected
+! 0149 0050 001 0: not detected
+! 0149 0051 001 0: not detected
+! 0149 0052 001 0: not detected
+! 0149 0053 001 0: not detected
+! 0149 0054 001 0: not detected
+! 0149 0055 001 0: not detected
+! 0149 0056 001 0: not detected
+! 0149 0057 001 0: not detected
+! 0149 0058 001 0: not detected
+! 0149 0059 001 0: not detected
+! 0149 0060 001 0: not detected
+! 0149 0061 001 0: not detected
+! 0149 0062 001 0: not detected
+! 0149 0063 001 0: not detected
+! 0149 0064 001 0: not detected
+! 0149 0065 001 0: not detected
+! 0149 0066 001 0: not detected
+! 0149 0067 001 0: not detected
+! 0149 0068 001 0: not detected
+! 0149 0069 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx2 ScW=0149*
+cpd /xs

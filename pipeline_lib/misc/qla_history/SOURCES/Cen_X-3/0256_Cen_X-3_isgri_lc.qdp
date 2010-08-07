@@ -1,0 +1,97 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0256 0004 001 0: not detected
+! 0256 0005 001 0: not detected
+! 0256 0006 001 0: not detected
+! 0256 0007 001 0: not detected
+! 0256 0008 001 0: not detected
+! 0256 0009 001 0: not detected
+! 0256 0010 001 0: not detected
+! 0256 0011 001 0: not detected
+! 0256 0012 001 0: not detected
+! 0256 0013 001 0: not detected
+ 1782.597033163415 0.0127372757650619     8.1470    0.0000     0.0000    0.0000    1.344  18.10  ! 0256 0014 001 0
+ 1782.624863040345 0.0127314887049579    16.3221    1.1577     0.0000    0.0000   12.648  13.38  ! 0256 0015 001 0
+ 1782.652785509875 0.0127372757249304    14.8049    0.4840     1.1256    0.0000   29.215   7.39  ! 0256 0016 001 0
+ 1782.680748488640 0.0127372757100375    16.3522    0.3962     1.0428    0.0000   40.182   1.86  ! 0256 0017 001 0
+ 1782.708775124820 0.0127430627400145    16.7950    0.4315     1.3005    0.0000   37.832   4.95  ! 0256 0018 001 0
+! 0256 0019 001 0: not detected
+! 0256 0020 001 0: not detected
+! 0256 0021 001 0: not detected
+! 0256 0022 001 0: not detected
+ 1782.815181434490 0.0104224595201003    19.3094    2.3997     0.0000    0.0000    7.858  15.07  ! 0256 0023 001 0
+ 1782.837455752485 0.0104166724850074    18.6103    1.3267     1.2270    0.0000   13.058  13.45  ! 0256 0024 001 0
+ 1782.859735857500 0.0104166724800052    16.9743    1.0701     0.0000    0.0000   14.238  12.27  ! 0256 0025 001 0
+ 1782.882021749555 0.0104224595049800    18.0699    1.6080     1.1231    0.0000   10.203  14.01  ! 0256 0026 001 0
+! 0256 0027 001 0: not detected
+! 0256 0028 001 0: not detected
+! 0256 0029 001 0: not detected
+! 0256 0030 001 0: not detected
+! 0256 0031 001 0: not detected
+! 0256 0032 001 0: not detected
+! 0256 0033 001 0: not detected
+! 0256 0034 001 0: not detected
+! 0256 0035 001 0: not detected
+! 0256 0036 001 0: not detected
+! 0256 0037 001 0: not detected
+! 0256 0038 001 0: not detected
+! 0256 0039 001 0: not detected
+! 0256 0040 001 0: not detected
+! 0256 0041 001 0: not detected
+! 0256 0042 001 0: not detected
+! 0256 0043 001 0: not detected
+! 0256 0044 001 0: not detected
+! 0256 0045 001 0: not detected
+! 0256 0046 001 0: not detected
+! 0256 0047 001 0: not detected
+! 0256 0048 001 0: not detected
+! 0256 0049 001 0: not detected
+! 0256 0050 001 0: not detected
+! 0256 0051 001 0: not detected
+! 0256 0052 001 0: not detected
+! 0256 0053 001 0: not detected
+! 0256 0054 001 0: not detected
+! 0256 0055 001 0: not detected
+! 0256 0056 001 0: not detected
+! 0256 0057 001 0: not detected
+! 0256 0058 001 0: not detected
+! 0256 0059 001 0: not detected
+! 0256 0060 001 0: not detected
+! 0256 0061 001 0: not detected
+! 0256 0062 001 0: not detected
+! 0256 0063 001 0: not detected
+! 0256 0064 001 0: not detected
+! 0256 0065 001 0: not detected
+! 0256 0066 001 0: not detected
+! 0256 0067 001 0: not detected
+! 0256 0068 001 0: not detected
+! 0256 0069 001 0: not detected
+! 0256 0070 001 0: not detected
+! 0256 0071 001 0: not detected
+! 0256 0072 001 0: not detected
+! 0256 0073 001 0: not detected
+! 0256 0074 001 0: not detected
+! 0256 0075 001 0: not detected
+! 0256 0076 001 0: not detected
+! 0256 0077 001 0: not detected
+! 0256 0078 001 0: not detected
+! 0256 0079 001 0: not detected
+! 0256 0080 001 0: not detected
+! 0256 0081 001 0: not detected
+! 0256 0082 001 0: not detected
+! 0256 0083 001 0: not detected
+! 0256 0084 001 0: not detected
+! 0256 0085 001 0: not detected
+! 0256 0086 001 0: not detected
+! 0256 0087 001 0: not detected
+! 0256 0087 002 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0256*
+cpd /xs

@@ -1,0 +1,73 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0391 0001 001 0: not detected
+! 0391 0002 001 0: not detected
+! 0391 0003 001 0: not detected
+! 0391 0005 001 0: not detected
+! 0391 0007 001 0: not detected
+ 2186.289963919885 0.0125578789450174     1.7747    0.4748     1.1718    0.3776    3.824   3.55  ! 0391 0008 001 0
+! 0391 0009 001 0: not detected
+! 0391 0010 001 0: not detected
+! 0391 0011 001 0: not detected
+! 0391 0012 001 0: not detected
+! 0391 0013 001 0: not detected
+! 0391 0014 001 0: not detected
+! 0391 0015 001 0: not detected
+! 0391 0016 001 0: not detected
+! 0391 0017 001 0: not detected
+! 0391 0018 001 0: not detected
+! 0391 0019 001 0: not detected
+! 0391 0020 001 0: not detected
+! 0391 0021 001 0: not detected
+! 0391 0022 001 0: not detected
+! 0391 0023 001 0: not detected
+! 0391 0024 001 0: not detected
+! 0391 0025 001 0: not detected
+! 0391 0026 001 0: not detected
+! 0391 0027 001 0: not detected
+! 0391 0028 001 0: not detected
+! 0391 0029 001 0: not detected
+! 0391 0030 001 0: not detected
+! 0391 0031 001 0: not detected
+! 0391 0032 001 0: not detected
+! 0391 0033 001 0: not detected
+! 0391 0034 001 0: not detected
+! 0391 0035 001 0: not detected
+! 0391 0036 001 0: not detected
+! 0391 0037 001 0: not detected
+! 0391 0038 001 0: not detected
+! 0391 0039 001 0: not detected
+! 0391 0040 001 0: not detected
+! 0391 0041 001 0: not detected
+! 0391 0042 001 0: not detected
+! 0391 0043 001 0: not detected
+! 0391 0044 001 0: not detected
+! 0391 0045 001 0: not detected
+! 0391 0046 001 0: not detected
+! 0391 0047 001 0: not detected
+! 0391 0048 001 0: not detected
+! 0391 0049 001 0: not detected
+! 0391 0050 001 0: not detected
+! 0391 0051 001 0: not detected
+! 0391 0052 001 0: not detected
+! 0391 0053 001 0: not detected
+! 0391 0054 001 0: not detected
+! 0391 0055 001 0: not detected
+! 0391 0056 001 0: not detected
+! 0391 0057 001 0: not detected
+! 0391 0058 001 0: not detected
+! 0391 0059 001 0: not detected
+! 0391 0060 001 0: not detected
+! 0391 0061 001 0: not detected
+! 0391 0062 001 0: not detected
+! 0391 0063 001 0: not detected
+plot v
+la x IJD
+la y2 cps (3-10 keV)
+la y3 cps (10-20 keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=jemx1 ScW=0391*
+cpd /xs

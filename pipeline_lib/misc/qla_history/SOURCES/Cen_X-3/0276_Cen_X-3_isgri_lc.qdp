@@ -1,0 +1,23 @@
+! Source: Cen X-3
+!--------------------------
+read serr 1 2 3  
+! center dT count_soft error_soft count_hard error_hard detsig radius revolution pointing subpointing pointingtype
+! 0276 0004 001 0: not detected
+ 1842.305633225215 0.0127372758649926    11.0653    2.1635     0.0000    0.0000    4.682   8.54  ! 0276 0010 001 0
+ 1842.333457315345 0.0127257017950342     1.6881    0.0000     2.4904    0.0000    1.879   6.33  ! 0276 0011 001 0
+ 1842.361281405470 0.0127372758599904     2.1092    0.0000     0.0000    0.0000    1.296   5.54  ! 0276 0012 001 0
+ 1842.389736282945 0.0133796373049790     3.5349    0.0000     0.0000    0.0000    1.736   9.66  ! 0276 0013 001 0
+ 1842.434516401105 0.0127314887149623     5.7955    0.0000     0.0000    0.0000    0.738  15.10  ! 0276 0014 001 0
+! 0276 0015 001 0: not detected
+! 0276 0016 001 0: not detected
+! 0276 0017 001 0: not detected
+! 0276 0018 001 0: not detected
+! 0276 0019 001 0: not detected
+plot v
+la x IJD
+la y2 cps (20-40keV)
+la y3 cps (40-80keV)
+la y4 DETSIG
+la y5 radius
+la ti src=Cen X-3 inst=isgri ScW=0276*
+cpd /xs

@@ -1,0 +1,62 @@
+
+NAME
+
+	nrtqla v-%VERSION%
+
+
+USAGE
+
+
+DESCRIPTION
+
+	ChangeLog - 
+	makeisdc1.in - 
+	makeisdc2 - 
+	nqlst.pl - script for the ST step
+	nqlscw.pl - script for the QL step
+	nqlfin.pl - script for the FI step
+	nqlmon.pl - script for the nrtqla monitor
+	QLALIB.pm - library containing some QLA specific functions
+	nrtqla.help - source for the nrtqla.txt help file
+
+	OPUS related files:
+		nqlst.resource - opus settings for ST step
+		nqlscw.resource - opus settings for QL step
+		nqlfin.resource - opus settings for FI step
+		nqlmon.resource - opus settings for nrtqla monitor
+		nrtqla.path - central location for variable definitions 
+				refered to in the resource files.
+		nrtqla.pipeline - list of which steps are run on which machine
+		nrtqla_omg_view.dat - 
+		nrtqla_pipeline.stage - defines the opus pipeline steps
+
+	UNITTEST files:
+		unit_test/README.test - unit test core script
+		unit_test/unittest.data.csh - generic test_data, outref and IC prep
+		unit_test/unittest.setup.csh - generic variable setup
+
+   
+PARAMETERS
+
+
+EXAMPLES
+
+
+ERROR
+
+
+BUGS
+
+
+
+AUTHOR
+
+	Tess Jaffe, ISDC
+	
+	George "Jake" Wendt, ISDC
+	Jake.Wendt@obs.unige.ch
+
+
+SEE ALSO
+	perldoc <filename>
+

@@ -1,0 +1,154 @@
+#! /bin/sh
+eval '  exec perl -x $0 ${1+"$@"} '
+#! perl -w
+
+use strict;
+use lib "$ENV{ISDC_OPUS}/pipeline_lib/";
+use lib "/home/wendt/";
+use ISDCPipeline;
+use OPUSLIB;
+use UnixLIB;
+use ISDCLIB;
+use QLAMOS;
+
+######################################################################
+#
+#	All after this was added by Jake, 070502, with regards to SCREW 1983
+#
+#	* OBS_ID to EXP_ID matching should be made with the pod
+#	* EXP_ID to SCW_ID matching should be made with the pointing_definition_predicted_vvv
+#	* The pod version should be taken from the PODV column in the PDEF.
+#	* The OBS group name should be qm{ii,j1,j2}_obsid_vvvv where vvvv is taken from the PDEF name
+
+$ENV{PATH_FILE_NAME} = "nrtqla";
+$ENV{LOG_FILES}    = "$ENV{OPUS_WORK}/nrtqla/logs";
+$ENV{MOSAICS}      = "$ENV{OPUS_WORK}/nrtqla/mosaics";
+$ENV{OBSDIR}       = "$ENV{REP_BASE_PROD}/obs";
+$ENV{PROCESS_NAME} = "nqlmon";
+$ENV{OSF_DATASET} = "NQLMON_UNDECLARED_OSF_DATASET";
+
+my @revolutions = &ISDCLIB::DoOrDie ( "$myls -1d $ENV{REP_BASE_PROD}/scw/???? | tail -2 | awk -F/ '{print \$NF}'" );
+
+foreach my $rev ( @revolutions ) {
+	chomp ($rev);
+	print "Processing revolution $rev\n";
+
+	my %podvs;	#	hash simply containing potentially multiple pod versions
+	my %exp;		#	hash containing EXP_ID keys containing an array of POINTING_IDs
+	my %obs_e;	#	hash containing OBS_ID keys containing a hash of EXP_ID keys
+	my %obs;		#	hash containing OBS_ID keys containing an array of POINTING_IDs
+	my $good_pdef;	#	flag to count good lines in pdef file
+	my $good_pod;	#	flag to count good lines in pod file
+
+	my @pdefs = sort(glob(&ISDCLIB::FindDirVers ( "$ENV{REP_BASE_PROD}/aux/adp/$rev" )."/pointing_definition_predicted_*.fits*"));
+	print "Found pdef files \n", join ( "\n", @pdefs) , "\n";
+	my ( $pdefv ) = ( $pdefs[$#pdefs] =~ /pointing_definition_predicted_(.+)\.fits/ );
+
+	my @pdef_list = &ISDCLIB::DoOrDie ( "fdump fldsep=, outfile=STDOUT columns='POINTING_ID,POINTING_TYPE,EXPID,PODV' rows=- prhead=no pagewidth=256 page=no wrap=yes showrow=no showcol=no showunit=no infile=$pdefs[$#pdefs]" );
+
+	foreach my $line ( @pdef_list ) {
+		next if ( $line =~ /^\s*$/ );
+		my ( $pointing_id, $pointing_type, $expid, $podver ) = split /\s*,\s*/, $line;
+		next unless ( $pointing_type == 0 );
+		next unless ( $pointing_id && $expid && $podver );
+		$good_pdef++;
+#		print "$pointing_id,$pointing_type,$expid,$podver\n";
+		$podvs{$podver}++;
+		push @{$exp{$expid}}, $pointing_id;
+	}
+	&Error ( "No good lines found in $pdefs[$#pdefs]!" ) unless ( $good_pdef );
+#	$podvs{'0022'}++;		#	for debugging
+
+	&Error ( "Multiple PODV values (", join ( ",", sort keys ( %podvs ) ), ") found in PDEF file!!" ) if ( scalar keys %podvs > 1 );
+	my @pods  = sort(glob(&ISDCLIB::FindDirVers("$ENV{REP_BASE_PROD}/aux/adp/$rev")."/pod_${rev}_".(keys %podvs)[0].".fits*"));
+	print "Found pod files \n", join ( "\n", @pods) , "\n";
+
+	my @pod_list = &ISDCLIB::DoOrDie ( "fdump fldsep=, outfile=STDOUT columns='EXP_ID,OBS_ID' rows=- prhead=no pagewidth=256 page=no wrap=yes showrow=no showcol=no showunit=no infile=$pods[$#pods]" );	#	AUXL-EXPO-REF	#	Why EXP_ID and not EXPID?
+
+	foreach my $line ( @pod_list ) {
+		next if ( $line =~ /^\s*$/ );
+		$good_pod++;
+		print $line;
+		my ( $exp_id, $obs_id ) = split /\s*,\s*/, $line;
+		$obs_e{$obs_id}{$exp_id}++;
+	}
+	&Error ( "No good lines found in $pods[$#pods]!" ) unless ( $good_pod );
+
+	#	Populate %obs observations with POINTING_IDs.  BEWARE!  There is a potential bug as SWIDs are NOT determined yet
+	foreach my $observation ( sort keys ( %obs_e ) ) {
+		foreach my $exposure ( sort keys ( %{$obs_e{$observation}} ) ) {
+			push @{$obs{$observation}}, @{$exp{$exposure}};
+		}
+	}
+
+	&ISDCLIB::DoOrDie ( "$mymkdir -p $ENV{MOSAICS}" ) unless ( -d "$ENV{MOSAICS}" );
+	foreach my $observation ( sort keys ( %obs ) ) {
+		my $obs_idx = "$ENV{MOSAICS}/${rev}_${observation}_${pdefv}.txt"; print "$obs_idx \n";
+		unless ( -e "$obs_idx" ) {
+			my $next_pointing = sprintf ( "%08d", (sort @{$obs{$observation}})[$#{$obs{$observation}}]+1 );
+			my $next_rev      = sprintf ( "%04d", $rev+1 );
+			my @next_scws = glob ( "$ENV{REP_BASE_PROD}/scw/$rev/$next_pointing\*/swg.fits" );
+			my @next_rev  = glob ( "$ENV{REP_BASE_PROD}/scw/$next_rev/0\*/swg.fits" ) unless ( @next_scws );
+			if ( @next_scws || @next_rev ) {
+				open SCW_LIST, "> $obs_idx";
+				foreach my $pointing ( sort @{$obs{$observation}} ) {
+					my @scws = glob ( "$ENV{REP_BASE_PROD}/scw/$rev/$pointing\*0.???/swg.fits" );
+					foreach my $scw ( @scws ) {
+						$scw =~ s/$ENV{REP_BASE_PROD}\/+//;
+						print "$scw\n";
+						print SCW_LIST "$scw\n";
+					}
+				}	#	end foreach pointing
+				close SCW_LIST;
+			}	#	end if
+		}
+
+		if ( -e "$obs_idx" ) {
+			foreach my $inst ( qw/ibis jmx1 jmx2/ ) {
+				my $in = &ISDCLIB::inst2in ( $inst );
+				$ENV{OSF_DATASET} = "qm${in}_${rev}_${observation}_${pdefv}";	#	.000";
+
+#				if ( glob ( "$ENV{OPUS_WORK}/nrtqla/obs/*.$ENV{OSF_DATASET}*" ) ) {
+				if ( `$myls $ENV{OPUS_WORK}/nrtqla/obs/*.$ENV{OSF_DATASET}* 2> /dev/null` ) {
+					print "OSF for $ENV{OSF_DATASET} exists\n";
+				} else {
+					print "OSF for $ENV{OSF_DATASET} does not exist.\n";
+
+
+
+#
+#	If enough science windows of all these pointings have completed,
+#
+#	For now, expect 100% completion.
+#
+
+
+
+					my $OBSDIR = "$ENV{OBSDIR}/$ENV{OSF_DATASET}.000";
+
+					&ISDCLIB::DoOrDie ( "$mymkdir -p $OBSDIR" ) unless ( -d "$OBSDIR" );
+					&Error ( "Did not mkdir $OBSDIR" ) unless ( -d "$OBSDIR" );
+
+					#   IBI, SPI, OMC, JX1, and JX2
+					my $dcf = $inst;
+					$dcf =~ tr/a-z/A-Z/; 
+					$dcf =~ s/JM/J/; 
+
+					# Startup OSF for observation, with status cww 
+					my $retval = &ISDCPipeline::PipelineStart (
+						"dataset"     => "$ENV{OSF_DATASET}", 
+						"state"       => "$osf_stati{QLA_ST_C}",  
+						"type"        => "obs", 
+						"dcf"         => "$dcf", 
+						"logfile"     => "$ENV{LOG_FILES}/$ENV{OSF_DATASET}.log", 
+						"reallogfile" => "$ENV{LOG_FILES}/$ENV{OSF_DATASET}_qla.txt", 
+						);
+
+					&Error ( "cannot start pipeline for $ENV{OSF_DATASET}" ) if ( $retval );
+				}	#	end unless
+			}	#	end if
+		}	#	end each instrument
+	}	#	end each observation
+}
+
+exit 0;

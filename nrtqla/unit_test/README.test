@@ -1,0 +1,260 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT NRTQLA"
+echo "#######"
+echo "###############################################################################"
+
+set system = "nrtqla"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set OUTREF_TGZ    = "nrtqla-3.4_outref.tar.gz"
+
+setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0025.fits[1]"
+echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
+
+
+####################################################################################################
+
+#setenv DO_NOT_RECREATE_DATA
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	echo "#######     Creating test data"
+	chdir test_data	#	./test_data
+
+	/bin/ln -s /isdc/arc/rev_2/aux
+	/bin/mkdir -p scw/0073
+	/bin/mkdir -p scw/0102
+
+	#	Note the version differences here...
+#	/bin/ln -s /isdc/arc/rev_2/scw/0073/007300590010.001 scw/0073/007300590010.000
+	/bin/ln -s /isdc/arc/rev_2/scw/0073/rev.001 scw/0073/rev.000
+	/bin/ln -s /isdc/arc/rev_2/scw/0102/rev.001 scw/0102/rev.000
+
+	foreach scw ( `/bin/ls -d1 /isdc/arc/rev_2/scw/0073/0* /isdc/arc/rev_2/scw/0102/0*` )
+		set new_scw = `echo $scw | sed 's/\.001/.000/'| awk -F/ 'BEGIN{ OFS="/"}{print $5,$6,$7}'`
+		/bin/ln -s $scw $new_scw
+	end	#	end foreach scw
+
+	chdir ..				#	./
+	/bin/mkdir -p opus_work/nrtqla/input/
+#	/bin/touch opus_work/nrtqla/input/007300590010.trigger
+	/bin/touch opus_work/nrtqla/input/010200370010.trigger
+	/bin/touch opus_work/nrtqla/input/010200370020.trigger
+	/bin/touch opus_work/nrtqla/input/010200370030.trigger
+	/bin/touch opus_work/nrtqla/input/010200400010.trigger	#	this trigger is after the mosaic so it will be triggered
+	/bin/cp $ISDC_OPUS/nrtqla/unit_test/isgr_qla_history.fits opus_work/nrtqla/scratch/
+	/bin/cp $ISDC_OPUS/nrtqla/unit_test/jemx_qla_history.fits opus_work/nrtqla/scratch/
+
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+
+#       Need ftools in qlamon.pl
+if ( -e $HEADAS/headas-init.csh ) then
+	source $HEADAS/headas-init.csh
+else if ( -e $LHEASOFT/lhea-init.csh ) then
+	source $LHEASOFT/lhea-init.csh 
+endif
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/nrtqla/input
+
+echo "#######     Looping over triggers in opus_work/nrtqla/input"
+
+#foreach trigger (`/bin/ls opus_work/nrtqla/input/* | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+#	foreach trigger ( "007300590010" )
+#foreach trigger ( "007300590010" "010200370010" "010200370020" "010200370030" )
+foreach trigger ( "010200370010" "010200370020" "010200370030" )
+
+	echo "###############################################################################"
+	echo "######"
+	echo "######  RUNNING:  opus_wrapper on pipeline nrtqla for science window $trigger"
+	echo "######"
+	echo "######    You should see no errors"
+	echo "######"
+	
+	#  Unlike other pipelines, we must control this here;  opus_wrapper isn't
+	#   smart enough and it is easier here:
+	###############################################
+	###############################################
+	#  So first the startup:
+	###############################################
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlst $trigger ${OPUS_WORK}/${trigger}_nqlst.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	if ($exit_status > 0) exit 1
+	
+	###############################################
+	###############################################
+	#  Now we see what triggers were created:
+	###############################################
+	echo "#######     Examining OSFs created..."
+	set obsosfs =  `osf_test -p nrtqla.path -pr dataset | sort`
+	echo "#######     Found OSFs:  $obsosfs"
+	
+	#  We know in what order they should come out (I think):
+#	if ( ($obsosfs[0] !~ "") || ($obsosfs[1] !~ "qsib_007300590010") || ($obsosfs[2] !~ "qsj1_007300590010") ||  ($obsosfs[3] !~ "qsj2_007300590010")) then
+#		echo "#######     ERROR:  didn't find all expected OSFs:  $obsosfs"
+#		exit 1
+#	else
+#		echo "#######     Found all expected OSFs;  looping..."
+#	endif
+	
+	###############################################
+	###############################################
+	#  Loop over Obs groups, i.e. instruments
+	###############################################
+	foreach obsosf ($obsosfs) 
+		set obsgrp = $obsosf[1]
+		echo "#######     Obs group OSF is ${obsgrp}"
+		echo "#######     Running nqlscw for ${obsgrp}"
+		echo "#######     Running 'osf_test -p nrtqla.path -pr dcf_num -f $obsgrp'"
+		set ins = `osf_test -p nrtqla.path -pr dcf_num -f $obsgrp ` 
+		if ($status != 0) exit 1
+		eval `envv set OSF_DCF_NUM $ins`		#	removed envv path so that Darwin might work
+#		eval `/usr/bin/envv set OSF_DCF_NUM $ins`
+		echo "#######     OSF_DCF_NUM is $OSF_DCF_NUM"
+		echo "#######     ins is $ins"
+		
+		#if ($ins == "IBI") then
+		#	echo "#######     Skipping IBIS"
+		#	continue
+		#endif
+		
+		#if ($ins =~ JX*) then
+		#	echo "#######     Skipping JEMX"
+		#	continue
+		#endif
+		
+		${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlscw $obsgrp ${OPUS_WORK}/${obsgrp}_nqlscw.log
+		@ exit_status = $status 
+		echo "#######     exit status from opus_wrapper was $exit_status"
+		if ($exit_status > 0) exit 1
+		
+		echo "#######     Running nqlfin for ${obsgrp}"
+		
+		${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlfin $obsgrp ${OPUS_WORK}/${obsgrp}_nqlfin.log
+		@ exit_status = $status 
+		echo "#######     exit status from opus_wrapper was $exit_status"
+		if ($exit_status > 0) exit 1
+
+		set command = "osf_update -p nrtqla.path -f $obsgrp  -s ccc"
+		echo "#######     Running $command"
+		$command
+		if ($status != 0) exit 1
+		
+	end  # foreach instrument
+	
+#	#  Now we have to clean up the blackboard so that the next trigger sees 
+#	#   only its related OSFs:
+#	foreach osf ( `osf_test -p nrtqla.path -pr dataset`)
+#		set command = "cleanup.pl --path=nrtqla --dataset=$osf --level=opus --do_not_confirm"
+#		echo "#######     Running $command"
+#		$command
+#		if ($status != 0) exit 1
+#	end
+
+#	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlmon - ${OPUS_WORK}/${trigger}_nqlmon.log
+
+end  # foreach trigger
+
+
+${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlmon - ${OPUS_WORK}/nqlmon.log
+
+#######################################################################
+#
+#		Mosaic processing
+#
+#######################################################################
+
+#foreach obsgrp ( "qmib_0073_01200680001_0003" "qmj1_0073_01200680001_0003" "qmj2_0073_01200680001_0003" )
+foreach obsgrp ( "qmib_0102_88600390004_0005" "qmj1_0102_88600390004_0005" "qmj2_0102_88600390004_0005" )
+		
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlobs $obsgrp ${OPUS_WORK}/${obsgrp}_nqlscw.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	if ($exit_status > 0) exit 1
+		
+	echo "#######     Running nqlfin for ${obsgrp}"
+		
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nqlfin $obsgrp ${OPUS_WORK}/${obsgrp}_nqlfin.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	if ($exit_status > 0) exit 1
+
+end  # foreach trigger
+
+foreach osf ( `osf_test -p nrtqla.path -pr dataset`)
+	set command = "cleanup.pl --path=nrtqla --dataset=$osf --level=opus --do_not_confirm"
+	echo "#######     Running $command"
+	$command
+	if ($status != 0) exit 1
+end
+
+
+
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete.  Moving results to out..."
+echo "#######     "
+
+if ( ! -e out ) /bin/mkdir -p out
+/bin/mv test_data/obs out
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/input   out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/logs    out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/obs     out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/mosaics out/opus_work/nrtqla
+
+echo "#######     Moving out logs"
+
+cd out/obs
+foreach ogid ( `/bin/ls -d q*` )
+	/bin/mkdir -p ../../test_data/$ogid
+#	/bin/mkdir -p ../../test_data/$ogid/logs
+	/bin/chmod    +w $ogid
+	/bin/chmod -R +w $ogid/logs
+
+	if ( $ogid =~ *spi* ) then
+		echo "#######     Moving out $ogid/source_res.fits (potentially different every time)"
+		if ( -e $ogid/source_res.fits.gz ) then
+			/bin/chmod +w $ogid/source_res.fits.gz
+			/bin/mv       $ogid/source_res.fits.gz ../../test_data/$ogid/
+		else
+			echo "#######     NO $ogid/source_res.fits found\!"
+		endif
+	endif
+
+	echo "#######     Moving out $ogid logs (different every time)"
+#	/bin/mv $ogid/logs/* ../../test_data/$ogid/logs/
+	/bin/mv $ogid/logs ../../test_data/$ogid/
+
+
+
+	echo "#######     Write-protecting $ogid"
+	/bin/chmod -w $ogid
+end   #  foreach obs_spi
+cd ../..
+
+
+echo "#######     "
+echo "#######     DONE"
+
+exit
+
+#	last line

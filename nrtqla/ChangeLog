@@ -1,0 +1,316 @@
+
+Linux differences are expected.
+
+	SCREW 1769 1783 and SPR 4385 4386 may not be accepted
+
+	May have to retest and redeliver this most recent version
+
+
+
+
+
+
+--------------------------------------------------------------
+20070605 - Jake - deliver nrtqla 3.4 for SCREW 1983
+
+20070510 - Jake
+	SCREW 1983 - nqlfin
+
+20070509 - Jake
+	more mods for SCREW 1983
+	included mods of IBISLIB.pm and JMXLIB.pm
+	included QLALIB.pm, QLAMOS.pm, nrtqla.path, nqlmon.pl, nqlmon.resource
+		nqlobs.pl and nqlobs.resource
+
+20070502 - Jake
+	began work on SCREW 1983 mosaic processing
+	this SCREW will require heavy modification of nqlmon.pl (possible moved to a library)
+	as well as the creation of nqlobs.pl and nqlobs.resource
+	This seems to be the simplest option.
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+--------------------------------------------------------------
+20061027 - Jake - deliver nrtqla 3.3 for SCREW 1940
+
+20061026 - Jake
+	SCREW 1940 - changing QLALIB.pm and the history files
+
+--------------------------------------------------------------
+20060508 - Jake - deliver nrtqla 3.2 for SPR 4445
+
+20060503 - Jake
+	changed ISDC_REF_CAT to version 0025 in unit test
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060317 - Jake
+	SPR 4445 - individual PARFILES for each OSF
+
+2006022? - Jake
+	added isgr_qla_history.fits and jemx_qla_history.fits to unit test
+
+--------------------------------------------------------------
+20060215 - Jake - deliver nrtqla 3.1 for SPR 4431 4432
+
+20060209 - Jake
+	SPR 4431 - chmod -R 755 $ENV{OBSDIR}/$ENV{OSF_DATASET}.000 during cleanup of previous run
+	SPR 4432 - nqlscw.pl choose swg or swg_prp depending which is there
+		make choosing swg.fits or swg_prp.fits smarter for og_create
+		so this can work on both rev_1 and rev_2 formats for now.
+
+--------------------------------------------------------------
+20060207 - Jake - deliver nrtqla 3.0 for SCREWs 1769 1796 and SPR 4409
+
+	SCREW 1763, 1774, 1781 changes done in pipeline_lib
+	SCREW 1783 was rejected, but would've been done in pipeline_lib
+
+20060117 - Jake
+	using cleanup.pl instead of osf_delete in unit_test
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	changed unit_test to use gnrl_refr_cat_0023
+	SPR 4409 - writing to /dev/null now instead of /tmp/$$
+
+20060109 - Jake
+	SCREW 1796 - moved QLALIB.pm back to nrtqla as all things in it are only called from nrtqla now
+
+20051208 - Jake
+	SCREW 1796 - 
+		moved QlaIBIS.pm functionality to pipeline_lib/IBISLIB.pm
+		moved QlaJMX.pm functionality to pipeline_lib/JMXLIB.pm
+		moved QlaGEN.pm functionality to pipeline_lib/QLALIB.pm
+		removed QlaOMC.pm and QlaSPI.pm because they don't do anything
+
+--------------------------------------------------------------
+20051130 - Jake - deliver nrtqla 3.0 for SCREWs 1763 1769 1774 1781 1783
+
+20051129 - Jake
+	SCREW 1781 - SCW2_BKG_pics[S,M]BkgDOL in ibis_science_analysis to "-"
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1774 - added parameter ISPE_isgrarf/SCW2_ISPE_isgrarf to ibis_*_analysis
+	SCREW 1783 - change IBIS_NoisyDetMethod from 1 to 0
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20051024 - Jake
+	SCREW 1763 - ibis_scripts parameter updates
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+	change ISDC_REF_CAT in unittest from 0020 to 0021
+
+--------------------------------------------------------------
+20050906 - Jake - deliver nrtqla 2.9 for SPRs 4298 4304
+
+20050826 - Jake
+	added some spaces to cleanup code
+	added preceding & to function calls
+	aligned ISDCPipeline hash parameters
+
+20050825 - Jake
+	SPR 4304 - only get the instrument ebounds, rmf and arf if thats
+		the instrument being run.
+
+20050815 - Jake
+	SPR 4298 - Added "do not stop on error" parameter to $inst-SRCL-* FindDOL calls
+
+--------------------------------------------------------------
+20050606 - Jake - RE-deliver nrtqla 2.8 for SCREWs 1695 1704 and SPRs 4132 4150 4171
+
+20050530 - Jake
+	added verbosity parameter to og_create 3.3 call
+
+20050527 - Jake
+	SPR 4171 - 
+	changed QlaINST.pm to use $ENV{IC_ALIAS} instead of NRT
+	added IC_ALIAS to EnvStretch in nqlscw
+
+20050525 - Jake
+	update of ibis_*_analysis parameters for ibis_scripts-8.0
+	update og_create parameters
+
+20050512 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+		for ibis_scripts-7.9
+
+20050509 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+--------------------------------------------------------------
+20050421 - Jake - deliver nrtqla 2.8 for SCREW 1695 1704
+
+20050414 - Jake
+	nrtqla unit test works on linux, but with many differences
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+20050405 - Jake
+	Changed unit_test to use ISDC_REF_CAT 0020
+	SCREW 1695 - QlaIBIS parameter changes again
+	
+--------------------------------------------------------------
+20050322 - Jake - deliver nrtqla 2.7 for SPR 4055 and SCREW 1687
+
+20050322 - Jake
+	added 2> /dev/null to end of myls of alerts in nqlfin.pl
+	SCREW 1687 - modified ibis_science_analysis parameters
+
+20050318 - Jake
+	SPR 4055 - set og_create to use swg.fits not swg_prp.fits
+
+20050317 - Jake
+	began modifications to use test_data straight from the archive
+
+---------------------------------------------------------------
+20050303 - Jake - deliver nrtqla 2.6 for SCREWs 1654 1667
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $my as prefix to some unix execs in nqlfin.pl nqlst.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in nqlfin.pl nqlscw.pl
+
+---------------------------------------------------------------
+20050114 - Jake - delivering nrtqla 2.5 on SPR 3893
+
+20050114 - Jake
+	Trying without optimizing ii_skyimage
+
+---------------------------------------------------------------
+20050110 - Jake - delivering nrtqla 2.5 on SPR 3893
+
+	hard coded the ISDC_REF_CAT 0017 into the unit_test
+
+20050107 - Jake
+	for ibis_scripts 7.7
+	QlaIBIS.pm         : ibis_science_analysis : add "par_IBIS_II_inEnergyValues" => "",
+	QlaIBIS.pm         : ibis_science_analysis : add "par_SCW1_ISGRI_event_select" => "",
+	QlaIBIS.pm         : ibis_science_analysis : add "par_OBS1_SouFit" => "0",
+	QlaIBIS.pm         : ibis_science_analysis : add "par_OBS2_imgSel" => "EVT_TYPE==SINGLE && E_MIN==252 && E_MAX==336",
+
+	QlaJMX.pm "par_BIN_I_shdType" => "3", #	from 0
+
+20041105 - Jake
+	SPR 3893 - JEMX LCR_timestep= -1, IMA_useCatPos=y
+
+---------------------------------------------------------------
+20041006 - Jake - delivering nrtqla 2.4 on 
+	SPR 3666 and SCREWs 1556 1561 1568
+
+20041006 - Jake
+	SCREW 1561 - obsDir parameter for og_create
+
+20040923 - Jake
+	removed outref data from test_data.tar.gz
+
+20040915 - Jake
+	SPR 3666 - added IMA_fineResol
+	SCREW 1556 - created QlaGEN and modified QlaJMX and QlaIBIS to
+		replace q_scw_jemx and q_scw_ibis 
+
+---------------------------------------------------------------
+20040908 - Jake - delivering nrtqla 2.3 on 
+	SPR 3800 and SCREWs 1533 1540 1550
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040827 - Jake
+	SCREW 1540 - Cleanup and Clarity
+	ran properindent.pl on everything
+
+20040824 - Jake
+	SCREW 1533 - PipelineSteps to LogErrors
+
+20040804 - Jake
+	SPR removed anaS4 from pipeline file
+
+---------------------------------------------------------------
+20040712 - Jake - delivering nrtqla 2.2 on 
+	SPRs 3578, 3658, 3666 and SCREWs 1421, 1454
+
+20040709 - Jake
+	SPR 3578 - sort of I guess.  I can't see any 
+		obvious mods for this for ibis, but ...
+	SCREW 1421 - integration of q_scw_ibis 2.5 and 
+		ibis_scripts 7.2 required the addition and
+		modification of several parameters
+		(q_scw_ibis 2.5 not accepted yet so did 
+			manual install)
+
+20040628 - Jake
+	SCREW 1454 - added IMA_dimImage and 
+		changed LCR_precisionLevel from 0 to 20
+		and SPE_precisionLevel from 0 to 20
+	SPR 3578 - added COR_outputExists and DEAD_outputExists 
+		pars for q_scw_jemx 2.4 (MUST BE SET TO NO)
+	SPR 3658 - change BKG_simulated from y to n
+	ran properindent.pl on README.test
+
+---------------------------------------------------------------
+20040527 - Jake - delivering nrtqla 2.1 on SCREW 1445 and 1476
+
+20040521 - Jake
+	added osf_status variables in nqlst.pl and nqlmon.pl
+
+20040519 - Jake
+	SCREW 1476 - changed q_scw_jemx par_SigLimit1 from 16.0 to 18.0
+
+20040427 - Jake
+	SCREW 1445 - changed q_scw_jemx par_distlimit from 0.1 to 0.05
+
+
+---------------------------------------------------------------
+20040317 - Jake - delivering nrtqla 2.0
+	accidentally made an incorrect change to SigLimit1 in 
+		QlaJMX.pm when integrating q_scw_jemx 2.3.
+	should've been 16.0 not 10.0
+	fixed with SPR 3514
+
+20040316 - Jake
+	new generic component version file
+
+20040309 - Jake - delivering nrtqla 1.9
+	changed makeisdc1.in
+		from (cd unit_test; README.test)
+		to   (cd unit_test; ./README.test)
+
+20040309 - Jake
+	added nrtqla script simply to give version number
+
+20040223 - Jake
+	parameter changes to integrate 
+		q_scw_ibis                    2.4         (changed from 2.3)
+		q_scw_jemx                    2.3         (changed from 2.2)
+
+20040204 - Jake
+	Uncommented IBIS testing
+

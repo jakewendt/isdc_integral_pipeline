@@ -1,0 +1,183 @@
+
+NOTE : convert_program fails on the timeline summary file TSF_0011_SSSSSSSSSSSSS_0002.INT on isdclin6/gcc, but does work on the intel compiler.  This is irrelevant as adp will never be run on a linux machine.  I have written SPR 4439 regarding this, just in case it is a sign of a deeper problem.
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20061212 - Jake
+	Reorganized perldoc info into code and comments in adpst.pl, adpfin.pl, adpmon.pl and adp.pl
+
+20061211 - Jake
+	changed all die's in adp.pl and adpst.pl to either ISDCLIB::Error or, with a command, ISDCLIB::DoOrDie
+		(none in adpfin.pl and NOT in adpmon.pl because no OSF log file)
+	These functions more clearly describe the problem when they are called.  die simply dies
+		and only shows a message in the process log and not the OSF log.
+
+----------------------------------------------------------------
+20060710 - Jake - deliver adp 5.1 on SPR 4485 and SCREW 1874
+
+20060523 - Jake
+	modified unit_test to incorporate adpmon into the testing
+
+20060522 - Jake
+	SPR 4485 - 
+	SCREW 1874 - write alert
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+----------------------------------------------------------------
+20060228 - Jake - deliver adp 5.0 on SPRs 3773 4392 and SCREWs 1811 1812
+
+20060210 - Jake
+	SPR 4392 - die if receive AHF file after attitude_historic.fits(.gz) already exists
+
+20060119 - Jake
+	code cleanup and simplifications
+	SCREW 1811 - no longer specify "logfile" to PipelineStep
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+
+20051205 - Jake
+	SPR 4394 - UnixLIB::Gzip
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20050627 - Jake
+	SPR 3773 - added some more info before writing alert
+
+----------------------------------------------------------------
+20051101 - Jake - deliver adp 4.9 on SCREW 1749 1752 1769 and SPR 4271
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+050722 - Jake
+	SCREW 1752 - add -p to cp
+
+050719 - Jake
+	SPR 4271 - more robust adp arc_prep rerun
+
+20050718 - Jake
+	SCREW 1749 - added check to count TIME_CORRELATION records in prev rev
+	this occurs at the first OLF of the next revolution and is triggered
+		by the non-existance of the org/revno/olf directory
+	will raise alert Level 2, ID 510
+
+20050718 - Jake
+	copying opus_misc_rep/alerts to out for unit_test checking
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050413 - Jake
+	Linux convertrevolution fails
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+		using $mydate
+
+----------------------------------------------------------------
+20050304 - Jake - deliver adp 4.8 on SCREW 1568 1654 1667 and SPR 3772
+
+20050303 - Jake
+	Dealt with special case for copied gzip file
+
+20050302 - Jake
+	SPR 3772 - added a * after fits in globs, mylss and chmods so to include
+		the unlikely gzipped file
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $my as prefix to some unix execs in adp.pl, adpfin.pl, adpst.pl, adpmon.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in adp.pl adpmon.pl adpst.pl
+
+20041005 - Jake 
+	SCREW 1568
+
+----------------------------------------------------------------
+20040908 - Jake - delivering adp 4.7 on SCREW 1533 1540 1550 and SPR 3776
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040827 - Jake
+	SCREW 1540 - Cleanup and Clarity
+
+20040824 - Jake
+	SCREW 1533 - adp.pl LogErrors to ISDCPipeline::LogErrors
+		PipelineSteps to LogErrors
+
+20040722 - Jake
+	broke up many long lines in adp.pl
+
+20040721 - Jake
+	SPR 3776 - using ADP_UNIT_TEST instead of USER
+		modified README.test, adpst.pl, adp.pl
+
+----------------------------------------------------------------
+20040708 - Jake - delivering adp 4.6 on SPR 3413
+
+20040708 - Jake
+	SPR 3413 - added a skip for day 000 in RevArcCheck
+
+----------------------------------------------------------------
+20040607 - Jake - delivering 4.5 on SCREW 1479 and SPR 3646
+
+20040607 - Jake
+	added a gzip in adp.pl for SCREW 1479
+
+20040528 - Jake
+	SPR 3646 - string comparison uses ne not !=
+
+20040521 - Jake
+	added osf_status_'s to adpmon.pl and adpst.pl for clarification
+
+20040511 - Jake 
+	SPR 3526 - added some code to check orbita historic file (still testing)
+
+20040316 - Jake
+	using new generic component version file
+
+20040310 - Jake
+	split the test_data file into test_data and outref
+	to conform to my new standard
+
+20040309 - Jake
+	added adp script to simply show version number
+
+20040212 - Jake
+	changed (cd unit_test; README.test)
+		to (cd unit_test; ./README.test)
+
+20040212 - Jake
+	ran properindent.pl on *.pl
+
+~20040120 - Jake 
+	removal of some 'envv del PATH' lines
+	addition of code to use outref file
+

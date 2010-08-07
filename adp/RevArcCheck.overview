@@ -1,0 +1,128 @@
+sub RevArcCheck {
+  #
+  # determine if a directory is ready for archiving;  
+  # send alerts if it's incomplete at the time the historic files are present
+  # if all passes,  write arc_prep trigger
+  #  
+  #  
+  # give revolution number only
+  #
+  
+  ###  first pass to check historic orbit and attitude
+
+
+	Are "orbit_historic" and "attitude_historic" files available?
+		Yes - continue
+      No  - return
+
+	Are any of these files missing? 
+		"orbit_predicted" "attitude_predicted " "observation_log " "time_correlation " "attitude_snapshot " "timeline_summary" "pod_${revnum}_"
+      Yes - send alert and return
+      No  - continue ( There are at least one of these )
+
+	Are (PAF version = TSF version) and (POD version = OPP version)?
+		Yes - continue
+		No  - send alert and return
+
+	Are any of these not complete?
+      ($osf =~ /opp_(\d{4})/) 
+       or ($osf =~ /pod_([0-9]{4})/) 
+       or ($osf =~ /([0-9]{4})_[0-9]{2}_PAF/) 
+       or ($osf =~ /([0-9]{4})_[0-9]{4}_(ASF|AHF)/) 
+       or ($osf =~ /TSF_([0-9]{4})/);
+      
+		Yes - return
+		No  - continue
+
+
+    ###  also have to check olfs;  more difficult because don't know rev number
+    ###  and additionally painful to handle names of YYYYDDDHH format;  
+    ##
+    ###  use both OSFs and files found in repository
+
+    print "*********      the OLFs found were: ",sort(keys(%olfosfs)),"\n";
+
+    my $prevrev = sprintf("04d",$revnum-1);
+    my $nextrev = sprintf("04d",$revnum+1);
+    my @olfs = sort(glob("$ENV{AUXDIR}/org/${revnum}/olf/*"));
+  die "Cannot find OLFs in org:  $ENV{AUXDIR}/org/${revnum}/olf/ \n" unless (@olfs);
+    my @prevolfs = sort(glob("$ENV{AUXDIR}/org/${prevrev}/olf/*"));
+    my @nextolfs = sort(glob("$ENV{AUXDIR}/org/${nextrev}/olf/*"));
+    my $end;
+    my $start;
+    my ($hex,$status,$osfname,$type,$dcf,$com);
+    # start with last successful OLF from previous revolution 
+    $start = $prevolfs[$#prevolfs] if (@prevolfs);
+    #  or first from current
+    $start = $olfs[0] unless (@prevolfs);
+    # end with first from next
+    $end = $nextolfs[0] if (@nextolfs);
+    # or last from current if none yet for next
+    $end = $olfs[$#olfs] unless (@nextolfs);
+    # parse YYYYDDDHH format
+    $start =~ s/.*(\d{9})\.OLF/$1/; 
+    $end  =~ s/.*(\d{9})\.OLF/$1/;
+print "*********      checking OLFs from $start to $end\n";
+    my $i;
+    print "*********      testing all OLFs\n";
+    #  Run numerically from start YYYYDDDHH to end, as found in repositorty,
+    #   and check the OSFs.  Yeah, it's ugly.  
+    for ($i=$start;$i<=$end;$i++) {
+      # because the hours only go 01 to 24, ignore numbers like ddddddd25
+      $i =~ /\d{7}(\d{2})/;
+      next if ($1 > 23);
+      $i =~ /(\d{4})(\d{3})\d{2}/;
+      # leap years?  Should be good enough to check divisible by 4.
+      # So, don't check numbers over 365 if year *not* divisible by 4:
+      next if (($2 > 365) && ($1 % 4)) ;
+      # Otherwise, don't check over 366.  
+      next if ($2 > 366);
+      # see if there is an OSF for every hour in the range
+      #  (Remember the OSFs now have . replaced with _.)
+      if (!$olfosfs{"${i}_OLF"}) {
+	$missing .= "${i}_OLF";
+	print "*********      missing ${i}_OLF\n";
+	next;
+      }
+      else {
+	print "*********      found ${i}_OLF;  testing...\n";
+	#  Since these get cleaned up automatically, the OSF may have 
+	#   already been deleted.  If the OSF exists, it should be complete.
+	@result = `$ISDCPipeline::myls $ENV{OPUS_WORK}/adp/obs/*${i}_OLF* 2> /dev/null`;
+	die "*******     ERROR:  I'm confused, as there appear to be more than one OSF matching ${i}_OLF:  @result\n" if ($#result > 0);
+	if (@result) {
+	  ($hex,$status,$osfname,$type,$dcf,$com) = ISDCPipeline::ParseOSF($result[0]);
+	  $num++ unless ($status =~ /c$/);
+	} # end if OSF exists
+	else {
+	  print "*******     OSF ${i}_OLF not found;  must have been cleaned and was therefore complete.\n";
+	}
+      }
+    } # for each olf in range
+
+    if ($missing) {
+      ISDCPipeline::WriteAlert(
+			       "step" => "adp - revolution check alert",
+			       "message" => "missing OLFs in rev $revnum:  $missing",
+			       "level" => 2,
+			       "logfile" => "$ENV{LOG_FILES}/$opuslink",
+			       "subdir" => "$newworkdir",
+			       "id" => "506",
+			      );
+      return;
+    }
+    elsif ($num) {
+      ISDCPipeline::PipelineStep("step" => "adp - archiving check: $num OLF files for rev $revnum incomplete","program_name" => "NONE","logfile" => "$ENV{LOG_FILES}/$opuslink");
+      return;
+    }
+
+
+
+
+
+
+#
+#  Everything passed, write arc_prep trigger.
+#
+
+

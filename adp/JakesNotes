@@ -1,0 +1,20 @@
+
+040114 - I think this is a list of DATA_IDs.  There may be others too.
+
+ops_adp@isdcifts:~>ls $OPUS_WORK/adp/obs/ | awk -F- '{print $3}' | sort | uniq
+
+ahf
+arc
+asf
+iop
+ocs
+olf
+opp
+orb
+pad
+paf
+pod
+rev
+thf
+tsf
+

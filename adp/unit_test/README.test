@@ -1,0 +1,222 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT ADP"
+echo "#######"
+echo "###############################################################################"
+
+set system = "adp"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "adp-4.4_test_data.tar.gz"
+set OUTREF_TGZ    = "adp-5.0_outref.tar.gz" 
+
+eval `/usr/bin/envv set ADP_UNIT_TEST TRUE`
+echo "#######     ADP_UNIT_TEST now set to ${ADP_UNIT_TEST}"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	
+	######################################################################
+	#  Set up (mostly) standard layout of subdirs and data:
+	#
+	#  Create and fill test_data directory:
+	
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	echo "#######     gzipping ..."
+	/usr/bin/find test_data/aux -name \*.fits -print -exec /bin/gzip {} \;
+
+
+	#  Fudge convertorbit parameters so that we can start in the middle.  The orbita
+	#   we're going to put in first has historic from rev 1 on, but predicted only
+	#   from 7 onward.  So we set RevP to 6 and pretend we've processed that already.
+	/bin/cp ${ISDC_ENV}/pfiles/convertorbit.par ${OPUS_WORK}/adp/pfiles/convertorbit.par
+	@ exit_status = $status 
+	if ($status != 0) then 
+		echo "#######     status not zero from:   /bin/cp ${ISDC_ENV}/pfiles/convertorbit.par ${OPUS_WORK}/adp/pfiles/convertorbit.par"
+		exit 1
+	endif
+	echo "#######     RUNNING:  pil_set ${OPUS_WORK}/adp/pfiles/convertorbit.par RevP=6"
+	pil_set ${OPUS_WORK}/adp/pfiles/convertorbit.par RevP=6
+	@ exit_status = $status 
+	if ($status != 0) then 
+		echo "#######     status not zero from:   pil_set ${OPUS_WORK}/adp/pfiles/convertorbit.par RevP=6"
+		exit 1
+	endif
+	
+endif #	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/adp/input
+#
+#  More complicated than other pipelines, since these must go in 
+#   non-alphabetic order.  I create triggers with faked names, each 
+#   prepended by a number telling in what order to run.  Here, we go 
+#   through them in that order, strip off the extra numbers ("nn-"),
+#   and run:
+
+mkdir -p  opus_misc_rep/ifts/inbox.tmp
+mv opus_misc_rep/ifts/inbox/* opus_misc_rep/ifts/inbox.tmp/
+
+echo "#######     Looping over triggers in opus_misc_rep/ifts/inbox.tmp/"
+foreach dummy (`/bin/ls -1 opus_misc_rep/ifts/inbox.tmp/* | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	#    echo "#######     got dummy trigger $dummy"
+	# grab real trigger name, which is without nn- prepended
+	set trigger = ` echo $dummy | /bin/awk -F- '{print $2}' `
+	#    echo "#######     real trigger will be $trigger"
+	# rename the input file
+	set command = `echo $dummy $trigger | /bin/awk '{print "/bin/mv opus_misc_rep/ifts/inbox.tmp/"$1" opus_misc_rep/ifts/inbox/"$2}' `
+	#    echo "#######     Running '$command'"
+	
+	eval $command
+	
+	if ($status != 0) then 
+		echo "#######     status not zero"
+		exit 1
+	endif
+
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper adpmon $trigger ${OPUS_WORK}/adpmon.log 
+
+	if ($status != 0) then 
+		echo "#######     status not zero"
+		goto NEXTTRIGGER
+	endif
+
+	if ( ! -e opus_misc_rep/ifts/inbox/$trigger ) then
+		echo "#######     adpmon must have moved file"
+		goto NEXTTRIGGER
+	endif
+
+	#  For orbit files, have to fudge parameters of convertorbit;  before we go into
+	#   this loop, we already set it correctly for the first one with the predicted
+	#   data.  Now, we test if the predicted exists;  if so, and we have an orbit
+	#   trigger, that means we're doing the second orbit file with historic data.
+	if ( ($trigger == "orbita.orbita") && (-e "${REP_BASE_PROD}/aux/adp/0011.000/orbit_predicted.fits"  )) then
+		echo "#######     RUNNING:  pil_set RevP=49 RevH=9"
+		pil_set ${OPUS_WORK}/adp/pfiles/convertorbit.par RevP=49 RevH=9
+		@ exit_status = $status 
+		if ($status != 0) then 
+			echo "#######     status not zero"
+			exit 1
+		endif
+		
+		#  We also need a fudge so that we don't get an error from two orbit files
+		#  in one day.  (Since they're named by the script by date.)  We get it to 
+		#  just add one by passing an environment variable:
+		eval `/usr/bin/envv set ADP_UNIT_TEST_ORB TRUE`												#	040721 - Jake - SPR 3776 - using diff var for ORB
+		echo "#######      ADP_UNIT_TEST_ORB now set to ${ADP_UNIT_TEST_ORB}"	#	040721 - Jake - SPR 3776 - using diff var for ORB
+	endif
+	
+	echo "###############################################################################"
+	echo "#######"
+	echo "#######     RUNNING:  opus_wrapper on pipeline adp for file $trigger"
+	echo "#######"
+	echo "#######     You should see no errors"
+	echo "#######"
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper adp $trigger ${OPUS_WORK}/${trigger}_adp.log 
+	@ exit_status = $status 
+	#  Note:  in this case, you get exactly what opus_wrapper returns, i.e.
+	#   if adp.pl returns 3, opus_wrapper gets 3*256, opus_wrapper divides
+	#   by 256 and then returns 3, but here you get 3 instead of 3*256.  
+	#   Don't ask me why.
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	
+	
+	####  Non-zero exit status possibilities:
+	if ($exit_status != 0) then
+		
+		# Special trigger:  this one should exit status 3 
+		if ( ($trigger == "200232204.OLF") || ($trigger == "0011_arc_prep.trigger") ) then
+			if ($exit_status == 3) then 
+				echo "#######     NOTE:  exit status 3 expected for this trigger;  continuing."
+			else
+				echo "#######     exit status of $exit_status not expected."
+				exit 1
+			endif
+			
+			# Speical trigger:  this one should exit status 5
+		else if ( ($exit_status == 5) && ($trigger == "THF_020816_0031.DAT") ) then 
+			echo "#######      exit status $exit_status expected for THF_020816_0031.DAT"
+			
+			#  Special trigger:  this one should error off
+		else if ($trigger == "THF_020816_0030.DAT") then
+			echo "#######     Error expected for THF_020816_0030.DAT;  continuing."
+			
+			#  Nothing else should exit non-zero status:
+		else
+			exit 1
+		endif
+		
+	endif   # if non-zero exit status
+	
+	####  Now, make sure those above that *should* have exited non-zero really did:
+	if ( ($trigger == "200232204.OLF") || ($trigger == "0011_arc_prep.trigger") ) then
+		if ($exit_status != 3) then
+			echo "#######     ERROR:  expected exit status 3 from trigger $trigger"
+			exit 1
+		endif
+	else if ($trigger == "THF_020816_0031.DAT") then
+		if ($exit_status != 5) then
+			echo "#######     ERROR:  expected exit status 5 from trigger $trigger"
+			exit 1
+		endif
+	else if ($trigger == "THF_020816_0030.DAT") then
+		if ($exit_status == 0) then
+			echo "#######     ERROR:  expected error exit from trigger $trigger"
+			exit 1
+		endif
+	endif
+NEXTTRIGGER:
+end  # foreach trigger
+
+foreach osf ( `osf_test -p adp.path -pr dataset`)
+	set command = "cleanup.pl --path=adp --dataset=$osf --level=opus --do_not_confirm"
+	echo "#######     Running $command"
+	$command
+end
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     Processing complete.  Moving results to out..."
+
+#	move opus_work stuff to check that cleanup.pl worked
+#	(don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/adp
+/bin/mv opus_work/adp/input   out/opus_work/adp
+/bin/mv opus_work/adp/logs    out/opus_work/adp
+/bin/mv opus_work/adp/scratch out/opus_work/adp
+/bin/mv opus_work/adp/obs     out/opus_work/adp
+
+/bin/mkdir -p out/aux
+/bin/mv test_data/aux/adp out/aux
+
+#  Move back out the logs
+/bin/chmod -R +w out/aux/adp/0011.000
+/bin/mv out/aux/adp/0011.000/logs test_data
+
+#  Orbitas end up in these two revs
+/bin/mv out/aux/adp/0013.000/logs/* test_data/logs
+/bin/mv out/aux/adp/0052.000/logs/* test_data/logs
+/bin/mv out/aux/adp/AO99/*txt test_data
+#	/bin/mv out/aux/adp/AO99/ocs/*txt test_data
+/bin/mv out/aux/adp/ref/revno/revno_*_log.txt test_data
+
+echo "#######     Renaming revno file stamped with today's date"
+/bin/mv out/aux/adp/ref/revno/revolution*.fits out/aux/adp/ref/revno/revolution.fits
+
+echo "#######     Moving alerts to out"
+/bin/mv opus_misc_rep/alert out/
+
+/bin/chmod -R -w out/aux/adp
+echo "#######     Done."
+echo ""
+
+exit
+
+#	last line

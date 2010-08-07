@@ -1,0 +1,82 @@
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=ORIGIN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=LOCATN action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=RESPONSI action=WRITE type=DAL_CHAR value_s=ii_map_rebin
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=STRT_VAL action=WRITE type=DAL_CHAR value_s="1999-01-01"
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=END_VAL action=WRITE type=DAL_CHAR value_s="2999-01-01"
+
+dal_attr indol=rebinned_corr_ima.fits+2  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+3  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+4  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+5  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+6  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+7  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+8  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+9  keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+10 keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+11 keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+12 keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+dal_attr indol=rebinned_corr_ima.fits+13 keynam=FILENAME action=WRITE type=DAL_CHAR value_s="rebinned_corr_ima.fits"
+
+
+
+

@@ -1,0 +1,23 @@
+
+!----------------------------------------------------------------------------
+!
+! PATH file for Standard Science window Analysis Pipeline
+!
+!----------------------------------------------------------------------------
+!
+! note that the first three, used by OPUS, must have the trailing "/".
+!
+
+ STAGE_FILE             = OPUS_DEFINITIONS_DIR:consssa_pipeline.stage
+ OPUS_OBSERVATIONS_DIR  = OPUS_WORK:consssa/obs/
+ rii_input              = OPUS_WORK:consssa/input/
+ rii                    = REP_BASE_PROD:
+! rii_obs                = REP_BASE_PROD:obs/
+ log_files              = OPUS_WORK:consssa/logs/
+ work                   = OPUS_WORK:consssa/scratch/
+ parfiles               = OPUS_WORK:consssa/pfiles/
+ cfg_dir                = ISDC_ENV:templates/
+ rii_scw                = REP_BASE_PROD:scw/
+ arcingest              = OPUS_MISC_REP:trigger/cons_ssa/
+! alerts                 = OPUS_MISC_REP:alert/cons_ssa/
+

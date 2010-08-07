@@ -1,0 +1,203 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT CONSSSA"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consssa"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set OUTREF_TGZ    = "consssa-2.2_outref.tar.gz"
+
+eval `/usr/bin/envv set SSA_UNIT_TEST TRUE`
+echo "#######     SSA_UNIT_TEST now set to ${SSA_UNIT_TEST}"
+
+setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0025.fits[1]"
+echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
+
+#	Set instruments outside this "if block" bc needed later even if "if block" not run
+	set instruments = ( "jmx1" "jmx2" "picsit" "omc" "isgri" )
+#	set instruments = ( "jmx1" "picsit" "omc" "isgri" )	#	jemx2 currently core dumps
+#	set instruments = ( "isgri" )
+#	set instruments = ( "picsit" )
+#	set instruments = ( "isgri" "picsit" )
+#	set instruments = ( "isgri" "picsit" "omc" )
+#	set instruments = ( "jmx1" "jmx2" )
+#	set instruments = ( "jmx1" )
+#	set instruments = ( "jmx2" )	#	jmx2 core dumps in j_ima_iros
+#	set instruments = ( "omc" )
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	
+#	setenv DO_NOT_USE_LINKS
+
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	#	must build the ISDC_SITE because cons_ssa_start.sh needs it
+	echo "#######     Creating ISDC_SITE"
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	eval `/usr/bin/envv set ISDC_SITE ${PWD}/ISDC_SITE`
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	/bin/mkdir -p ${PWD}/ISDC_SITE/run/pipelines/cons
+	/bin/ln -s ../../../../opus_work/consssa ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s ../../../../opus_work/opus    ${PWD}/ISDC_SITE/run/pipelines/cons/
+
+	echo "#######     Creating test data"
+	chdir test_data
+
+	/bin/ln -s /isdc/arc/rev_2/aux
+	/bin/ln -s /isdc/arc/rev_2/scw
+
+	chdir ..
+	/bin/mkdir -p opus_work/consssa/input/
+
+	#	/bin/mkdir $REP_BASE_PROD/obs_isgri/
+	#	/bin/mkdir $REP_BASE_PROD/obs_picsit/
+	#	/bin/mkdir $REP_BASE_PROD/obs_spi/
+	#	/bin/mkdir $REP_BASE_PROD/obs_omc/
+	#	/bin/mkdir $REP_BASE_PROD/obs_jmx/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_isgri/002*  $REP_BASE_PROD/obs_isgri/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_picsit/002* $REP_BASE_PROD/obs_picsit/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_spi/002*    $REP_BASE_PROD/obs_spi/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_omc/002*    $REP_BASE_PROD/obs_omc/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_jmx/002*    $REP_BASE_PROD/obs_jmx/
+
+	#	because cons_ssa_start.sh parses the output of dal_dump
+	#	and the stuff that would go to this log confuses it.
+	unsetenv COMMONLOGFILE
+
+	#	Need ftools in cons_ssa_start.sh
+	if ( -e $HEADAS/headas-init.csh ) then
+		source $HEADAS/headas-init.csh
+	else if ( -e $LHEASOFT/lhea-init.csh ) then
+		source $LHEASOFT/lhea-init.csh 
+	endif
+	foreach instrument ( $instruments )
+		cons_ssa_start.sh --min_duration 700 --max_duration 2164 --instruments $instrument 0044
+	end
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+#	
+#	\rm opus_work/consssa/input/*trigger
+#	foreach scwid ( 005000100010 005000110010 005300760010 005300770010 005300820010 005400150010 010500100010 010500110010 010500120010 010500180010 010500190010 010500200010 010500210010 010500220010 010500230010 010500270010 010500280010 010500290010 010500300010 010500310010 010500320010 010500380010 010500390010 017101050010 017101060010 017101070010 017101080010 017101090010 017200870010 017200880010 017200890010 017300270010 017300280010 017300290010 017300300010 017300310010 017300350010 017300360010 017300370010 017300380010 017300390010 017300460010 017300470010 024400810010 024400820010 024400830010 024400930010 024400940010 024400950010 024400960010 024500420010 024500430010 024500440010 024500510010 024500520010 024500530010 024500540010 024500600010 024500610010 024500620010 024500630010 001200020010 001200020020 001200020030 001200020040 001400050010 001400050020 001400050030 001400050040 001400050050 001400050060 001400050070 007900630010 007900640010 007900650010 007900660010 007900680010 007900690010 007900700010 007900710010 007900720010 007900730010 007900740010 007900750010 008000070010 008000080010 008000090010 008000100010 008000110010 008000120010 008000130010 008000190010 008000200010 008000210010 021500470010 021500480010 021500490010 021500520010 021500530010 021500540010 021500550010 021500560010 021500570010 021500580010 021600110010 021600120010 021600130010 021600140010 021600150010 021600160010 021600170010 021600200010 021600210010 021600220010 021600230010 021600240010 021600250010 )
+#	foreach scwid ( 021600160010 021600170010 021600200010 021600210010 021600220010 021600230010 021600240010 021600250010 )
+#			touch opus_work/consssa/input/${scwid}_isgri.trigger
+#	end
+#	
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/consssa/input
+
+echo "#######     "
+echo "#######     Looping over ssa triggers in opus_work/consssa/input"
+/bin/ls -1 opus_work/consssa/input/*trigger
+
+#	Create the mosaic trigger now, because this'll all get cleaned up in the processing
+foreach sciencewindow ( `/bin/ls -1 opus_work/consssa/input/*_*.trigger | /bin/awk -F/ '{print $NF}' | /bin/awk -F_ '{print $1}' | /usr/bin/uniq` )
+	echo $sciencewindow >> opus_work/TestMosaic.trigger
+end
+
+foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	echo "#######     Running process_consssa_trigger.csh $trigger"
+	$ISDC_OPUS/consssa/unit_test/process_consssa_trigger.csh $trigger
+	@ exit_status = $status 
+	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
+	if ( $exit_status > 0 ) exit 1
+end  # foreach trigger
+
+
+
+
+
+
+
+
+set instruments = ( "jmx1" "picsit" "omc" "isgri" )
+
+
+
+
+
+
+
+set instruments = ( $instruments "spi" )
+
+foreach instrument ( $instruments )
+#	echo "004400120010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+#	echo "004400850010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+#	echo "004400930010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+	cp opus_work/TestMosaic.trigger opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+end
+
+
+echo "#######     "
+echo "#######     Looping over sma triggers in opus_work/consssa/input"
+/bin/ls -1 opus_work/consssa/input/*trigger
+
+foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	echo "#######     Running process_consssa_trigger.csh $trigger"
+	$ISDC_OPUS/consssa/unit_test/process_consssa_trigger.csh $trigger
+	@ exit_status = $status 
+	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
+	if ( $exit_status > 0 ) exit 1
+end  # foreach trigger
+
+foreach osf ( `osf_test -p consssa.path -pr dataset`)
+	set command = "cleanup.pl --path=consssa --dataset=$osf --level=opus --do_not_confirm"
+	echo "#######     Running $command"
+	$command
+	if ( $exit_status > 0 ) exit 1
+end
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete.  Moving results to out..."
+echo "#######     "
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/consssa
+/bin/mv opus_work/consssa/input   out/opus_work/consssa
+/bin/mv opus_work/consssa/logs    out/opus_work/consssa
+/bin/mv opus_work/consssa/scratch out/opus_work/consssa
+/bin/mv opus_work/consssa/obs     out/opus_work/consssa
+
+if ( ! -e out ) /bin/mkdir -p out
+/bin/mv test_data/obs* out
+
+cd out
+foreach ogid ( `/bin/ls -d obs_*/s* obs_*/0*/s*` ) 
+	/bin/mkdir -p ../test_data/$ogid/logs
+	/bin/chmod    +w $ogid
+	/bin/chmod -R +w $ogid/logs
+
+	if ( $ogid =~ *spi* ) then
+		echo "#######     Moving out $ogid/source_res.fits (potentially different every time)"
+		if ( -e $ogid/source_res.fits.gz ) then
+			/bin/chmod +w $ogid/source_res.fits.gz
+			/bin/mv       $ogid/source_res.fits.gz ../test_data/$ogid/
+		else
+			echo "#######     NO $ogid/source_res.fits found\!"
+		endif
+	endif
+
+	echo "#######     Moving out $ogid logs (different every time)"
+	/bin/mv $ogid/logs/* ../test_data/$ogid/logs/
+
+	echo "#######     Write-protecting $ogid"
+	/bin/chmod -w $ogid
+end	#	foreach obs_spi
+cd ..
+
+echo "#######     "
+echo "#######     ALL DONE"
+
+exit
+
+#	last line

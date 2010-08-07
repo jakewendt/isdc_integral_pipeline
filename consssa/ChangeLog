@@ -1,0 +1,388 @@
+
+Linux gcc differences are expected.  Linux intel compilation will fail.
+
+Try to implement a way to test cons_sma.sh in the unit test
+
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+--------------------------------------------------
+20060711 - deliver consssa 2.1 on SCREW 1815
+
+20060503 - Jake
+	changed ISDC_REF_CAT to version 0025 in unit test
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060328 - Jake
+	SCREW 1815 : versioning of the obs_INST_OSA directory
+
+--------------------------------------------------
+20060116 - deliver consssa 2.0 on SPR 4192 4325 4373 4385 4386 4393 4408 4409 and SCREW 1665 1763 1765 1769 1774 1781 1796
+
+	SCREW 1783 rejected - change back
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	changed unit_test to use gnrl_refr_cat_0023
+	SPR 4409 - writing to /dev/null now instead of /tmp/$$
+
+20060109 - Jake
+	SCREW 1796 - moved energy_bands.fits.gz to pipeline_lib for conssa and consssa
+
+20060104 - Jake
+	added check on existance of ingest trigger after its creation and move
+
+20051214 - Jake
+	moved CssCOR.pm to pipeline_lib with CorLIB.pm from nrtscw
+	SPR 4408
+
+20051208 - Jake
+	SCREW 1796 - 
+		moved CssIBIS.pm functionality to pipeline_lib/IBISLIB.pm
+		moved CssJMX.pm functionality to pipeline_lib/JMXLIB.pm
+		moved CssSPI.pm functionality to pipeline_lib/SPILIB.pm
+
+--------------------------------------------------
+20051130 - deliver consssa 2.0 on SPR 4192 4325 4373 4385 4386 and SCREW 1665 1763 1765 1769 1774 1781 1783
+
+20051201 - Jake
+	WCT has $LHEASOFT set to same thing as $HEADAS which causes some problems
+
+20051130 - Jake 
+	SPR 4393 - using /usr/bin/printf instead of /bin/printf
+
+20051129 - Jake
+	SCREW 1781 - SCW2_BKG_pics[S,M]BkgDOL in ibis_science_analysis to "-"
+
+20051121 - Jake
+	Unquoted all $ENV{DEBUGIN} in CssGEN.pm to avoid warnings
+	Skipping the potential renaming of trigger_done to trigger_done
+	SPR 4385 - remove opus scratch area
+	SPR 4386 - jemx_science_analysis::BIN_I_shdType = 2
+	Added var{scw} and var{mosaic}
+
+20051110 - Jake
+	SPR 4373 - Find latest version of rev.* for linking in scratch dir
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1774 - added parameter ISPE_isgrarf/SCW2_ISPE_isgrarf to ibis_*_analysis
+	SCREW 1783 - change IBIS_NoisyDetMethod from 1 to 0
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20051026 - Jake
+	SCREW 1665 - Changed the following for jemx_science_analysis
+		"par_IMA_relDist"   => "-0.05",  #  was "1.5",
+		"par_IMA_searchRad" => "0.0",    #  was "0.25",
+		"par_IMA_gridNum"   => "0",      #  was "25",
+		"par_IMA_distFuzz"  => "0.0",    #  was "0.15",
+	SPR 4192 - change startLevel of jemx_science_analysis to COR
+
+20051024 - Jake
+	SCREW 1763 - ibis_scripts parameter updates
+
+20051020 - Jake
+	Had to add source $LHEASOFT/lhea-init.csh to unit test
+		because of addition of fdump to cons_ssa_start.sh
+	2 patches to Mathias' cons_ssa_start.sh
+		picsit test split over 2 lines
+		sed command missing last '
+
+20051007 - Jake
+	Implemented ip_skymosaic call for PICSIT mosaics
+	No SCREW/SPR for this yet as it is just testing
+	SCREW 1765 - copied cons_ssa_start.sh-0.6 from the reproc
+		area and editted for this SCREW
+
+20050921 - Jake
+	SCREW 1765 - add --max_duration to cons_ssa_start.ssh
+
+20050920 - Jake
+	SPR 4325 - 
+	consssa is crashing on smii when using the links to /unsaved_data/
+	changed IDX2OG in CssGEN.pm to be relative path to ./ instead of REP_BASE_PROD
+	changed to be relative path in cssscw.pl (for single scw)
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+	change ISDC_REF_CAT in unittest from 0020 to 0021
+
+20050912 - Jake
+	rebinned_corr_ima.fits integration
+
+20050908 - Jake
+	added --max_duration parameter to cons_ssa_start.sh
+	broke a part README.test now called process_consssa_trigger.csh
+		for ease of use as a function
+
+--------------------------------------------------
+20050907 - deliver consssa 1.9 on SPR 4241 4276
+
+20050816 - Jake
+	add extension parameter to dal_copy call(s)
+
+20050808 - Jake
+	so many little changes
+	don't gzip the files in the fin step if REDO_CORRECTION
+
+20050804 - Jake
+	added ENV.REDO_CORRECTION to cssst.resource to stop the potential
+		processing of OMC, SPI and PICSIT
+
+20050802 - Jake
+	Error if $ENV{REP_BASE_PROD}/scw/${revno}/${scwid} not found
+	Added trailing slashes to all dirs in consssa.path
+
+20050727 - Jake
+	add ENV.CREATE_REV_3 to cssscw.resource
+	not running evts_pick for scratch, but will probably run
+		it when populating rev_3
+
+20050722 - Jake
+	added FULLREV.test which is a modified version of README.test
+		but which test a full revolution
+
+20050719 - Jake
+	ENV.CREATE_REV_3 in cssfin.resource will cause files to be copied
+		instead of linked
+	use gti_merge to create ISOC{_ISGRI} gtis
+	copying MERGED{_ISGRI} to events files
+	moved nrtscw/nswcor.pl::CopyGTIExtension to nrtscw/CorLIB.pm
+		so that it can be used in consssa/CssCOR.pm
+
+20050713 - Jake
+	trying to use consssa to reprocess the COR/GTI/DEAD steps of ibis and jemx
+	introduced ENV.REDO_CORRECTION in cssscw.resource and cssfin.resource
+	created CssCOR.pm to hold most of the code
+
+20050627 - Jake
+	consssa/CssJMX.pm jemx_science_analysis-4.5.4 par updates
+
+20050608 - Jake
+	parameter updates for spi_scripts-3.1.1 and j_scripts-4.5.2
+
+--------------------------------------------------
+20050606 - deliver consssa 1.8 on SCREW 1587 and SPRs 3913 3916 4110 4132 4150 4171
+
+20050530 - Jake
+	added verbosity parameter to og_create 3.3 call
+
+20050527 - Jake
+	SPR 4171 - 
+	changed CssINST.pm to use $ENV{IC_ALIAS} instead of CONS
+	added IC_ALIAS to EnvStretch in cssscw.pl
+
+20050525 - Jake
+	update of ibis_*_analysis parameters for ibis_scripts-8.0
+	update of jemx*_analysis parameters for j_scripts-4.5.1
+	update og_create parameters
+
+20050512 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+		for ibis_scripts-7.9
+
+20050509 - Jake
+	TEMPORARILY DISABLED PICSIT TESTS BECAUSE OF IBIS_SCRIPTS CRASH
+
+20050509 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+
+20050503 - Jake
+	SCREW 1587 - IMA_triggersize to 0
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050422 - Jake
+	SPR 3913 - spi_science_analysis needs a parameter for the reference catalogue
+	SPR 4110 - spi_science_analysis 3.0 parameter changes
+	SPR 3916 - gain coeff not found
+		I don't see any explicit modifications needed to implement SPR 3916
+
+--------------------------------------------------
+20050418 - deliver consssa 1.7 on SCREWs 1633 1634 1636 1704 and SPR 4083
+
+	SPR 4083
+
+20050414 - Jake
+	consssa unit test work on linux with many differences
+	cons_ssa_start.sh to use /usr/bin/printf
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+20050405 - Jake
+	Changed unit_test to use ISDC_REF_CAT 0020
+
+20050322 - Jake
+	changed: if ( `$myls Parameters*par > /dev/null` );
+		to: if ( `$myls Parameters*par 2> /dev/null` );
+		in CssSPI.pm
+
+20050317 - Jake
+	modifying unit_test to use data directly from archive
+
+20050314 - Jake
+	SCREW 1633, 1634, 1636 - additional parameters for o_scripts 5.0
+
+-----------------------------------------------------
+20050303 - deliver consssa 1.6 on SCREW 1654 1667
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $my to some unix execs in CssSPI.pm cssfin.pl cssscw.pl
+
+-----------------------------------------------------
+20050223 - deliver consssa 1.5 on SPRs 3987 and SCREW 1646 1654
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in CssIBIS.pm CssSPI.pm cssfin.pl cssscw.pl cssst.pl
+	expanded Trigger2OSF to return ( $osfname, $dcf, $inst, $INST, $revno, $scwid )
+	modify cssst.pl to use SCREW 1646's function
+	
+20050211 - Jake
+	modified cssst.pl to use SSA_ST_C instead of CSS_ST_C
+
+20050209 - Jake
+	SCREW 1646 - Create CssGEN::Trigger2OSF function
+
+20050202 - Jake
+	SPR 3987 - corrected a truncated line (line 88) in cons_ssa_start.sh
+
+------------------------------------------------------
+20050118 - deliver consssa 1.4
+
+200501?? - Jake
+	hard coded the ISDC_REF_CAT 0017 into unit test
+	SPR 3957 - restart logging problem
+
+------------------------------------------------------
+20041215 - deliver consssa 1.3 on SPRs 3893 and SCREW 1617 1618
+
+20041215 - Jake
+	SPR 3893 - JEMX parameter changes
+	SCREW 1617 - delete log prior to run
+	SCREW 1618 - add mosaicing code
+	JEMX IMA_numPixelSubDiv from 20 to 15
+
+------------------------------------------------------
+20041125 - deliver consssa 1.2 on SPRs 3911 3914
+
+20041112 - Jake
+	added 3 parameters for ibis_scripts-7.5
+	added 1 parameter for ibis_scripts-7.6
+	Changed ibis parameters for reprocessing as per Arash
+	been making modifications for SPI processing
+
+20041109 - Jake
+	serious mods to allow triggers to contain lists
+	and proper handling, directory structure, locations,
+	ic_trees, and the like.
+	Specify spi_gain_coeffs.  Bug in spi_scripts ends
+		up creating empty gain_coeffs_index.
+
+20041108 - Jake
+	SPR 3911 - correctly locate triggers
+
+20041104 - Jake
+	SPR 3893 -  JEMX LCR_timestep= -1, IMA_useCatPos=y
+
+20041022 - Jake
+	Mathias provided cons_ssa_start.sh-0.4 (from 0.1)
+
+------------------------------------------------------
+20041018 - deliver consssa 1.1 on SPRs 3879 3880 3881 3882 3885
+
+20041018 - Jake
+	SPR 3885 - cleanup all possible scw/og dirs
+
+20041015 - Jake
+	SPR 3879 - cssscw.pl to use -l and -e checks in case of dead links
+	SPR 3880 - cssfin.pl to expand INPUT
+	SPR 3881 - cssfin.pl to modify find for relative paths
+	SPR 3882 - more error checking and use LogError
+	Changed all dies to ISDCPipeline::LogErrors
+		except those after write protection
+	changing from obs_ibis to obs_isgri and obs_picsit
+	changing ibis prefix from ssib to ssii and ssip
+	changing trigger from ibis to separate isgri and picsit triggers
+
+20041014 - Jake
+	modify unit_test to delete triggers and touch new correct ones 
+		to avoid creating new test_data.tar.gz
+	Merged obs_jmx1 and obs_jmx2 into just obs_jmx
+	Enable PICSIT
+	Using jemx_science_analysis and not jemx_scw_analysis
+	Using new jemx pars from Peter
+
+20041013 - Jake
+	in unit_test remove triggers from test_data
+	and touch new ones to avoid creating new
+	test_data set
+
+------------------------------------------------------
+20041005 - deliver consssa 1.0 on SCREWs 1561 1563 and SPRs 3860 3861
+
+20041004 - Jake
+	so many things
+
+20040929 - Jake
+	calling omc_science_analysis (instead of _scw_)
+	using FindDirVers
+	new og_create
+	removed ENV{OBSDIR} from resource files
+		because dependent on instrument
+
+20040927 - Jake
+	SCREW 1507 - omc_scw_analysis par changes
+	Modified cssst.pl to read instrument from trigger
+	Also does not use RUN_*_SCW env vars
+		or RUN_SLEWS anymore
+
+20040924 - Jake
+	Most everything is working at this point.
+	The components list seems to be complete.
+	IBIS, JEMX, SPI and OMC fully process.
+	OMC and SPI parameters appear OK.
+	IBIS and JEMX parameters to be decided.
+
+20040923 - Jake
+	It has been decided that
+	pipeline		= cons_ssa	(nrt_qla)
+	component	= consssa	(nrtqla)
+	prefix		= css			(nql and qla)
+	og prefix	= ss			(qs)
+
+20040922 - Jake
+	Began creating hybrid
+	modified pipeline_lib/ISDCConstants.pm
+	modified pipeline_lib/ISDCPipeline.pm
+	modified pipeline_lib/isdc_opus_install.csh
+	modified pipeline_lib/opus_wrapper
+
+	Changed	qs (as in qsib_) to hs
+	Changed	QLA 		to HYB
+	Changed  nrtqla	to hybsa
+	Changed  qla		to hyb	(most things)
+	Changed  nql		to hsa	(really just perlscript names)
+

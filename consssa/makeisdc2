@@ -1,0 +1,16 @@
+
+COMPONENT_NAME  = consssa
+COMPONENT_VERS  = 2.1
+
+revtest::  
+	(cd unit_test; ./FULLREV.test)
+
+oldtest::  
+	(cd unit_test; ./OLDREADME.test)
+
+onescw::  
+	(cd unit_test; ./ONESCW.test)
+
+mosaic::  
+	(cd unit_test; ./MOSAIC.test)
+

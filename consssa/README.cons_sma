@@ -1,0 +1,142 @@
+#!/bin/csh
+#	
+#	* ops_ssa@osa1
+#	* ISDC_ENV: /isdc/sw/cons_sw/prod
+#	* FTOOLS need to be initialised
+#	
+
+set VVV = "002"
+set today = `date +%Y%m%d`
+
+cd $REP_BASE_PROD/scw/
+ls `/home/isdc/wendt/local/scripts/testing/range_test.pl 0300 .. 0370`
+
+cd
+~/cons_sma.sh generate '03[01234567][0123456789]'
+
+#	
+#	* ~beck/scripts/cons_sma.sh generate RRRR_1 RRRR_2 ...
+#	   wildcards need to be enclosed in '', e.g. '030[0123456789]'
+#	
+#	   Note: output goes to ~ops_ssa/work/mosaics/dols_arc/yyyymmdd
+#	
+#	   Note: SCW for the revolutions need to be ingested to /isdc/arc/rev_2/scw
+#	
+
+cd ~ops_ssa/work/mosaics/dols_arc/$today
+
+
+
+
+#
+#	The following should no loger be needed.
+#
+#	#	SPECIAL ATTENTION NEEDED FOR DEALING WITH "." IN THE FILENAME!
+#	
+#	~wendt/local/scripts/filenames/replacespecfromfilenames.pl -c \\\+  -n _ /home/isdc_guest/ops_ssa/work/mosaics/dols_arc/20060628/*
+#	~wendt/local/scripts/filenames/replacespecfromfilenames.pl -c #  -n _ /home/isdc_guest/ops_ssa/work/mosaics/dols_arc/20060628/*-*
+#	~wendt/local/scripts/filenames/replacespecfromfilenames.pl -c -  -n _ /home/isdc_guest/ops_ssa/work/mosaics/dols_arc/20060628/*-*
+#	~wendt/local/scripts/filenames/replacespecfromfilenames.pl -c __ -n _ /home/isdc_guest/ops_ssa/work/mosaics/dols_arc/20060628/*__*
+
+
+
+
+mkdir -p ~ops_ssa/work/mosaics/dols_arc/isr.$VVV/
+mv ~ops_ssa/work/mosaics/dols_arc/$today/*       ~ops_ssa/work/mosaics/dols_arc/isr.$VVV/
+mv ~ops_ssa/work/mosaics/dols_arc/isr.$VVV/*GPS* ~ops_ssa/work/mosaics/dols_arc/$today/
+
+#	
+#	* move the relevant files to ~ops_ssa/work/mosaics/dols_arc/isr.$VVV
+#	
+#	   where VVV is the VERSION of the ISR that is being populated
+#	
+#	   Note: check file names for 'invalid characters', e.g. '.', '#'
+#	         and replace them by '_'
+#	
+#	   Note: GPS is not to be moved.
+#	
+
+cd  ~ops_ssa/work/mosaics/dols_arc/isr.$VVV/
+
+#
+#	THIS WILL NEED MODIFIED AS THE CONTENTS WILL NOT GO AWAY!
+#	WE'LL NEED TO REPLACE THE ???? WITH ACTUAL REVOLUTION NUMBERS
+#
+
+foreach rev ( "0301" "0302" )
+	foreach list ( `ls dolsrev${rev}*.txt` )
+		echo $list
+		~/cons_sma.sh import $list
+	end
+end
+
+#	
+#	* ~beck/scripts/cons_sma.sh import ~ops_ssa/work/mosaics/dols_arc/isr.VVV/dolsrevRRRR.... 
+#	
+#	   Note: output goes to ~ops_ssa/work/mosaics/master/yyyymmdd
+#	
+#	   Note: only one file at a time is supported.
+#	
+
+
+mkdir -p ~ops_ssa/work/mosaics/master/isr.$VVV/
+mv ~ops_ssa/work/mosaics/master/$today/* ~ops_ssa/work/mosaics/master/isr.$VVV/
+
+
+#	
+#	* move relevant files to ~ops_ssa/work/mosaics/master/isr.$VVV
+#	
+#	   where VVV is the VERSION of the ISR that is being populated
+#	
+
+
+
+###########################################################################
+#
+#	THE FOLLOWING CANNOT BE DONE UNTIL THE ssii_* FOR THE ASSOCIATED
+#	REVOLUTION ARE INGESTED INTO THE ARCHIVE AND THE REV_DIR IS
+#	LINKED.  THE `ls /isdc/arc/rev_2/obs_isgri/$rev.$VVV` IS
+#	TO MAKE SURE THAT THE REVOLUTION DIR IS MOUNTED.
+#
+
+
+#	foreach rev ( 0303 0304 0305 0306 0307 0308 0309 )
+#	foreach rev ( 0310 0311 0312 0313 0314 0315 0316 0317 0318 0319 )
+#	foreach rev ( 0320 0321 0322 0323 0324 0325 0326 0327 0328 0329 )
+#	foreach rev ( 0330 0331 0332 0333 0334 0335 0336 0337 0338 0339 )
+#	foreach rev ( 0340 0341 0342 0343 0344 0345 0346 0347 0348 0349 )
+#	foreach rev ( 0350 0351 0352 )
+#	foreach rev ( 0353 0354 0355 0356 0357 )
+#	foreach rev ( 0358 0359 )
+#	foreach rev ( 0360 0361 )
+#	foreach rev ( 0362 0363 )
+#	foreach rev ( 0364 0365 0366 0367 0368 0369 0370 )
+	echo "----------------------------------------------------------------------------------------"
+	echo "--  Processing revolution $rev"
+	echo "--"
+	cd $REP_BASE_PROD/obs_isgri/
+	ls /isdc/arc/rev_2/obs_isgri/$rev.$VVV
+	if ( ! -e $rev.$VVV ) ln -s /isdc/arc/rev_2/obs_isgri/$rev.$VVV
+	cd  ~ops_ssa/work/mosaics/master/isr.$VVV/
+	foreach list ( `ls ${rev}_*.list` )
+		echo $list
+		~/cons_sma.sh trigger isgri $list
+	end
+end
+
+
+
+
+#
+#	* once the ss??_RRRR* are archived:
+#	
+#	   ~beck/scripts/cons_sma.sh trigger isgri ~ops_ssa/work/mosaics/master/isr.$VVV/RRRR_*.list
+#	
+#	   Note: output goes to /reproc/run/pipelines/cons/consssa/input on the
+#	         ops-network
+#	
+#	         files need to be transferred to the corresponding directory on the
+#	         office network
+#	
+#	   Note: only one file at a time is supported.
+#	

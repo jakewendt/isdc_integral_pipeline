@@ -1,0 +1,178 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT CONSSSA"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consssa"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+#set OUTREF_TGZ    = "consssa-2.0_outref.tar.gz"
+
+eval `/usr/bin/envv set SSA_UNIT_TEST TRUE`
+echo "#######     SSA_UNIT_TEST now set to ${SSA_UNIT_TEST}"
+
+setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0021.fits[1]"
+echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	
+#	setenv DO_NOT_USE_LINKS
+
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	#	must build the ISDC_SITE because cons_ssa_start.sh needs it
+	echo "#######     Creating ISDC_SITE"
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	eval `/usr/bin/envv set ISDC_SITE ${PWD}/ISDC_SITE`
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	/bin/mkdir -p ${PWD}/ISDC_SITE/run/pipelines/cons
+	/bin/ln -s ../../../../opus_work/consssa ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s ../../../../opus_work/opus    ${PWD}/ISDC_SITE/run/pipelines/cons/
+
+	echo "#######     Creating test data"
+	chdir test_data
+
+	/bin/ln -s /isdc/arc/rev_2/aux
+	/bin/ln -s /isdc/arc/rev_2/scw
+
+	chdir ..
+	/bin/mkdir -p opus_work/consssa/input/
+
+	#	/bin/mkdir $REP_BASE_PROD/obs_isgri/
+	#	/bin/mkdir $REP_BASE_PROD/obs_picsit/
+	#	/bin/mkdir $REP_BASE_PROD/obs_spi/
+	#	/bin/mkdir $REP_BASE_PROD/obs_omc/
+	#	/bin/mkdir $REP_BASE_PROD/obs_jmx/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_isgri/002*  $REP_BASE_PROD/obs_isgri/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_picsit/002* $REP_BASE_PROD/obs_picsit/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_spi/002*    $REP_BASE_PROD/obs_spi/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_omc/002*    $REP_BASE_PROD/obs_omc/
+	#	/bin/cp -r $REP_BASE_PROD/../outref/obs_jmx/002*    $REP_BASE_PROD/obs_jmx/
+
+
+	#	because cons_ssa_start.sh parses the output of dal_dump
+	#	and the stuff that would go to this log confuses it.
+	unsetenv COMMONLOGFILE
+
+#	cons_ssa_start.sh --min_duration 700 --max_duration 2164 --instruments jmx1,jmx2,omc,picsit,isgri 0044 
+	set instruments = ( "jmx2" ) 
+#	"jmx1" )
+#	"picsit" "omc" "isgri" )
+#	set instruments = ( "isgri" )
+#	set instruments = ( "picsit" )
+
+	source $LHEASOFT/lhea-init.csh 
+	foreach instrument ( $instruments )
+#		cons_ssa_start.sh --instruments $instrument 0044 
+#		cons_ssa_start.sh --min_duration 700 --max_duration 2164 --instruments $instrument 0044 
+		foreach scw ( `cat ${ISDC_OPUS}/consssa/unit_test/jemx2_mosaic_scwlist` )
+#		foreach scw ( `cat ${ISDC_OPUS}/consssa/unit_test/jemx1_mosaic_0316scwlist` )
+			if ( $scw =~ \#* ) then 
+				continue
+			endif
+			echo "touch opus_work/consssa/input/${scw}_${instrument}.trigger"
+			touch opus_work/consssa/input/${scw}_${instrument}.trigger
+		end
+
+	end
+
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/consssa/input
+
+echo "#######     "
+echo "#######     Looping over ssa triggers in opus_work/consssa/input"
+/bin/ls -1 opus_work/consssa/input/*trigger
+
+foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+
+	echo "#######     Running process_consssa_trigger.csh $trigger"
+	$ISDC_OPUS/consssa/unit_test/process_consssa_trigger.csh $trigger
+	@ exit_status = $status 
+	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
+	if ( $exit_status > 0 ) exit 1
+
+end  # foreach trigger
+
+#set instruments = ( $instruments "spi" )
+
+foreach sciencewindow ( `/bin/ls -1 opus_work/consssa/input/*_*.trigger_done | /bin/awk -F/ '{print $NF}' | /bin/awk -F_ '{print $1}' | /bin/uniq` )
+	echo $sciencewindow >> opus_work/TestMosaic.trigger
+end
+
+
+foreach instrument ( $instruments )
+#	echo "004400120010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+#	echo "004400850010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+#	echo "004400930010" >> opus_work/consssa/input/0044_TestMosaic_${instrument}.trigger
+#	cp opus_work/TestMosaic.trigger opus_work/consssa/input/0316_TestMosaic_${instrument}.trigger
+	cp opus_work/TestMosaic.trigger opus_work/consssa/input/9999_TestMosaic_${instrument}.trigger
+end
+
+
+echo "#######     "
+echo "#######     Looping over sma triggers in opus_work/consssa/input"
+/bin/ls -1 opus_work/consssa/input/*trigger
+
+foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	
+	echo "#######     Running process_consssa_trigger.csh $trigger"
+	$ISDC_OPUS/consssa/unit_test/process_consssa_trigger.csh $trigger
+	@ exit_status = $status 
+	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
+	if ( $exit_status > 0 ) exit 1
+
+end  # foreach trigger
+
+
+
+echo "#######     "
+echo "###############################################################################"
+#	echo "#######     "
+#	echo "#######     Processing complete.  Moving results to out..."
+#	echo "#######     "
+#	
+#	#/bin/mkdir -p out
+#	/bin/mv test_data/obs* out
+#	
+#	cd out
+#	foreach ogid ( `/bin/ls -d obs_*/s* obs_*/0*/s*` ) 
+#		/bin/mkdir -p ../test_data/$ogid/logs
+#		/bin/chmod    +w $ogid
+#		/bin/chmod -R +w $ogid/logs
+#	
+#		if ( $ogid =~ *spi* ) then
+#			echo "#######     Moving out $ogid/source_res.fits (potentially different every time)"
+#			if ( -e $ogid/source_res.fits.gz ) then
+#				/bin/chmod +w $ogid/source_res.fits.gz
+#				/bin/mv       $ogid/source_res.fits.gz ../test_data/$ogid/
+#			else
+#				echo "#######     NO $ogid/source_res.fits found\!"
+#			endif
+#		endif
+#	
+#		echo "#######     Moving out $ogid logs (different every time)"
+#		/bin/mv $ogid/logs/* ../test_data/$ogid/logs/
+#	
+#		echo "#######     Write-protecting $ogid"
+#		/bin/chmod -w $ogid
+#	end	#	foreach obs_spi
+#	cd ..
+
+echo "#######     "
+echo "#######     ALL DONE"
+echo "#######     "
+
+exit
+
+#	last line

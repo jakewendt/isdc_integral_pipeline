@@ -1,0 +1,106 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT CONSSSA"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consssa"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+eval `/usr/bin/envv set SSA_UNIT_TEST TRUE`
+echo "#######     SSA_UNIT_TEST now set to ${SSA_UNIT_TEST}"
+
+setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0020.fits[1]"	#	050405 - Jake
+echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	setenv HOMEDIR $PWD
+
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	echo "#######     Creating ISDC_SITE"
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	eval `/usr/bin/envv set ISDC_SITE ${PWD}/ISDC_SITE`
+	echo "#######     ISDC_SITE is now $ISDC_SITE "
+	/bin/mkdir -p ${PWD}/ISDC_SITE/run/pipelines/cons
+	/bin/ln -s ../../../../opus_work/consssa ${PWD}/ISDC_SITE/run/pipelines/cons/
+	/bin/ln -s ../../../../opus_work/opus    ${PWD}/ISDC_SITE/run/pipelines/cons/
+
+	echo "#######     Creating test data"
+	chdir test_data
+
+	/bin/ln -s /isdc/arc/rev_2/aux
+	/bin/ln -s /isdc/arc/rev_2/scw
+
+
+#	setenv REP_DIR "/isdc/scratch/isdc_int/redo_cor-5"
+#	/bin/mkdir $REP_DIR
+#	/bin/mkdir $REP_DIR/obs_isgri
+#	/bin/ln -s $REP_DIR/obs_isgri
+#	/bin/mkdir $REP_DIR/scratch
+#	/bin/ln -s $REP_DIR/scratch
+#	/bin/mkdir $REP_DIR/obs_jmx
+#	/bin/ln -s $REP_DIR/obs_jmx
+#
+#	/bin/mv idx $REP_DIR/
+#	/bin/ln -s  $REP_DIR/idx
+#
+#	chdir $REP_DIR
+#	/bin/ln -s  /isdc/arc/rev_2/scw
+#	/bin/ln -s  /isdc/arc/rev_2/aux
+#	/bin/ln -s  /isdc/arc/rev_2/ic
+#
+
+	chdir $HOMEDIR
+	/bin/mkdir -p opus_work/consssa/input/
+
+#/bin/cp temp/input/*trigger opus_work/consssa/input/
+#/bin/cp temp/log/*          opus_work/
+
+
+#	Is there anyway to use cons_ssa_start here instead of all this touching?
+#	unsetenv COMMONLOGFILE
+#	cons_ssa_start.sh -i isgri 0071
+#	cons_ssa_start.sh -i jmx1  0071
+#	cons_ssa_start.sh -i jmx2  0071
+#	setenv COMMONLOGFILE +common_log.txt
+	unsetenv COMMONLOGFILE
+
+#>>>>> Usage: cons_ssa_start.sh [--h] [-n] [-i isgri,jmx[12],omc,picsit,spi] [--instruments isgri,jmx[12],omc,picsit,spi] [-a --all] [-d time] [--duration time] [-z --zeropointings] revno_1 [revno_2 ...]
+
+	touch opus_work/consssa/input/008000520010_isgri.trigger
+
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/consssa/input
+
+echo "#######     Looping over triggers in opus_work/consssa/input"
+/bin/ls -1 opus_work/consssa/input/*
+
+foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	echo "#######     Running process_consssa_trigger.csh $trigger"
+	$ISDC_OPUS/consssa/unit_test/process_consssa_trigger.csh $trigger
+	@ exit_status = $status
+	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
+	if ( $exit_status > 0 ) exit 1
+end  # foreach trigger
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete."
+echo "#######     "
+echo "#######     "
+
+exit
+
+#	last line

@@ -1,0 +1,20 @@
+
+!----------------------------------------------------------------------------
+!
+! PATH file for Data Distribution pipeline.
+!
+!----------------------------------------------------------------------------
+! note that the first three, used by OPUS, must have the trailing "/".
+!
+ STAGE_FILE             = OPUS_DEFINITIONS_DIR:arcdd_pipeline.stage
+
+!
+!  Dummy paths have to be replaced someday.
+!
+!   DON'T FORGET THE TRAILING SLASH!!
+
+ OPUS_OBSERVATIONS_DIR  = OPUS_WORK:/arc_distr/obs/
+
+ arc_dd_queue = OPUS_WORK:/arc_distr/queue/
+ arc_dd_log = OPUS_WORK:/arc_distr/log/
+

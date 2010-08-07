@@ -1,0 +1,52 @@
+
+!-----------------------------------------------------------------------------
+
+NSTAGE = 7
+STAGE01.TITLE = DI
+ STAGE01.DESCRIPTION = 'DD Pipeline Input'
+ STAGE01.NSTATUS.W = 'DI Waiting'
+ STAGE01.PSTATUS.P = 'DI Processing'
+ STAGE01.CSTATUS.C = 'DI Complete'
+ STAGE02.TSTATUS.X = 'DI Error'
+STAGE02.TITLE = SD
+ STAGE02.DESCRIPTION = 'DD Pipeline Packaging'
+ STAGE02.NSTATUS.W = 'Waiting'
+ STAGE02.PSTATUS.P = 'Processing'
+ STAGE02.CSTATUS.C = 'Complete'
+ STAGE02.TSTATUS.X = 'Error'
+STAGE03.TITLE = FD
+ STAGE03.DESCRIPTION = 'DD Pipeline Staging'
+ STAGE03.NSTATUS.W = 'Waiting'
+ STAGE03.PSTATUS.P = 'Processing'
+ STAGE03.CSTATUS.F = 'Ready for FTP'
+ STAGE03.CSTATUS.T = 'Ready for Tape'
+ STAGE03.CSTATUS.V = 'Ready for DVD'
+ STAGE03.TSTATUS.X = 'Error'
+STAGE04.TITLE = CV
+ STAGE04.DESCRIPTION = 'DD Pipeline Writing'
+ STAGE04.NSTATUS.W = 'Waiting'
+ STAGE04.PSTATUS.P = 'Processing'
+ STAGE04.CSTATUS.C = 'Complete'
+ STAGE04.CSTATUS.O = 'Skipped'
+ STAGE04.TSTATUS.X = 'Error'
+STAGE05.TITLE = NT
+ STAGE05.DESCRIPTION = 'DD Pipeline Notification'
+ STAGE05.NSTATUS.W = 'Waiting'
+ STAGE05.PSTATUS.P = 'Processing'
+ STAGE05.CSTATUS.C = 'Complete'
+ STAGE05.TSTATUS.X = 'Error'
+STAGE06.TITLE = PR
+ STAGE06.DESCRIPTION = 'DD Pipeline Privacy'
+ STAGE06.NSTATUS.W = 'Waiting'
+ STAGE06.PSTATUS.P = 'Processing'
+ STAGE06.CSTATUS.C = 'Complete'
+ STAGE06.TSTATUS.X = 'Error'
+STAGE07.TITLE = CL
+ STAGE07.DESCRIPTION = 'DD Deletion'
+ STAGE07.NSTATUS.D = 'Marked for OSF deletion'
+ STAGE07.NSTATUS.O = 'Marked for OPUS cleaning'
+ STAGE07.NSTATUS.- = 'Not to be deleted'
+ STAGE07.PSTATUS.P = 'OSF being cleaned/deleted'
+ STAGE07.TSTATUS.X = 'Cleaning error'
+ STAGE07.TSTATUS.E = 'Deletion error'
+

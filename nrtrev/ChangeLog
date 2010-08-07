@@ -1,0 +1,502 @@
+
+NOTE:  Rev pipeline executables don't all compile in the WCT environment due to root not working on the intel compiler.
+
+spi_psd_adcgain: GetChisquare and GetNDF may require root 4.03.02
+
+-----------------------------------------------------------------------
+20070227 - Jake - deliver nrtrev 8.8 on SPR 4631 4644
+
+20070207 - Jake
+	SPR 4631 - ibis_isgr_low_thres - meanExpect"   => "15.39", #  from 15.29 (typo)
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20070112 - Jake
+	SPR 4644 - added -IDX to ScwIndex parameter of am_cp calls in RevIBIS.pm
+
+20061207 - Jake
+	SPR 4631 - ibis_isgr_low_thres - meanExpect"   => "15.29", #  from 15.25
+
+20061107 - Jake
+	new test data created from Preproc 4.1
+	(some changes in jemx frss rev data)
+
+-----------------------------------------------------------------------
+20060508 - Jake - deliver nrtrev 8.7 on SCREW 1816 1824
+
+20060426 - Jake
+	SCREW 1816 - ibis_isgr_low_thres par changes
+		maxDead from 550 to 650
+		maxNewDead from 8 to 9
+		maxLT from 36.0 to 38.0
+		maxLTM from 150 to 99
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060323 - Jake
+	SCREW 1824 - RevIBIS.pm
+
+20060310 - Jake
+	removed 144909 as an acceptable error for ibis_isgr_low_thres
+
+-----------------------------------------------------------------------
+20060302 - Jake - deliver nrtrev 8.6.1 on SPR 4435 4437
+
+20060302 - Jake
+	SPR 4435 - better select index, rather than clean it
+
+200602 - Jake
+	SPR 4435 - clean working index
+	SPR 4437 - properly trigger iii_prep and arc_prep
+
+-----------------------------------------------------------------------
+20060215 - Jake - deliver nrtrev 8.6 on SPR 4409 4422
+
+20060130 - Jake
+	SPR 4422 - Change 2 calls to PipelineStep to just system("") calls
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+	SPR 4409 - writing to /dev/null now instead of /tmp/$$
+
+20060103 - Jake
+	Created new test_data using Preproc-3.8
+
+20051207 - Jake
+	moved Datasets.pm to pipeline_lib
+	formating changes
+		added & prefix to functions
+		remove {} when possible for vim color clarity
+		aligned =>
+
+20051118 - Jake
+	added & prefix to all ISDCPipeline function calls
+	aligned parameters to function calls
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+-----------------------------------------------------------------------
+20051101 - Jake - deliver nrtrev 8.5 on SCREW 1677 1769
+
+200510?? - Jake
+	SCREW 1677 - par updates
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+-----------------------------------------------------------------------
+20050906 - Jake - deliver nrtrev 8.4 on SPR 4296
+
+200508-- - Jake 
+	SPR 4296 - don't PutAttribute if file was just deleted
+
+-----------------------------------------------------------------------
+20050617 - Jake - deliver nrtrev 8.3 on SCREW 1499 1704
+
+20050504 - Jake
+	SCREW 1499 - par changes for ibis_isgr_cal_energy
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050414 - Jake
+	irem_obt_calc crashes in linux unit_test
+	irem_obt_calc on 0025_20021227060629_00_ire
+	irem_obt_calc on 0025_20021227070629_00_ire
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+20050407 - Jake
+	ibis_isgr_cal_energy 3.3 needs IC_TREE newer than 7.8
+
+-----------------------------------------------------------------------
+20050322 - Jake - deliver nrtrev 8.2 on SCREW 1628
+
+20050316 - Jake
+	SCREW 1628 - ibis_isgr_evts_tag probShot from 0.1 to 0.001
+
+-----------------------------------------------------------------------
+20050303 - Jake - deliver nrtrev 8.1 on SCREWs 1344 1625 1654 1667 
+		and SPRs 3972 3978
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $mv as prefix to some unix execs in Archiving.pm Datasets.pm RevIBIS.pm nrvgen.pl nrvmon.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in Archiving.pm RevIBIS.pm 
+		RevIREM.pm RevJMX.pm RevSPI.pm nrvfin.pl nrvgen.pl nrvmon.pl nrvst.pl
+
+20050201 - Jake
+	modified unit_test to correctly make OPUS_MISC_REP subdirs
+
+20050131 - Jake
+	SPR 3978 - changed GNRL-SCWG-GRP to GNRL-SCWG-GRP-IDX
+
+20050125 - Jake
+	iii_prep failed in barn/cons run because txt2idx index had incorrect number of ../'s
+	this is because $PWD and `pwd` are different here ie. /isdc/run and /isdc_run
+	added $workdir to the name of the index and set $workdir to `pwd` (/isdc_run)
+	don't forget to chomp!
+	
+20050120 - Jake
+	modified SCREW 1344 implementation
+
+20050118 - Jake
+	SCREW 1625 - nrvidp.resource - changed ILT_RATIO_PEAK and ILT_REVOL_WAIT (checkmode already correct)
+	added to all *.p? - use lib "$ENV{ISDC_OPUS}/nrtrev/"; (don't know why it worked before)
+
+-----------------------------------------------------------------------
+20050110 - Jake - deliver nrtrev 8.0 on SPR 3919 3930 and SCREW 1598
+
+20050107 - Jake
+	for ibis_isgr_low_thres           3.8         (changed from 3.6)
+	nrtrev/RevIBIS.pm         : ibis_isgr_low_thres  : add "par_maxStep" => "6",
+	nrtrev/RevIBIS.pm         : ibis_isgr_low_thres  : change "par_minLT" from 14.0 to 14.7
+	nrtrev/RevIBIS.pm         : ibis_isgr_low_thres  : change "par_maxLT" from 32.0 to 36.0
+	nrtrev/RevIBIS.pm         : ibis_isgr_low_thres  : change "par_meanExpect" from 13.75 to 15.25
+
+20041117 - Jake
+	SPR 3930 - added stoponerror=0 to ibis_isgr_dump_decod
+		as well as am_cp in case of alert
+
+20041116 - Jake 
+	SPR 3930 - added stoponerror = 0 to ibis_isgr_low_thres
+		which should've been there before
+	added am_cp after ibis_isgr_low_thres in case of alert creation
+	SPR 3919 - RevIBIS.pm, nrvmon.resource
+	SCREW 1598 - RevIBIS.pm, nrvidp.resource
+
+-----------------------------------------------------------------------
+20041019 - Jake - deliver nrtrev 7.9 on SCREW 1568 1569 and SPR 3842
+
+20041018 - Jake
+	SCREW 1569 - mv ibis context to IFTS_OUTBOX
+
+20041005 - Jake
+	SCREW 1568 - dal_dump wrapper GetColumn used in RevSPI
+
+20040920 - Jake
+	SPR 3842 - add REVOL to RevIBIS working_prpscw_index selection
+
+-----------------------------------------------------------------------
+20040908 - Jake - delivering nrtrev 7.8 on SCREW 1463 1533 1540 1550 and SPR 3813 3827
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040831 - Jake
+	added 2 pars for ibis_isgr_low_thres-3.2 (No SPR/SCREW)
+	SCREW 1463 - ibis_isgr_low_thres par value changes
+
+20040825 - Jake
+	SPR 3827 - moved osf_update of iii_prep step to very end
+	SCREW 1540 - Cleanup and Clarity
+
+20040820 - Jake
+	SCREW 1533
+
+20040816 - Jake
+	SPR 3813 - only write attr if file not deleted
+
+-----------------------------------------------------------------------
+20040804 - Jake - delivering nrtrev 7.7 on SPR 3801, 3802
+
+20040804 - Jake
+	SPR 3801 - remove time stamp for isgri_cdte_cor file name
+	SPR 3802 - iii_prep and arc_prep to use end of 
+		revolution time and not OSF time 
+	
+-----------------------------------------------------------------------
+20040802 - Jake - testing nrtrev 7.6.1 to test unit_tests
+
+-----------------------------------------------------------------------
+20040730 - Jake - delivering nrtrev 7.6 on SPR 3780 and 3793
+	(no unit tests due to the loss of test_data and outref files)
+
+20040729 - Jake
+	SPR 3793 - write-protect swg.fits files before txt2idx run
+
+20040723 - Jake
+	SPR 3780 - using RowsIn to check rows of IREM files now
+		ignoring IREM-SYNC-SRW as it is irrelevant
+
+-----------------------------------------------------------------------
+20040714 - Jake - delivering nrtrev 7.5 on SPR 3750
+
+20040714 - Jake 
+	SPR 3750 - Clever bad.  Simple good.
+
+-----------------------------------------------------------------------
+20040712 - Jake - delivering nrtrev 7.4 on SPR 3750
+
+20040712 - Jake
+	SPR 3750 - exit SPI calibration if spi_gain_hist returns no spectra
+
+-----------------------------------------------------------------------
+20040705 - Jake - delivering 7.3 on SPR 3609, 3748, 3751
+
+20040705 - Jake
+	code cleanup - removal of commented out lines in Archiving.pm
+	SPR 3751 - JMX2 to just JMX in par_Instrument of call
+	SPR 3748 - add "select" => "EVT_TYPE == 'PSD_SI'"
+	SPR 3609 - add evt_struct parameter to ibis_isgr_low_thres
+
+-----------------------------------------------------------------------
+20040701 - Jake - delivering 7.2 on SPR 3725, 3734 and 3746
+
+20040701 - Jake
+	SPR 3725 - found a few missed opportunities to use 
+		ISDCPipeline::RowsIn in RevIBIS.pm
+	SPR 3746 - use index for ibis_isgr_cal_energy
+ 
+20040625 - Jake 
+	SPR 3734 - trigger numbers must be sequential and without gaps
+		arc was #10, sct was #25, commenting #10 out caused all after 
+		#10 to be ignored.
+		removing duplicat SPI 'ssn' trigger in nrvspi.resource
+
+-----------------------------------------------------------------------
+20040622 - Jake - delivering 7.1 on SPR 3725, 3732 and SCREW 1504
+
+20040624 - Jake
+   SCREW 1504 - copied nrvgen.resource to nrviii and nrvarc
+	   to parallelize these processes
+		Also add these new processes to nrtrev.pipeline
+	SPR 3725 - added ISDCPipeline::RowsIn function in RevIBIS.pm
+	SPR 3732 - txt2idx for SPI calibration instead of idx_adds
+
+-----------------------------------------------------------------------
+20040622 - Jake - delivering 7.0 on SPR 3710 and 3713
+
+20040622 - Jake
+	SPR 3713 - nrvgen.* - stretch REV_INPUT, 
+		correct osf_status to ccwww
+
+20040621 - Jake
+	SPR 3710 - append _log.txt to iii_prep log file
+
+20040617 - Jake
+	split some strings to make the code more legible
+
+-----------------------------------------------------------------------
+20040611 - Jake - delivering 6.9 on SCREW 1347, 1479, 1493 and SPR 3671
+
+20040610 - Jake
+	SCREW 1493 replaces SPR 3636 and 3637
+
+20040609 - Jake
+	made Mathias changes to Archiving.pm::RawRemoval
+
+20040608 - Jake
+	SCREW 1479 - gzip rev data
+	more SPI Calibration: now using the IC files
+	modified nrvgen.pl, RevSPI.pm, Archiving.pm for SCREW 1347
+
+20040607 - Jake
+	SPR 3671 - better template cfg parsing
+
+20040605 - Jake
+	code cleanup in RevSPI.pm
+
+-----------------------------------------------------------------------
+20040604 - Jake - delivering 6.8 on SPRs 3636, 3640 and partial SCREW 1347
+	(rush delivery for testing reproc)
+
+20040604 - Jake
+	correctly fixed nrvgen.resource for iii_prep step
+	temporarily disabled unit_test
+
+20040602 - Jake
+	added SPI.-COEF-CAL to rev indexing in Datasets.pm
+	added spi_gain_coeff to exception in Rev Indexing bc of no timestamp
+	removed spi_cal_ from exception in Glo Indexing bc don't index those files
+
+20040601 - Jake
+	SPR 3637 - dal_detach failing when extension to be detached does 
+	not exist.  Added retval check to deal with this.
+
+20040528 - Jake
+	SPR 3640 - added next unless ( -r "${scwid}/${grpfile}" ); 
+	to RawRemoval in place of next unless ( $scwid =~ /\d{12}\.\d{3}/ );
+	which isn't really needed now that I use ${revno}/${revno}*
+
+20040527 - Jake
+	recursive from yes to no on dal_detaches in RawRemoval - SPR 3636
+	chmod's on the scwdir before and after in RawRemoval - SPR 3636
+	changed * to ${revno}* in loop of scw's - SPR 3640
+
+20040526 - Jake
+	added iii trigger stuff to nrvgen.resource file
+
+20040525 - Jake
+	changed scw_prep to iii_prep because can grep for iii
+		and get nothing right now
+	had to change unit test to deal with new step
+
+20040524 - Jake
+	creating scw_prep step for SPI calibration
+	to crvmon.pl, nrvmon.pl, nrvgen.pl, Datasets.pm
+
+20040521 - Jake
+	added osf_status variables in Archiving.pm, RevIBIS.pm, 
+
+
+-----------------------------------------------------------------------
+20040519 - Jake - delivering 6.7 on SCREWs 791, 1424, 1428, 1344, 1415 and SPR 3600
+
+
+20040514 - Jake
+	added code to copy COBT0 from raw/irem_raw_ to prp/irem_prp_ - SPR 3600
+
+20040513 - Jake
+	changed a line in nrvst.pl to fix "xwwwww" which I 
+		think is refering to the scw pipeline
+
+20040503 - Jake
+	changing all idx/scw/prp/GNRL-SCWG-GRP-IDX references to
+		and all idx/scw/osm/GNRL-SCWG-GRP-IDX references to
+			idx/scw/GNRL-SCWG-GRP-IDX
+
+20040427 - Jake
+	added SPICal function to RevSPI.pm
+
+20040421 - Jake
+	created Archiving::RawRemoval to remove swg_raw.fits and other raw
+	data from each scw during arc_prep step (SCREW 1415)
+
+20040420 - Jake
+	integrating ibis_isgr_cal_energy 3.1 so testing SCREW 791
+	modified README.test to rename isgri_cdte_cor_$TODAYSDATE to 
+		isgri_cdte_cor for testing purposes
+
+20040412 - Jake
+	Added DoNOTAttachIndex in nrvgen.pl and RevIBIS.pm for SCREW 1344
+		as per Aymerics request based on return of ibis_isgr_low_thres
+
+20040408 - Jake
+	added files for SCREW 791 to test_data
+	next ibis_isgr_cal_energy will revert to ISGRI_PI and not ISGRI_RT
+	modified IREM section of nrvgen.pl for SCREW 1428
+	several changes to RevIBIS.pm to adapt to SCREW 1437 change to pipeline_lib
+		(all dal_list calls from RunProgram, but not sure if all were needed)
+	maybe modify RunProgram and add a parameter to the call
+
+20040407 - Jake
+	incorporating ibis_isgr_evts_tag 2.3 into rev pipeline
+	renaming ACAirc function to ACAircOld
+	renaming ACAircNew function to ACAirc
+	ibis_isgr_cal_energy 3.0 requires newer ISGR-CDTE-COR.tpl with ISGRI_RT
+
+20040331 - Jake
+	added parsing code for expected converttime output
+
+20040329 - Jake
+	added ... to ibis_isgr_cal_energy call in RevIBIS
+	"par_pathBipar" => "",        #  040329 - Jake - added for integration of ibis_isgr_cal_energy 3.0
+
+20040325 - Jake
+	another mod to remove empty isgri_context_dead file
+
+20040324 - Jake
+	oh so many mods.  I think that SCREW 791 and 1344 could work now.
+	I have commented out needed statement in the unit test and 
+	removed the temporary templates that 1344 needs and there are
+	no differences in the unit test results.  I hope this means that
+	I haven't done any damage.  Awaiting approval to go ahead and make
+	these mods permanent from Mathias and Aymeric. 
+	Changes in RevIBIS.pm, Datasets.pm and nrvgen.pl
+
+20040323 - Jake
+	code cleanup and more SCREW 1344 mods
+	tested SCREW 1344 changes and everything seems to work as expected
+	(had to 
+	cp /isdc/integration/isgri/NEWtemplates/ISGR-DEAD-CFG* $CFITSIO_INCLUDE_FILES/ 
+	to test)
+
+20040322 - Jake
+	OK, so far SCREW 791 has required mods to 
+		nrvgen.pl's arc_prep section to call ...
+		RevIBIS.pm's new ACAircNew
+		which contains the call to 
+		ibis_isgr_cal_energy(iice) which needs
+		isgri_prp_cal_index.fits which required mods to
+		Datasets.pm - %Datasets::IndicesGlobal to work
+		and test_data ( temporarily just the README.test ) to test.
+		iice also required to creation of osm/isgri_cdte_cor_${stamp}.fits
+		which required mods to Datasets.pm - %Datasets::Products
+	Also some mods to RevIBIS::ICAiltNRT for SCREW 1344 
+		which has not been implemented yet
+
+20040318 - Jake
+	trying to install SCREW 791 by adding ACAircNew 
+	(may rename) to be called in the arc_prep step
+
+20040316 - Jake
+	using new generic component version file
+
+20040309 - Jake
+	added nrtrev script simply to give version number
+
+-----------------------------------------------------------------------
+
+20040305 - Jake - delivering 6.6
+	changed this file, README.test and makeisdc1.in
+
+20040227 - Jake
+	modified RevSPI.pm because of hard coded file location for SCREW 1386
+
+-----------------------------------------------------------------------
+
+20040212 - Jake 
+	delivered nrtrev 6.5
+
+20040212 - Jake
+	change ibis_isgr_low_thres parameter values
+	  maxLTM     from  80 to 99
+	  maxNewDead from   5 to 8
+
+	added ibis_isgr_low_thres parameters
+		DOLdead_in
+		dead_out
+
+20040212 - Jake
+	ran properindent.pl on *.p?
+
+20040212 - Jake
+	change par_chatter in ibis_????_dump_decod calls to 3
+		(SPR 3088 and SCREW 1170)
+
+	change ibis_isgr_low_thres parameter values
+		checkmode from   1 to 2
+		maxLTM    from  70 to 80
+		maxDead   from 500 to 550
+
+???????? - Jake
+	added blank step for SPICal
+	cleaned up envv PATH in unit test
+

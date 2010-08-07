@@ -1,0 +1,271 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT NRTREV"
+echo "#######"
+echo "###############################################################################"
+
+set system = "nrtrev"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "nrtrev-8.8_test_data.tar.gz"
+set OUTREF_TGZ    = "nrtrev-8.9_outref.tar.gz"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+endif
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/nrtrev/input
+foreach trigger (`/bin/ls opus_work/nrtrev/input/*trigger | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	echo "#######"
+	echo "###############################################################################"
+	echo "###############################################################################"
+	echo "#######"
+	echo "#######     RUNNING:  testing nrtrev for revolution trigger $trigger"
+	echo "#######"
+	echo "#######     You should see no errors"
+	echo "#######"
+
+#	if ( ( "$OS" == "Linux" ) && ( ( "$trigger" == "0025_20021227060629_00_ire" ) || ( "$trigger" == "0025_20021227070629_00_ire" ) ) ) then
+#		echo "Skipping $trigger for linux unit test"
+#		goto NEXTTRIGGER
+#	endif
+
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev $trigger ${OPUS_WORK}/${trigger}_nrtrev.log
+	@ exit_status = $status
+	echo "#######     exit status of wrapper was $exit_status"
+	if ($exit_status != 0) then
+		#	if ( ($exit_status == 5) && ($trigger =~ "0088_20030107044808_00_ire") ) then
+		#	echo "#######     Status of 5 expected for 0088_20030107044808_00_ire"
+		#	else
+		exit 1
+		#	endif
+	endif
+	
+	#  In order that the archive checking work, must update osf
+	echo "#######     running:  osf_update -p nrtrev.path -f $trigger -s ccc"
+	osf_update -p nrtrev.path -f $trigger -s ccc
+	
+	#  Now, since ILT's are triggered specially, we need a fudge if we ran
+	#   an IBIS dump (except for 20020115110213, which has no ISGRI context):
+	if  ("$trigger" =~ *idp*) then
+		#  trigger name same as idp stamp
+		echo "#######      trigger was IDP;  looking for ILT."
+		set ilt_trigger = ` echo $trigger | /bin/awk -F_ '{print $1"_"$2"_00_ilt"}' `
+		echo "#######      ILT trigger should be ${ilt_trigger}"
+		#
+		#  version determined by script, so we have to go look:
+		set ilt_version = `/bin/ls ${OPUS_WORK}/nrtrev/obs/*${ilt_trigger}* | /bin/awk -F- '{print $4}' | /bin/awk -F_ '{print $1}' `
+		#  Check if the IBIS dump resulted in an ILT trigger:
+		set run = `/bin/ls opus_work/nrtrev/input/${ilt_trigger}*`
+		
+		if ($run != "") then
+			set ilt_version = `osf_test -p nrtrev.path -f ${ilt_trigger} -pr dcf_num `	    
+			echo "#######     ILT version is ${ilt_version}"
+			eval `/usr/bin/envv set OSF_DCF_NUM ${ilt_version}`
+			echo "#######     OSF_DCF_NUM is now $OSF_DCF_NUM"
+			eval `/usr/bin/envv set ILT_UNITTEST  1`
+			echo "#######     ILT_UNITTEST is now $ILT_UNITTEST"
+		
+			####   Need data ?
+			#
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev ${ilt_trigger} ${OPUS_WORK}/${ilt_trigger}_nrtrev.log
+			if ($status > 0) exit 1
+			#
+			#	    #  In order that the archive checking work, must update osf
+			echo "#######     running:  osf_update -p nrtrev.path -f $ilt_trigger -s ccc"
+			osf_update -p nrtrev.path -f $ilt_trigger -s ccc
+			#
+			####
+			echo "#######    WARNING:  skipping ILT processing for now"
+		else
+			echo "#######     WARNING:  no ILT trigger created"
+		endif
+		
+	endif # end if idp trigger
+	
+	eval `/usr/bin/envv set OSF_DCF_NUM 000`
+NEXTTRIGGER:
+end  # foreach trigger
+
+
+
+#  Trigger archive ingest for the revolutions, just to clean up the indices:
+echo "########     Testing monitor;  it should trigger most revs for archiving:"
+echo
+echo "You should see 4 ls error messages about opus_work/nrtrev/obs/*0036_*_00_sp*"
+echo "These triggers are not run because there are no rev 0036 scws in the test_data"
+
+#	This nrvmon creates the iii_prep triggers
+${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvmon - ${OPUS_WORK}/nrvmon_create.log
+
+if (-e ${OPUS_WORK}/nrtrev/input/0024_iii_prep.trigger) then
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev 0024_iii_prep ${OPUS_WORK}/0024_iii_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f 0024_iii_prep -s ccc
+	if ($status > 0) exit 1
+else 
+	echo "#######     ERROR:  0024_iii_prep.trigger not written"
+	exit 1
+endif
+
+if ( "$OS" == "Linux" ) /bin/touch ${OPUS_WORK}/nrtrev/input/0025_iii_prep.trigger		#	TEMPORARY FOR LINUX TESTING B/C SOME IREs FAIL FOR 0025
+
+if (-e ${OPUS_WORK}/nrtrev/input/0025_iii_prep.trigger) then
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev 0025_iii_prep ${OPUS_WORK}/0025_iii_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f 0025_iii_prep -s ccc
+	if ($status > 0) exit 1
+else 
+	echo "#######     ERROR:  0025_iii_prep.trigger not written"
+	exit 1
+endif
+
+echo
+echo "You should see 4 ls error messages about opus_work/nrtrev/obs/*0036_*_00_sp* again"
+echo "These triggers are not run because there are no rev 0036 scws in the test_data"
+
+#	This nrvmon creates the arc_prep triggers
+${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvmon - ${OPUS_WORK}/nrvmon_create2.log
+
+if (-e ${OPUS_WORK}/nrtrev/input/0024_arc_prep.trigger) then
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev 0024_arc_prep ${OPUS_WORK}/0024_arc_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f 0024_arc_prep -s ccc
+	if ($status > 0) exit 1
+else 
+	echo "#######     ERROR:  0024_arc_prep.trigger not written"
+	exit 1
+endif
+
+if ( "$OS" == "Linux" ) /bin/touch ${OPUS_WORK}/nrtrev/input/0025_arc_prep.trigger		#	TEMPORARY FOR LINUX TESTING B/C SOME IREs FAIL FOR 0025
+
+if (-e ${OPUS_WORK}/nrtrev/input/0025_arc_prep.trigger) then
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtrev 0025_arc_prep ${OPUS_WORK}/0025_arc_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f 0025_arc_prep -s ccc
+	if ($status > 0) exit 1
+else 
+	echo "#######     ERROR:  0025_arc_prep.trigger not written"
+	exit 1
+endif
+
+TESTING:
+
+/bin/touch ${OPUS_WORK}/nrtrev/input/0036_iii_prep.trigger				#	because some don't get created
+foreach revno ("0003" "0004" "0013" "0014" "0036")
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvst  ${revno}_iii_prep ${OPUS_WORK}/${revno}_iii_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f ${revno}_iii_prep -s ccw		#	skip the nrvgen step
+	if ($status > 0) exit 1 # 070220 - Jake
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvfin ${revno}_iii_prep ${OPUS_WORK}/${revno}_iii_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f ${revno}_iii_prep -s ccc
+	if ($status > 0) exit 1 # 070220 - Jake
+end
+
+#	050125 - Jake - I don't think this one really does anything.
+echo
+echo "You should see 4 ls error messages about opus_work/nrtrev/obs/*0036_*_00_sp* again"
+echo "These triggers are not run because there are no rev 0036 scws in the test_data"
+${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvmon - ${OPUS_WORK}/nrvmon_create3.log
+
+/bin/touch ${OPUS_WORK}/nrtrev/input/0036_arc_prep.trigger				#	because some don't get created
+foreach revno ("0003" "0004" "0013" "0014" "0036")
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvst  ${revno}_arc_prep ${OPUS_WORK}/${revno}_arc_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f ${revno}_arc_prep -s ccw		#	skip the nrvgen step
+	if ($status > 0) exit 1 # 070220 - Jake
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrvfin ${revno}_arc_prep ${OPUS_WORK}/${revno}_arc_prep_nrtrev.log 
+	if ($status > 0) exit 1 # 070220 - Jake
+	osf_update -p nrtrev.path -f ${revno}_arc_prep -s ccc
+	if ($status > 0) exit 1 # 070220 - Jake
+end
+
+foreach osf ( `osf_test -p nrtrev.path -pr dataset`)
+	set command = "cleanup.pl --path=nrtrev --dataset=$osf --level=opus --do_not_confirm"
+	echo "#######     Running $command"
+	$command
+	if ($status != 0) exit 1
+end
+
+echo "#######"
+echo "###############################################################################"
+echo "#######"
+echo "#######     Processing complete.  Moving results to out..."
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/nrtrev
+/bin/mv opus_work/nrtrev/input   out/opus_work/nrtrev
+/bin/mv opus_work/nrtrev/logs    out/opus_work/nrtrev
+/bin/mv opus_work/nrtrev/scratch out/opus_work/nrtrev
+/bin/mv opus_work/nrtrev/obs     out/opus_work/nrtrev
+
+#WARNING:  unique file detected  -->    out/opus_work/nrtrev/input/0036_20060130161447_00_spa.trigger
+#WARNING:  unique file detected  -->    out/opus_work/nrtrev/input/0036_20060130161447_00_spe.trigger
+#WARNING:  unique file detected  -->    out/opus_work/nrtrev/input/0036_20060130161447_00_spp.trigger
+#WARNING:  unique file detected  -->    out/opus_work/nrtrev/input/0036_20060130161447_00_sps.trigger
+#WARNING:  unique file detected  -->    outref/opus_work/nrtrev/input/0036_20060130154519_00_spa.trigger
+#WARNING:  unique file detected  -->    outref/opus_work/nrtrev/input/0036_20060130154519_00_spe.trigger
+#WARNING:  unique file detected  -->    outref/opus_work/nrtrev/input/0036_20060130154519_00_spp.trigger
+#WARNING:  unique file detected  -->    outref/opus_work/nrtrev/input/0036_20060130154519_00_sps.trigger
+
+chdir out/opus_work/nrtrev/input/
+foreach trigger ( `/bin/ls *trigger` )
+	set revno = `echo $trigger | /bin/awk -F_ '{print $1}'`
+	set type  = `echo $trigger | /bin/awk -F_ '{print $4}'`
+	/bin/mv $trigger ${revno}_20060000000000_00_${type}.trigger
+end
+chdir ../../../../
+
+/bin/mkdir -p out/idx/rev
+
+#  To avoid unique file errors in dircmp, copy only link, which in fact
+#   compies the source file itself.
+chdir test_data
+foreach index (`/usr/bin/find idx/rev -name \*IDX.fits -print`) 
+	/bin/cp $index ../out/${index}
+end
+chdir ..
+
+chdir test_data/scw
+foreach revno ( `/bin/ls -d 0*` )
+	/bin/chmod -R +w ./$revno
+	/bin/mkdir -p ../../out/scw/$revno
+	/bin/mv          ./$revno/rev.000 ../../out/scw/$revno
+	/bin/mkdir -p    ./$revno/rev.000
+	/bin/mv       ../../out/scw/$revno/rev.000/logs ./$revno/rev.000/
+	/bin/chmod -R -w ./$revno
+end
+chdir ../..
+
+echo "#######     Removing TPF tar which is date stamped today for 0025"	#	040804 - Jake - this isn't timestamped for today, but is different
+/bin/chmod +w test_data/scw/0025/rev.000/
+/bin/mkdir test_data/scw/0025/rev.000/cfg
+/bin/chmod -R +w out/scw/0025/rev.000/cfg
+/bin/mv          out/scw/0025/rev.000/cfg/*.INT test_data/scw/0025/rev.000/cfg/
+/bin/chmod -R -w out/scw/0025/rev.000/cfg
+/bin/chmod -R -w test_data/scw/0025/rev.000/cfg
+
+if (-e out/idx/rev/PICS-FALT-STA-IDX.fits) then
+	/bin/rm out/idx/rev/PICS-FALT-STA-IDX.fits
+else
+	echo "#######     ERROR:  out/idx/rev/PICS-FALT-STA-IDX.fits not found\!"
+	exit 1
+endif
+
+echo "#######     "
+echo "#######     NOTE:  isdc_dircmp should find 0 differences between outref and out"
+echo "#######     "
+echo "#######     DONE"
+#if (-e /tmp/$$nrvtest) /bin/rm /tmp/$$nrvtest
+exit
+

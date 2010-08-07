@@ -1,0 +1,144 @@
+
+ibis_obs1_analysis:
+DoPart2=1
+IBIS_II_ChanNum = -1
+IBIS_II_E_band_max =
+IBIS_II_E_band_min =
+IBIS_II_inEnergyValues = energy_bands.fits[1]      (the same energy_bands.fits from consssa) will need to modify scripts to copy this file
+IC_Group = ../../../idx/ic/ic_master_file.fits[1]
+MinCatSouSnr = 1
+MinNewSouSnr = 5
+SWITCH_disablePICsIT = yes
+SWITCH_disableCompton = yes
+SearchMode = 3
+SouFit = 1
+ToSearch = 10
+corrDol =
+GENERAL_levelList = PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN   (remove CAT_S ???)
+
+
+ibis_scw1_analysis:
+BIN_P_HepiLut =
+BKG_I_isgrBkgDol = -
+BKG_I_isgrUnifDol = -
+IBIS_II_ChanNum = -1
+IBIS_II_E_band_max =
+IBIS_II_E_band_min =
+IBIS_II_inEnergyValues = energy_bands.fits[1]
+IBIS_IPS_E_band_max_m = 600 1000 10000
+IBIS_IPS_E_band_max_s = 600 1000 10000
+IBIS_IPS_E_band_min_m = 170 600 1000
+IBIS_IPS_E_band_min_s = 170 600 1000
+IBIS_IPS_corrPDH = 0
+IBIS_max_rise = 90
+IBIS_min_rise = 7
+IC_Group = ../../../idx/ic/ic_master_file.fits[1]
+ISGRI_event_select =
+SWITCH_disablePICsIT = yes
+SWITCH_disableCompton = yes
+startLevel = BIN_I
+GENERAL_levelList = PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN   (remove CAT_S ???)
+GTI_ISGRI = ATTITUDE ISGRI_DATA_GAPS                                                 (remove VETO????)
+GTI_PICsIT = ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS (remove VETO????)
+IBIS_IP_E_band_max = 252 329 455 655 1057 1841 3570 6510	#	Luigi thinks "252 336 448 672 1036 1848 3584 6720"
+IBIS_IP_E_band_min = 203 252 329 455 655 1057 1841 3570		#	Luigi thinks "203 252 336 448 672 1036 1848 3584"
+IBIS_P_convFact = 7		#	Luigi thinks this should be 7.1
+BIN_cleanTrk = 0			#	Luigi thinks this should be 1
+BKG_P_method = 0			#	Luigi thinks this should be 1
+BKG_picsMUnifDOL =		#	Luigi thinks this should be -
+BKG_picsSUnifDOL =		#	Luigi thinks this should be -
+
+
+ibis_scw2_analysis:
+BIN_P_HepiLut =
+IBIS_SPS_ChanNum = 51
+IBIS_SPS_E_band_max_m =
+IBIS_SPS_E_band_max_s =
+IBIS_SPS_E_band_min_m =
+IBIS_SPS_E_band_min_s =
+IBIS_SPS_corrPDH = 0
+IBIS_max_rise = 90
+IBIS_min_rise = 7
+IC_Group = ../../../idx/ic/ic_master_file.fits[1]
+PHASE_E_band_max = 60 200
+PHASE_E_band_min = 20 60
+PHASE_epoch = 1229.5
+PHASE_num_band = 2
+PHASE_num_phase = 100
+PHASE_period = 0.03
+PHASE_periodd = 0
+PHASE_select =
+PHASE_srcname =
+SWITCH_disableCompton = yes
+SWITCH_disablePICsIT = yes
+corrDol =
+deccolumn = DEC_FIN
+do_phase = no
+racolumn = RA_FIN
+remove = yes
+GENERAL_levelList = PRP,COR,GTI,DEAD,BIN_I,BKG_I,CAT_I,IMA,IMA2,BIN_S,SPE,LCR,COMP,CLEAN   (remove CAT_S ???)
+ISPE_MethodFit = 1
+IBIS_P_convFact = 7		#	Luigi thinks this should be 7.1
+BIN_cleanTrk = 0			#	Luigi thinks this should be 1
+BKG_P_method = 0			#	Luigi thinks this should be 1
+BKG_picsMUnifDOL =		#	Luigi thinks this should be -
+BKG_picsSUnifDOL =		#	Luigi thinks this should be -
+
+
+jemx_obs_analysis:
+chanHigh = 57 118 159 196 235
+chanLow = 30 58 119 160 197
+nChanBins = 5
+startLevel = COR
+skipLevels = BKG,SPE
+endLevel = LCR
+
+
+jemx_scw_analysis:
+chanHigh = 57 118 159 196 235
+chanLow = 30 58 119 160 197
+nChanBins = 5
+startLevel = IMA2
+skipLevels = 
+endLevel = IMA2
+BIN_I_shdType = 3
+BKG_simulated = no
+COR_outputExists = no
+DEAD_outputExists = no
+IMA_dimImage=0
+IMA_fineResol=n
+IMA_numPixelSubDiv=15
+IMA_useCatPos=y
+LCR_precisionLevel=20
+LCR_timeStep = -1
+SPE_precisionLevel=20
+SPE_vignCorr = yes
+
+
+omc_science_analysis:
+COR_biastime = 630
+IMA_timestep = 630
+IMA_minshottime = 0
+IMA_maxshottime = 300
+IMA_minSNR = 1.0
+IMA_scienceImage = no
+IMA_skyStdDev = 10.0
+IMA_triggerImage = yes
+IMA_noiseLowLeft=45.0
+IMA_noiseLowRight=54.0
+IMA_noiseHighLeft=36.5
+IMA_noiseHighRight=45.0
+
+
+spi_science_analysis:
+run_cat_extract = NO
+detectors = 0-84
+spibounds_0_nregions = 5
+spibounds_0_regions = 20,40,80,150,300,1000
+spibounds_0_nbins = 1,1,1,1,1
+spiros_0_detector-subset = 0,1,3-16,18
+spiros_0_background-method = 5
+spiros_0_srclocbins = ALL
+spiros_0_nofsources = 5
+
+

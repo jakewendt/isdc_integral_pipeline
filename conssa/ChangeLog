@@ -1,0 +1,370 @@
+
+
+Linux gcc differences are expected.  Linux intel compilation will fail.
+
+
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+---------------------------------------------------------------------
+20060712 - Jake - deliver conssa 2.8 on SCREW 1854
+
+20060711 - Jake
+	SCREW 1854 - modified csast.pl to copy rebinned_corr_ima.fits.gz
+
+20060629 - Jake
+	copied rebinned_corr_ima.fits.gz from /isdc/cons/ops_sa/obs/soib_03200440001_001.000
+	will use this in reference to SCREW 1854
+
+---------------------------------------------------------------------
+20060511 - Jake - deliver conssa 2.7 on SPR 4464 and SCREW 1769 1796
+
+20060511 - Jake
+	set PFILES at beginning of csascw and csaobs
+	this is normally done in PipelineStep, but when you haven't run that
+		yet, it isn't set 
+
+20060510 - Jake
+	minor fix to Gzip call in csafin.pl
+	remove dal_clean.par from the ogdir (only occurs on WCT)
+
+20060503 - Jake
+	changed ISDC_REF_CAT to version 0025 in unit test
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+2006----
+	SCREW 1665 1763 1774 1783 - moved to pipeline_lib
+
+20060118 - Jake
+	using cleanup.pl instead of osf_delete in the unit test
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	changed unit_test to use gnrl_refr_cat_0023
+
+20060109 - Jake
+	SCREW 1796 - moved energy_bands.fits.gz to pipeline_lib for conssa and consssa
+
+20060105 - Jake
+	SCREW 1796 - Changing from ibis_obs1_analysis to ibis_science_analysis
+	SCREW 1796 - Changing from omc_obs_analysis to omc_science_analysis
+
+20051215 - Jake
+	SCREW 1796 - 
+		using pipeline_lib/JMXLIB.pm instead of StdJMX.pm
+		using pipeline_lib/IBISLIB.pm instead of StdIBIS.pm
+
+20051214 - Jake
+	SCREW 1796 - 
+		using pipeline_lib/OMCLIB.pm instead of StdOMC.pm
+
+20051208 - Jake
+	SCREW 1796 - 
+		using pipeline_lib/SPILIB.pm instead of StdSPI.pm
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1774 - added parameter ISPE_isgrarf/SCW2_ISPE_isgrarf to ibis_*_analysis
+	SCREW 1783 - change IBIS_NoisyDetMethod from 1 to 0
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20051026 - Jake
+	SCREW 1665 - Changed the following for jemx_scw_analysis
+		"par_IMA_relDist"   => "-0.05",  #  was "1.5",
+		"par_IMA_searchRad" => "0.0",    #  was "0.25",
+		"par_IMA_gridNum"   => "0",      #  was "25",
+		"par_IMA_distFuzz"  => "0.0",    #  was "0.15",
+
+20051024 - Jake
+	SCREW 1763 - ibis_scripts parameter updates
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+	change ISDC_REF_CAT in unittest from 0020 to 0021
+
+
+20050808 - Jake
+	SPI OSA 5 parameter updates
+		"par_spiros_image-fov" => "POINTING+FCFOV",  - was POINTING+ZCFOV
+		"par_spiros_sigmathres" => "3.0",            - was 6.0
+		"par_spiros_detector-subset" => "0-18",      - was "0,1,3-16,18"
+
+	JEMX OBS OSA 5 parameter updates
+		"par_srcattach" => "Y",       - was "no"
+		"par_cdelt" => "0.02",        - was "0.03"
+		"par_radiusSelect" => "4.8",  - was "5."
+		"par_viewTime" => "Y",        - was "N"
+		"par_viewVar" => "Y",         - was "N"
+
+	JEMX SCW OSA 5 parameter updates
+		doesn't appear that there are any changes
+
+20050627 - Jake
+	conssa/StdJMX.pm jemx_obs_analysis-4.5.4 par updates
+
+---------------------------------------------------------------------
+20050610 - Jake - deliver conssa 2.6 on SCREWs 1587 1704 and SPRs 3913 4110 4132 4150 4171
+
+20050610 - Jake
+	will have to re-deliver conssa 2.6 due to the fact the j_ima_iros
+	now creates differences when compiled with and without optimization
+
+20050608 - Jake
+	parameter updates for spi_scripts-3.1.1 and j_scripts-4.5.2
+
+---------------------------------------------------------------------
+20050606 - Jake - deliver conssa 2.6 on SCREWs 1587 1704 and SPRs 3913 4110 4132 4150 4171
+
+20050527 - Jake
+	SPR 4171 - 
+	changed resource files to have IC_ALIAS = CONS
+	changed StdINST.pm to use $ENV{IC_ALIAS} instead of CONS
+	added IC_ALIAS to EnvStretch in csaobs and csascw
+
+20050525 - Jake
+	update of ibis_*_analysis parameters for ibis_scripts-8.0
+	update of jemx*_analysis parameters for j_scripts-4.5.1
+
+20050512 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+		for ibis_scripts-7.9
+
+20050509 - Jake
+	SPR 4132 - partial update of ibis_*_analysis parameters
+
+20050503 - Jake
+	SCREW 1587 - IMA_triggersize to 0
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050422 - Jake
+	SPR 4110 - spi_science_analysis 3.0 parameter changes
+
+20050414 - Jake
+	conssa unit test works on linux with many differences
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+20050406 - Jake
+	Changed unit_test to use sa_start.pl instead of doing it manually.  
+	This creates different named ogs, but the content should be the same.
+
+20050405 - Jake
+	Changed unit_test to use ISDC_REF_CAT 0020
+	Moved SPI Parameters*par to logs/
+
+---------------------------------------------------------------------
+20050405 - Jake - deliver conssa 2.5 on SCREWs 1633 1634 1636 1654 1667 1694
+
+20050331 - Jake
+	SCREW 1694 - copying energy_bands.fits to og dir
+		New parameters
+
+20050324 - Jake
+	added energy_bands.fits.gz
+
+20050317 - Jake
+	modifying unit_test to use data directly from archive
+
+20050314 - Jake
+	SCREW 1633, 1634, 1636 - additional parameters for o_scripts 5.0
+
+---------------------------------------------------------------------
+20050302 - Jake - DID NOT deliver conssa 2.4 on SCREWs 1654 1657 1667
+
+20050301 - Jake
+	SCREW 1657 - analysis parameter changes
+	SCREW 1667 - chmod -R fix
+
+	SPR 3893 - JEMX BIN_I_shdType=3 from 0
+	hard coded the ISDC_REF_CAT 0017 into unit test
+
+20050224 - Jake
+	SCREW 1654 - added $my to some unix execs in csafin.pl and sa_start.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in csafin.pl csast.pl
+
+20050223 - Jake
+	SCREW 1657 - analysis parameter changes
+
+---------------------------------------------------------------------
+20041215 - Jake - deliver conssa 2.2 on SCREWs 1507 1532 1561 1619
+	and SPRs 3817 3888 3902
+
+	SCREW 1619 - new directory structure
+
+20041213 - Jake
+	parameter additions for ibis_science_analysis execs
+	parameter mod for jmx_scw_analysis (IMA_numPixelSubDiv and BIN_I_shdType)
+
+20041104 - Jake
+	SPR 3893 - JEMX LCR_timestep= -1, IMA_useCatPos=y
+
+20041102 - Jake
+	csast.pl expects just 12 digit ScwID from og_create
+	csascw.pl parses just 12 digit scwid from OSF
+	SPR 3902 - to change this to use 12.3 format in everything
+
+20041021 - Jake
+	attempt to deliver conssa 2.2 failed
+	could not resolve why there were differences
+	will try again later
+
+20041020 - Jake
+	SPR 3888 - correctly gzip fits files
+	SCREW 1507 - adding omc_obs_analysis call
+
+20041001 - Jake
+	SPR 3817 - add "remove" parameter to ibis_scw2_analysis call
+	SCREW 1532 - add subdir and clobber to jemx_obs_analysis call 
+	SCREW 1507 - add IMA_triggerImage and IMA_scienceImage to omc_scw_analysis
+	SCREW 1561 - add obsDir to og_create call
+
+---------------------------------------------------------------------
+20040909 - Jake - delivering conssa 2.1 on SCREWs 1533 1540 1550
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040827 - Jake 
+	SCREW 1540 - Cleanup and Clarity
+
+20040824 - Jake
+	SCREW 1533 - PipelineSteps to LogErrors
+
+---------------------------------------------------------------------
+20040624 - Jake - delivering conssa 2.0 on 
+	SPRs 3578, 3591, 3624, 3654, 3657, 3662, 3666 and SCREWs 1351, 1415, 1454, 1460
+
+20040622 - Jake
+	jemx_scw_analysis startLevel must be COR and not CAT_I for
+		pre-reproc data format
+
+20040618 - Jake
+	spi_scripts 2.0 has all new parameters
+	conssa 2.2 integration
+
+20040601 - Jake
+	SPR 3654 - j_scripts typo
+	removed a lot of blank lines
+
+20040527 - Jake
+	different     ibis_scripts               7.1           7.0
+	different     j_scripts                  4.2.0         3.9.1
+	different     o_scripts                  3.8           3.6
+
+	new ibis_obs2_analysis   : "par_detThr" => "3.0",						SPR 3657
+	new ibis_obs2_analysis   : "par_catalog" => "",							SPR 3657
+	changed ibis_scw1_analysis GTI_PICsIT 
+		from "ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS" 
+		to "VETO ATTITUDE P_SGLE_DATA_GAPS P_MULE_DATA_GAPS"				SPR 3657
+	changed ibis_scw1_analysis GTI_ISGRI 
+		from "ATTITUDE ISGRI_DATA_GAPS" 
+		to "VETO ATTITUDE ISGRI_DATA_GAPS"										SPR 3657
+	changed ibis_scw2_analysis ISPE_MethodFit from 1 to 2					SPR 3657
+
+	new jemx_scw_analysis    : "par_COR_outputExists" => "n",			SPR 3578
+	new jemx_scw_analysis    : "par_DEAD_outputExists" => "n",			SPR 3578
+	new jemx_scw_analysis    : "par_IMA_dimImage" => "0",					SCREW 1454
+	changed jemx_scw_analysis startLevel from COR to CAT_I				SCREW 1415
+	changed jemx_scw_analysis skipLevels from "BKG,LCR,BIN_T" to "BKG,LCR,BIN_S" - typo
+	new jemx_obs_analysis    : "par_chanLow" => "46 83 129 160",		SPR 3657
+	new jemx_obs_analysis    : "par_chanHigh" => "82 128 159 223",		SPR 3657
+
+	new omc_scw_analysis     : "par_IMA_minSNR" => "1.0",					SPR 3624
+	new omc_scw_analysis     : "par_IMA_minshottime" => "0",				SPR 3624
+	new omc_scw_analysis     : "par_IMA_maxshottime" => "300",			SPR 3624
+	new omc_scw_analysis     : "par_IMA_skyStdDev" => "10.0",			SPR 3624
+	changed omc_scw_analysis IMA_timestep from 600 to 630					SPR 3624
+	changed omc_scw_analysis COR_biastime from 600 to 630					SPR 3624
+	changed omc_scw_analysis COR_higain from 5 to 5.0						SPR 3624
+	changed omc_scw_analysis COR_lowgain from 30 to 30.0					SPR 3624
+	changed omc_scw_analysis IMA_noiseHighRight from 45.0 to 35.0		SCREW 1351(?)
+
+20040521 - Jake
+	added variable for osf_status_ check in SATools.pm and csast.pl
+
+20040517 - Jake
+	SPR 3591 - modified sa_start.pl to allow for multiple insts
+
+20040330 - Jake
+	undid changes and integration of j_scripts 4.0.0
+
+20040330 - Jake
+	made the following changes from parcheck.pl *.p[lm] output
+	StdJMX.pm : jemx_scw_analysis : "par_skipLevels" => from "BKG,LCR,BIN_T" to "BKG,LCR,BIN_S"
+
+20040329 - Jake
+	made the following changes from parcheck.pl *.p[lm] output
+	StdJMX.pm : jemx_obs_analysis : "par_chanLow" => "46 83 129 160",   in par file
+	StdJMX.pm : jemx_obs_analysis : "par_chanHigh" => "82 128 159 223",   in par file
+	StdJMX.pm : jemx_scw_analysis : "par_startLevel" => from COR to CAT_I
+
+20040324 - Jake
+	added csafin for IBIS OG Loop II in unit_test/README.test
+	this wasn't begin done before and therefore the core
+	file that I touch wasn't removed and the osf showed
+	up as processing
+
+20040322 - Jake
+	parameter modifications in ibis_scw[12]_analysis calls
+		for ip_si_shadow_build 3.0 and ibis_scripts 7.0
+
+20040319 - Jake
+	uncommented touch core command in ibis unit testing
+
+20040316 - Jake
+	using new generic component version file
+
+20040312 - Jake
+	noticed a missing endif in the unit_tests
+	added some code to correct this
+
+---------------------------------------------------------------------
+20040310 - Jake - delivering 1.9
+
+20040309 - Jake 
+	added script conssa to simply give version number
+
+20040308 - Jake
+	SPR 3474 - changed 5 jemx_scw_analysis parameter values
+
+20040220 - Jake
+	added parameters in StdIBIS.pm calls for ibis_scripts 6.1 (from 5.9)
+
+20040212 - Jake
+	ran properindent.pl on *.p?
+	changed (cd unit_test; README.test)
+	   to   (cd unit_test; ./README.test)
+
+20040204 - Jake
+	uncommented ibis trigger skip from the unit test
+
+20040203 - Jake 
+	change par in ibis_scw2_analysis and ibis_obs1_analysis calls from 
+		"par_catalog" => "",
+	to
+		"par_catalog" => "ibis/res/isgri_catalog.fits[ISGR-SRCL-CAT]",   #       040203 - Jake - SPR 3459
+

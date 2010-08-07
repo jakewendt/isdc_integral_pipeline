@@ -1,0 +1,38 @@
+
+For IBIS Scw1
+"par_IBIS_IP_E_band_min" => "203 252 336 448 672 1036 1848 3584",  # was "203 252 329 455 655 1057 1841 3570",
+"par_IBIS_IP_E_band_max" => "252 336 448 672 1036 1848 3584 6720", # was "252 329 455 655 1057 1841 3570 6510",
+"par_IBIS_P_convFact" => "7.1",                                    # was "7.0",
+"par_BIN_cleanTrk" => "1",                                         # was "0",
+"par_BKG_I_isgrBkgDol" => "-",                                     # was "",
+"par_BKG_P_method" => "1",                                         # was "0",
+"par_BKG_picsSUnifDOL" => "-",                                     # was "",
+"par_BKG_picsMUnifDOL" => "-",                                     # was "",
+
+For IBIS Scw2
+"par_IBIS_P_convFact" => "7.1",                                    # was "7.0",
+"par_ISPE_isgrBkgDol" => "",                                       # was already "",
+"par_BIN_cleanTrk" => "1",                                         # was "0",
+"par_BKG_P_method" => "1",                                         # was "0",
+"par_BKG_picsSUnifDOL" => "-",                                     # was "",
+"par_BKG_picsMUnifDOL" => "-",                                     # was "",
+
+For JEMX Scw
+"par_chanLow" => "58 119 160 197",      # was "46 83 129 160",
+"par_chanHigh" => "118 159 196 235",    # was "82 128 159 223",
+
+For JEMX Obs
+"par_chanLow" => "58 119 160 197",      # was "46 83 129 160",
+"par_chanHigh" => "118 159 196 235",    # was "82 128 159 223",
+
+
+For SPI
+"par_run_cat_extract" => "NO",                          # was YES
+"par_detectors" => "0-84",                              # was "0-18",
+"par_spibounds_0_nregions" => "5",                      # was "4",
+"par_spibounds_0_regions" => "20,40,80,150,300,1000",   # was "20,40,100,1000,8000",
+"par_spibounds_0_nbins" => "1,1,1,1,1",                 # was "-10,-10,-9,-7",
+"par_spiros_0_detector-subset" => "0,1,3-16,18",        # was "",
+"par_spiros_0_background-method" => "2",                # was "5",
+"par_spiros_0_srclocbins" => "ALL",                     # was "FIRST",
+"par_spiros_0_nofsources" => "5",                       # was "3",

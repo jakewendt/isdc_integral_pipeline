@@ -1,0 +1,382 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT CONSSA"
+echo "#######"
+echo "###############################################################################"
+
+set system = "conssa"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set OUTREF_TGZ    = "conssa-2.9_outref.tar.gz" 
+
+eval `/usr/bin/envv set SA_UNIT_TEST TRUE`
+echo "#######     SA_UNIT_TEST now set to ${SA_UNIT_TEST}"
+
+setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0025.fits[1]"
+echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
+
+echo "#######     Unsetting DISPLAY"
+unsetenv DISPLAY
+
+####################################################################################################
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+#	setenv DO_NOT_USE_LINKS
+
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+
+	echo "#######     Creating test data"
+	chdir test_data
+
+	/bin/ln -s /isdc/arc/rev_2/aux
+	/bin/ln -s /isdc/arc/rev_2/scw
+	/bin/mkdir -p ../opus_work/conssa/input/
+
+	/bin/cp $ISDC_OPUS/conssa/unit_test/01020023001_001.txt $OPUS_WORK/conssa/scratch/
+	/bin/cp $ISDC_OPUS/conssa/unit_test/01020029001_001.txt $OPUS_WORK/conssa/scratch/
+#	/bin/cp ../001900000000_001.txt $OPUS_WORK/conssa/scratch/
+
+	sa_start.pl obsid=01020029001 object="Unit test" instrument=SPI
+	sa_start.pl obsid=01020023001 object="Unit test" instrument=IBIS
+	sa_start.pl obsid=01020023001 object="Unit test" instrument=OMC
+	sa_start.pl obsid=01020023001 object="Unit test" instrument=JMX2
+
+	#	this core file is now actually removed at the beginning of processing 
+	#	so it no longer tests the function that it was meant to.
+	foreach obs ( `/bin/ls -d obs/so*` )
+		/bin/touch $obs/core
+	end
+
+	chdir ..
+
+endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
+
+####################################################################################################
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/conssa/input
+
+echo "#######     Looping over triggers in opus_work/conssa/input"
+
+foreach trigger (`/bin/ls opus_work/conssa/input/* | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	
+	echo "###############################################################################"
+	echo "######"
+	echo "######  RUNNING:  opus_wrapper on pipeline conssa for OG $trigger"
+	echo "######"
+	echo "######    You should see no errors"
+	echo "######"
+	
+	#  Unlike other pipelines, we must control this here;  opus_wrapper isn't
+	#   smart enough and it is easier here:
+	
+	###############################################
+	###############################################
+	#  So first the startup:
+	###############################################
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csast $trigger ${OPUS_WORK}/${trigger}_csast.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	if ($exit_status > 0) exit 1
+	
+	###############################################
+	###############################################
+	#  Now we see what triggers were created:
+	###############################################
+	echo "#######     Examining OSFs created:"
+	set obsosfs =  `osf_test -p conssa.path -pr dataset -t obs`
+	echo "#######     $#obsosfs Obs OSFs resulted;  looping."
+	
+	###############################################
+	###############################################
+	#  Loop over Obs groups, i.e. instruments
+	###############################################
+	foreach obsosf ($obsosfs) 
+		set obsgrp = $obsosf[1]
+		echo "#######     Obs group OSF is ${obsgrp}"
+		echo "#######     Running 'osf_test -p conssa.path -pr dcf_num -f $obsgrp'"
+		set ins = `osf_test -p conssa.path -pr dcf_num -f $obsgrp ` 
+		if ($status != 0) exit 1
+		eval `/usr/bin/envv set OSF_DCF_NUM $ins`
+		echo "#######     OSF_DCF_NUM is $OSF_DCF_NUM"
+		
+		#	if ($ins =~ JX1) then
+		#	    echo "#######     WARNING:  skipping JMX1;  currently not working."
+		#	    goto ENDOG
+		#	endif
+		
+		#	if ($ins =~ JX2) then
+		#	    echo "#######     WARNING:  skipping JMX2;  currently not working."
+		#	    goto ENDOG
+		#	endif
+		
+		#	if ($ins =~ OMC) then
+		#	    echo "#######     WARNING:  skipping OMC;  currently not working."
+		#	    goto ENDOG
+		#	endif
+		
+		echo "#######     Running 'osf_test -p conssa.path -pr dataset -t scw -n $ins'"
+		set scwosfs = `osf_test -p conssa.path -pr dataset -t scw -n $ins`
+		if ($status != 0) exit 1
+		echo "#######     $#scwosfs ScW OSFs resulted"
+		echo "#######     Science windows are:  $scwosfs"
+		
+		
+		###############################################
+		###############################################
+		#  Now loop I through the science windows first
+		###############################################
+		foreach scw ($scwosfs) 
+			
+			echo "#######     processing science window $scw in csasw1"
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csasw1 $scw ${OPUS_WORK}/${scw}_csasw1.log
+			@ exit_status = $status 
+			echo "#######     exit status from opus_wrapper was $exit_status"
+			
+			if ($exit_status == 5) then
+				echo "#######     exit status 5 for IBIS loop I"
+				#  manually update it:
+				echo "#######     running 'osf_update -p conssa.path -f $scw -c SA -s g'"
+				osf_update -p conssa.path -f $scw -c SA -s g
+				if ($status != 0) exit 1
+			else if ($exit_status != 0) then 
+				exit 1
+			else
+				#  manually update it:
+				echo "#######     running 'osf_update -p conssa.path -f $scw -c SA -s c'"
+				osf_update -p conssa.path -f $scw -c SA -s c
+				if ($status != 0) exit 1
+			endif
+			
+			
+			# now the finish step, same exit values, etc.:
+			
+			echo "#######     processing science window $scw in csafin"
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csafin $scw ${OPUS_WORK}/${scw}_csafin.log
+			@ exit_status = $status 
+			echo "#######     exit status from opus_wrapper was $exit_status"
+			
+			if ($exit_status == 5) then
+				echo "#######     exit status 5 for IBIS loop I"
+				#  manually update it:
+				echo "#######     running 'osf_update -p conssa.path -f $scw -c FI -s g'"
+				osf_update -p conssa.path -f $scw -c FI -s g
+				if ($status != 0) exit 1
+				
+			else if ($exit_status != 0) then 
+				exit 1
+			else
+				#  manually update it:
+				echo "#######     running 'osf_update -p conssa.path -f $scw -c FI -s c'"
+				osf_update -p conssa.path -f $scw -c FI -s c
+				if ($status != 0) exit 1
+			endif
+			
+			
+		end # foreach science windows
+		
+		###############################################
+		###############################################
+		#  Now the Obs group (loop I) processing:
+		###############################################
+		
+		
+		#  Check that the last science window did update the obsgrp OSF
+		#  (or that, for SPI, it was created with w)
+		set ogstat = `osf_test -p conssa.path -f $obsgrp -pr SA `
+		if ($ogstat =~ w*) then
+			echo "#######     $obsgrp correctly set to w"
+			#  Now the obs1 step:
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csaob1 $obsgrp ${OPUS_WORK}/${obsgrp}_csaob1.log
+			@ exit_status = $status 
+			echo "#######     exit status from opus_wrapper was $exit_status"
+			if ($exit_status == 5) then
+				echo "#######     exit status was 5 for IBIS loop I"
+				echo "#######     running 'osf_update -p conssa.path -f $obsgrp -c SA -s s'"
+				osf_update -p conssa.path -f $obsgrp -c SA -s s
+				if ($status != 0) exit 1
+			else if ($exit_status != 0) then
+				exit 1
+			else 
+				#  Finally, the finish step:
+				${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csafin $obsgrp ${OPUS_WORK}/${obsgrp}_csafin.log
+				@ exit_status = $status 
+				echo "#######     exit status from opus_wrapper was $exit_status"
+				if ($exit_status != 0) exit 1
+			endif # if exit_status from ob1
+			
+		else
+			echo "#######     ERROR:  $obsgrp not updated to w"
+			exit 1
+		endif
+		if ($ins !~ IBI*) then
+			#####
+			goto ENDOG
+		endif
+		
+		
+		echo "#######     Done with Loop I"
+		###############################################
+		###############################################
+		#  Repeat above for loop II for IBIS:
+		###############################################
+		#  loop through science windows:
+		###############################################
+		foreach scw ($scwosfs) 
+			
+			# test each science window to be sure it was set to v by ob1 above
+			echo "#######     running 'osf_test -p conssa.path -f $scw -pr SA'"
+			set scwstat = `osf_test -p conssa.path -f $scw -pr SA`
+			echo "#######     status of $scw is $scwstat"
+			
+			if ($scwstat =~ v*) then
+				echo "#######     running IBIS loop II"
+				
+				${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csasw2 $scw ${OPUS_WORK}/${scw}_csasw2.log
+				@ exit_status = $status 
+				echo "#######     exit status from opus_wrapper was $exit_status"
+				if ($exit_status != 0) exit 1
+				osf_update -p conssa.path -f $scw -c SA -s c
+				if ($status != 0) exit 1
+				
+				${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csafin $scw ${OPUS_WORK}/${scw}_csafin.log
+				@ exit_status = $status 
+				echo "#######     exit status from opus_wrapper was $exit_status"
+				if ($exit_status != 0) exit 1
+				
+				osf_update -p conssa.path -f $scw -c FI -s c
+				if ($status != 0) exit 1
+				
+			else
+				echo "#######     ERROR:  status of $scw is $scwstat instead of v"
+				exit 1
+			endif	
+			
+		end # foreach scw
+		
+		###############################################
+		###############################################
+		#  Now the Obs group (loop II) processing:
+		###############################################
+		
+		#  Check that the last science window did update the obsgrp OSF
+		set ogstat = `osf_test -p conssa.path -f $obsgrp -pr SA `
+		if ($ogstat =~ v*) then
+			echo "#######     $obsgrp correctly updated to v"
+			#  Now the obs2 step:
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csaob2 $obsgrp ${OPUS_WORK}/${obsgrp}_csaob2.log
+			@ exit_status = $status 
+			echo "#######     exit status from opus_wrapper was $exit_status"
+			if ($exit_status != 0) exit 1
+
+			#	040323 - Jake - don't understand why this step was not here
+			#		the csafin IBIS OG Loop II step was not here
+			#		only difference is now files are gzip'd and osf trigger is done
+			#		./opus_work/conssa/input/saib_unit_test.trigger_done
+			#  Finally, the finish step:
+			${ISDC_ENV}/opus/pipeline_lib/opus_wrapper csafin $obsgrp ${OPUS_WORK}/${obsgrp}_csafin.log
+			@ exit_status = $status 
+			echo "#######     exit status from opus_wrapper was $exit_status"
+			if ($exit_status != 0) exit 1
+			#	040323 - Jake - end code insertion
+			
+		else	#	040312 - Jake
+			echo "#######     ERROR:  $obsgrp NOT updated to v"
+			echo "#######     ERROR:  osf_test -p conssa.path -f $obsgrp -pr SA"
+			echo "#######     ERROR:  returned $ogstat "
+			exit 1
+		endif	#	040312 - Jake - This statement was missing and the if statement was just ending at the end foreach, I think.
+		#####
+		#  Now we have to clean up the blackboard so that the next one sees only its
+		#   related OSFs:	(cleaning the "obs" will clean the "scw"s)
+		foreach osf ( `osf_test -p conssa.path -pr dataset -t obs`)
+			set command = "cleanup.pl --path=conssa --dataset=$osf --level=opus --do_not_confirm"
+			echo "#######     1) Running $command"
+			$command
+			if ($status != 0) exit 1
+		end
+ENDOG:
+	end #  foreach obsgroup associated with trigger
+	
+	#  Now we have to clean up the blackboard so that the next trigger sees 
+	#   only its related OSFs:	(cleaning the "obs" will clean the "scw"s)
+	foreach osf ( `osf_test -p conssa.path -pr dataset -t obs`)
+		set command = "cleanup.pl --path=conssa --dataset=$osf --level=opus --do_not_confirm"
+		echo "#######     2) Running $command"
+		$command
+		if ($status != 0) exit 1
+	end
+	
+end  # foreach trigger
+
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete.  Moving results to out..."
+
+
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/conssa
+/bin/mv opus_work/conssa/input   out/opus_work/conssa
+/bin/mv opus_work/conssa/logs    out/opus_work/conssa
+/bin/mv opus_work/conssa/scratch out/opus_work/conssa
+/bin/mv opus_work/conssa/obs     out/opus_work/conssa
+
+#	move back sa_start_log.txt as it'll be different
+/bin/mkdir -p opus_work/conssa/logs
+/bin/mv out/opus_work/conssa/logs/sa_start_log.txt opus_work/conssa
+
+
+
+if ( ! -e out ) /bin/mkdir -p out
+/bin/mv test_data/obs out
+
+echo "#######     Moving out logs"
+
+cd out/obs
+foreach ogid ( `/bin/ls -d so*` )
+	/bin/mkdir -p ../../test_data/$ogid/logs
+	/bin/chmod    +w $ogid
+	/bin/chmod -R +w $ogid/logs
+
+	if ( $ogid =~ *sosp* ) then
+		echo "#######     Moving out $ogid/source_res.fits (potentially different every time)"
+		if ( -e $ogid/source_res.fits.gz ) then
+			/bin/chmod +w $ogid/source_res.fits.gz
+			/bin/mv       $ogid/source_res.fits.gz ../../test_data/$ogid/
+		else
+			echo "#######     NO $ogid/source_res.fits found\!"
+		endif
+	endif
+
+	echo "#######     Moving out $ogid logs (different every time)"
+	/bin/mv $ogid/logs/* ../../test_data/$ogid/logs/
+
+#	if ( -e $ogid/dal_clean.par ) then
+#		echo "#######     Moving out $ogid dal_clean.par file"
+#		/bin/mv $ogid/dal_clean.par ../../test_data/$ogid/
+#	endif
+
+	echo "#######     Write-protecting $ogid"
+#	echo "/bin/chmod -w $ogid"
+	/bin/chmod -w $ogid
+end
+cd ../..
+
+echo "#######     ALL DONE"
+
+exit
+
+#	last line

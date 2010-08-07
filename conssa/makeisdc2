@@ -1,0 +1,7 @@
+
+COMPONENT_NAME  = conssa
+COMPONENT_VERS  = 2.8
+
+manualtest::	
+	(cd unit_test; ./MANUAL.test)
+

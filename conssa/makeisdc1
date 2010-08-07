@@ -1,0 +1,10 @@
+# Simple makefile just for unit test:
+
+testcommands::	
+	(cd unit_test; ./README.test)
+
+manualtest::	
+	(cd unit_test; ./MANUAL.test)
+
+TAR_FILE_NAME = conssa-2.6
+

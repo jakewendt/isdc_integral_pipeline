@@ -1,0 +1,39 @@
+#!/bin/sh
+#------------------------------------------------------------------------------
+#
+# Purpose:      This is a (soon to be, hopefully) standard file to respond 
+#               to the --v option for components that cannot do it the 
+#               usual way.
+#
+# Author:       Mark Gaber
+#
+# Modified:     Jake Wendt
+#               made COMPONENT and VERSION calculated variables
+#
+#               051031 - made mods to work with exec in $ISDC_ENV/bin
+#
+#------------------------------------------------------------------------------
+
+  COMPONENT=`basename $0`
+  VERSION=`cat ${ISDC_ENV}/opus/${COMPONENT}/makeisdc1.in | grep COMPONENT_VERS | head -1 | awk -F= '{print $NF}' | awk '{print $NF}'`
+#	the last awk strips out the space that's before the version number
+
+  while [ $1 ]; do
+
+    if [ "$1" = "--v" ]; then
+      shift
+      echo "Log_1  : Version : $COMPONENT $VERSION"
+      exit 0
+    else
+      echo "Unexpected argument: + $1 +.  Aborting..."
+      exit 1
+    fi
+
+  done
+
+  echo "The component you have called + $0 + is a container for other"
+  echo "executables.  This one does nothing.  Exiting."
+  exit 0
+
+
+# Last line.

@@ -1,0 +1,75 @@
+
+I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20061107 - Jake
+	created new dataset from Preproc 4.1
+	this has caused different jemx frss files
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+
+20060104 - Jake
+	made new test_data with Preproc-3.8
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+20050829 - Jake
+	removed from SCREW 1704 as there were only changes to unit test
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050413 - Jake
+	unit test seems to work on linux with no differences
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+---------------------------------------------------------------------------
+20050110 - Jake - delivering consinput 2.4 on SCREW 1540
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+	SCREW 1540 - code cleanup
+
+20040604 - Jake
+	modified README.test for SCREW 1484
+
+20040316 - Jake
+	using new generic component version file
+
+20040309 - Jake
+	added consinput script to simply give version number
+
+20040212 - Jake
+	changed (cd unit_test; README.test)
+		to   (cd unit_test; ./README.test)
+

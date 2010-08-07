@@ -1,0 +1,85 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT CONSINPUT"
+echo "#######"
+echo "###############################################################################"
+
+set system = "consinput"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "consinput-2.5_test_data.tar.gz"
+set OUTREF_TGZ    = "consinput-2.5_outref.tar.gz"
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	source unittest.data.csh 
+	if ( $status != 0 ) exit $status
+endif
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/consinput/input
+
+echo "#######     Looping over triggers in opus_work/consinput/input"
+
+foreach trigger (`/bin/ls opus_work/consinput/input/* | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+	echo "###############################################################################"
+	echo "#######     "
+	echo "#######     RUNNING:  testing consinput for science window $trigger"
+	echo "#######     "
+	echo "#######     You should see no errors"
+	echo "#######     "
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper consinput $trigger ${OPUS_WORK}/${trigger}_consinput.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+	if ($exit_status > 0) exit 1
+end  # foreach trigger
+
+foreach osf ( `osf_test -p consinput.path -pr dataset`)
+   set command = "cleanup.pl --path=consinput --dataset=$osf --level=opus --do_not_confirm"
+   echo "#######     Running $command"
+   $command
+	if ($status != 0) exit 1
+end
+
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete.  Moving results to out..."
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/consinput
+/bin/mv opus_work/consinput/input   out/opus_work/consinput
+/bin/mv opus_work/consinput/logs    out/opus_work/consinput
+/bin/mv opus_work/consinput/scratch out/opus_work/consinput
+/bin/mv opus_work/consinput/obs     out/opus_work/consinput
+
+/bin/mkdir -p out/scw/0025
+/bin/mkdir -p out/idx/scw/raw
+
+#  To avoid unique file errors in dircmp, copy only link, which in fact
+#   compies the source file itself.
+chdir test_data
+foreach index (`/usr/bin/find idx/scw -name \*IDX.fits -print`) 
+	/bin/cp $index ../out/${index}
+end
+chdir ..
+
+/bin/mv test_data/scw/0025/0* out/scw/0025
+#  this will always be different, so don't move it into the comparison.
+/bin/mv out/scw/0025/*/*inp.txt test_data		#	040604 - Jake - SCREW 1484 - removed logs/
+/bin/chmod -w out/scw/0025/0*
+
+echo "#######     "
+echo "#######     NOTE:  isdc_dircmp should find 0 differences between outref and out"
+echo "#######     "
+echo "#######     DONE"
+
+exit
+
+#	last line

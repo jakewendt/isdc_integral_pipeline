@@ -1,0 +1,7 @@
+# Simple makefile just for unit test:
+
+testcommands::	
+	(cd unit_test; ./README.test)
+
+TAR_FILE_NAME = consinput-2.4
+

@@ -1,0 +1,7 @@
+cswst        consscw    osa1
+cswdp        consscw    consscw2
+cswosm       consscw    consscw3
+cswfin       consscw    consscw5
+cleanosf     consscw    consscw5
+cleanopus    consscw    consscw5
+cswcor       consscw    consscw5

@@ -1,0 +1,442 @@
+
+I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
+
+Linux differences expected.
+
+---------------------------------------------------------------------------
+20070227 - Jake - deliver nrtscw 8.2 on SPR 3674 and SCREW 1872
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20061218 - Jake
+	removed 2 parameters for ibis_correction 9.2	( SCREW or SPR ???? )
+
+20061113 - Jake
+	modifications to nswdp.pl for SPR 3674
+
+20061107 - Jake
+	new test data created from Preproc 4.1
+	(some changes in jemx frss rev data)
+
+20060925 - Jake
+	new parameter for j_correction
+
+20060627 - Jake
+	SCREW 1872 - for ibis_gti ...
+		removed "par_GTI_attTolerance" => "0.5",   in code.
+		added "par_GTI_attTolerance_X" => "0.5",   in par file
+		added "par_GTI_attTolerance_Z" => "3.0",   in par file
+
+20060529 - Jake
+	SCREW 1872 - gti_attitude "par_AttStability_Z" => "3.0",
+
+---------------------------------------------------------------------------
+20060508 - Jake - deliver nrtscw 8.1 on SPR 4387 4459 4477 and SCREW 1832
+
+Undocumented change?
+	spi_gain_corr::clobber from no to yes
+
+20060508 - Jake
+	moved the dal_list check to the last possible moment AFTER dal_grp_extract
+	SPR 4477 - do not delete scw log if input log does not exist
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060404 - Jake
+	SPR 4459 - chmod +w raw
+	SCREW 1832 - make parsing config file a function
+
+20060315 - Jake
+	SPR 4387 - added parameter overwriteALL=no to spi_gain_corr in nswcor.pl
+
+20060228 - Jake
+	code cleanup
+
+---------------------------------------------------------------------------
+20060224 - Jake - deliver nrtscw 8.0 on SCREW 1769 1796 1819
+
+20060224 - Jake
+	SCREW 1819 - gti_create and gti_merge simplification and minimization
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+
+20060103 - Jake
+	Created new test_data using Preproc-3.8
+
+20051214 - Jake
+	move CorLIB.pm to pipeline_lib
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+---------------------------------------------------------------------------
+20050906 - Jake - deliver nrtscw 7.9 on SPR 4276
+
+20050816 - Jake
+	add extension parameter to dal_copy call(s)
+
+20050719 - Jake
+	SPR 4276 - Moved CopyGTIExtension function to CorLIB.pm so that it can
+		be called from consssa/CssCOR.pm
+
+20050704 - Jake
+	I found 2 more uses of the logs/ in nswst.pl
+	I should write an SPR, but I won't
+
+20050617 - Jake
+	SPR 4242 - debuging prints (nrtscw not really part of SPR 4242)
+
+---------------------------------------------------------------------------
+20050617 - Jake - deliver nrtscw 7.8 on SCREWs 1648 1697 1704
+
+20050504 - Jake
+	SCREW 1648 - ibis_dead par changes
+	SCREW 1697 - ibis_correction par changes
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+20050415 - Jake
+	nrtscw unit tests work on linux with newer ibis_comp_evts_tag with diffs
+
+20050414 - Jake
+	ibis_comp_evts_tag seems to hang during linux unit_test for 002500000051
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibility
+		modified unit_tests to check OS
+
+---------------------------------------------------------------------------
+20050322 - Jake - deliver nrtscw 7.7 on SPR 4033 4056
+
+20050321 - Jake
+	SPR 4056 - nswcor to find latest spi_gain_coeff
+	added 2> /dev/null to myls' in nswfin.pl
+
+20050307 - Jake
+	SPR 4033 - added a dal_list to beginning of nswfin
+
+---------------------------------------------------------------------------
+20050304 - Jake - deliver nrtscw 7.6 on SPR 3975 and SCREW 1654 1667
+
+20050304 - Jake
+	added use lib "$ENV{ISDC_OPUS}/pipeline_lib/"; to every *p?
+	added eval `envv add PERL5LIB ${ISDC_ENV}/opus/pipeline_lib` to unit test
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $my as prefix to some unix execs in nswcor.pl nswosm.pl nswfin.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in nswcor.pl nswdp.pl nswfin.pl nswst.pl
+
+20050215 - Jake
+	SPR 3975 - evts_pick chatter from 3 to 2
+
+20050114 - Jake
+	SPR 3853 - commented added in code to not change swg_tmp
+		(This was actually done some time ago.)
+
+---------------------------------------------------------------------------
+20050110 - Jake - delivering nrtscw 7.5 on SPRs 3578 3781 3846 3863 and SCREWs 1527
+
+20041124 - Jake
+	corrected unit_test to mv isgri_context....gz
+
+20041123 - Jake
+	SCREW 1527 - dp_average to use OutSWG
+
+20041119 - Jake
+	SPR 3578 - ibis_dead par changes
+
+20041018 - Jake
+	gti_data_gaps-2.4 "par_RemoveWrongGTIs" => "yes",
+
+20041001 - Jake
+	SPR 3863 - manually reset ISDCLEVL to DEAD in nswfin.pl
+
+20040920 - Jake
+	SPR 3842 - ibis_correction and pixelswitchlist
+
+---------------------------------------------------------------------------
+20040908 - Jake - delivering nrtscw 7.4 on SCREW 1532 1533 1540 1550 and SPR 3826
+
+20040906 - Jake
+	SCREW 1532 - j_dead and j_correction add 'subDir' parameter
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040825 - Jake
+	SCREW 1540 - Remove all uncalled execs, ibisOSMspecific, CVS comments
+	SPR 3826 - better search for junk files
+
+20040820 - Jake
+	SCREW 1533
+
+---------------------------------------------------------------------------
+20040802 - Jake - delivering nrtscw 7.3 on SPR 3646 3776 3792
+
+20040729 - Jake
+	SPR 3792 - update nrtscw_omg_view.dat
+
+20040721 - Jake
+	SPR 3776 - using NRTSCW_UNIT_TEST instead of USER
+		modified README.test, nswosm.pl
+	SPR 3646 - use eq instead of == although this is irrelevant
+		as the whole thing was replaced with SPR 3776 solution
+
+---------------------------------------------------------------------------
+20040714 - Jake - delivering nrtscw 7.2 on SCREWs 1479, 1491
+
+20040714 - Jake
+	SCREW 1479 - made many small changes to look for the 
+		existance of aux files that may be gzipped
+		do not use the gz in the name though.
+	SCREW 1491 - Clever bad.  Simple good.
+		undid possible malfunctioning clever code.
+
+---------------------------------------------------------------------------
+20040707 - Jake - delivering nrtscw 7.1 on SPR 3762
+
+20040707 - Jake
+	SPR 3762 - correct JEMX parameters in gti_merge calls
+
+---------------------------------------------------------------------------
+20040624 - Jake - delivering 7.0 on SPR 3725 and 3730
+
+20040624 - Jake
+	SPR 3725 - Added ISDCPipeline::RowsIn call in CopyGTIExtension
+
+---------------------------------------------------------------------------
+20040622 - Jake - delivering 6.9 on SPR 3713 3714 3715
+
+20040622 - Jake
+	SPR 3714 - change ISDC_IC_TREE to REP_BASE_PROD
+	SPR 3713 (3715) - removed nswdp.pl touch of iii_prep.trigger
+
+---------------------------------------------------------------------------
+20040617 - Jake - delivering 6.8 on SCREW 1347 and SPR 3685
+	(SCREW 1347 was complete before but wasn't delivered on)
+
+20040616 - Jake
+	SPR 3685 - removed wildcards(*s) from the extensions used in dal_list
+		no longer needed as the bug has been fixed in dal_list
+
+---------------------------------------------------------------------------
+20040615 - Jake - delivering 6.7 on SCREW 1462
+
+20040615 - Jake
+	SCREW 1462 - enabled SPI for evts_pick
+
+---------------------------------------------------------------------------
+20040614 - Jake - delivering 6.6 on SPR 3671, and SCREWs 1488, 1491 and 1493
+	(should've also delivered on SCREW 1347)
+
+20040611 - Jake
+	SCREW 1493 replaces SPR 3636 and 3637
+
+20040611 - Jake
+	using extname in dal_list in CopyGTIExtension
+
+20040609 - Jake
+	SPR 3578 - ibis_correction 7.4 parameter outputExists
+	made MB's changes to nswcor.pl for tmp files
+	SCREW 1491 - see if any events before copying GTI
+
+20040608 - Jake (this comment is a late addition)
+	SCREW 1347 - added REV_INPUT definition in nswdp.pl
+		added REV_INPUT to EnvStretch in nswdp.pl
+
+20040607 - Jake
+	SPR 3671 - better template cfg parsing
+
+---------------------------------------------------------------------------
+20040604 - Jake - delivering 6.5 on SPRs 3634, 3647, 3650 and SCREWs 1483 and 1484
+
+20040604 - Jake
+	forgot to change the README.test to not compare
+	the *scw.txt file
+
+20040603 - Jake
+	SCREW 1484 - moving *_inp.txt from ./logs/ to ./
+	trying spi_gain_corr with spi_gain_coeff (no index)
+
+20040602 - Jake
+	adding spi_gain_coeff and spi_gain_coeff_index files to 
+		rev 0025 test_data for SPI calibration testing
+
+20040602 - Jake
+	removed commented code in nswcor.pl file check
+	removed spiGTI and enable spiAnalysis which is currently 
+		exactly the same cuz spi_gain_corr and evts_pick are
+		disabled
+
+20040602 - Jake - *****************
+	both nswst.pl and nswdp.pl were missing the "logs/" in a line 
+	about the *_scw.txt logs (SCREW 1484 may cover this, but if it
+	doesn't I should write an SPR
+
+20040531 - Jake
+	SPR 3650 - added ignored_errors.cfg to test_data to deal
+		with ibis_correction and j_correction errors
+	SPR 3647 - nswcor.pl file check removed
+		(will cause diffs bc now dead and gti will run)
+
+200405?? - Jake
+	SCREW 1462 - SPI GTI, evts_pick, spi_gain_corr and such
+	NOT YET ENABLED THOUGH!
+
+
+---------------------------------------------------------------------------
+20040526 - Jake - delivering 6.4 on SPR 3617
+
+200405   - Jake
+	code cleanup
+	SPR 3617 - forgot the . in .= in nswdp.pl
+
+---------------------------------------------------------------------------
+20040519 - Jake - delivering 6.3 on SCREWs 1446, 1415, 1416, 1392, 1406 and SPR 3603
+
+20040518 - Jake 
+	putting the gti_merge stuff back for IBIS because
+		of Nicolass 
+
+20040513 - Jake
+	made a check of files and structures at the beginning of
+	script and exit if everything isn't OK
+
+20040502 - Jake
+	still working on the GTI/MERGE/COR thing in the nswcor.pl
+
+20040429 - Jake
+	added a call to ibis_prp_check_histo in nswdp.pl but 
+	still waiting on location of proper placement from NP.
+
+20040426 - Jake
+	changed to have MakeIndex of swg.fits in idx/scw dir
+	(the following LinkUpdate as well)
+
+20040422 - Jake
+	added parameters for integration of ibis_isgr_energy 5.1
+	modified nswfin.pl content checker
+
+20040420 - Jake
+	swg_clean run only in OSM as it is after COR
+	(I had to change opus_wrapper to make this so)
+
+20040419 - Jake
+	testing changes for SCREW 1416 - GTI step
+	moved all the GTI stuff from nswosm.pl to nswcor.pl
+	duplicated some gti_merge calls from ISOC to MERGED
+
+20040414 - Jake
+	added useGTI,eraseALL, and chatter parameters to ibis_comp_energy call
+	in nswosm.pl for integration of version 5.1
+	doesn't appear to need newer templates
+
+20040330 - Jake
+	undid installation of ibis_comp_energy 5.0
+	appears to need newer templates
+
+20040330 - Jake
+	added useGTI,eraseALL, and chatter parameters to ibis_comp_energy call
+	in nswosm.pl for integration of version 5.0
+
+20040316 - Jake
+	nswosm.pl cleanup
+	nswosm.resource cleanup
+
+---------------------------------------------------------------------------
+20040315 - Jake - delivering 6.2
+	implementation of new generic component version file
+
+20040315 - Jake
+	change swg Level from PRP to DEAD
+
+---------------------------------------------------------------------------
+20040311 - Jake - delivering 6.1
+	SPR 3474 - parameter update
+	SCREW 1391 - added dal_grp_extract - nswfin.pl
+	change scw_prp_index to scw_osm_index and related prp's to osm's
+
+20040310 - Jake
+	SPR 3480 - code removal - nswdp.pl
+	some other code cleanup and removal *.pl
+	commented out (remove?) MakeIndex and LinkUpdate of prp stuff
+		(this probably shoulda been done before) - nswfin.pl
+
+20040309 - Jake
+	added nrtscw script simply to give version number
+
+---------------------------------------------------------------------------
+20040308 - Jake - delivering 6.0
+	added a blank "echo" PipelineStep
+	to replace the side effect of swg_clean
+	that set the COMMONLOGFILE variable
+
+20040305 - Jake
+	changed this file and makeisdc1.in
+
+20040225 - Jake
+	commiting the many changes for reproc
+
+20040223 - Jake
+	many more temp changes have been made
+
+20040218 - Jake
+	made mods to use both new and old lists to make sure this works
+		through the change from old to new
+	These are TEMPORARY and should be removed when done.
+
+20040217 - Jake
+	much more hacking for SCREW 1390 and 1386
+	if this actually works, I will be surprised
+
+20040217 - Jake
+	oh what a nightmare!
+	this is a bad idea.
+	shoot me now.
+
+20040212 - Jake
+	changed are comments about SPR 1386 to
+		SCREW 1386 (duh!)
+	more mods for SCREW 1386
+	ran properindent.pl on *.pl
+
+20040211 - Jake
+	made mods for using GNRL_SCWG_???.cfg files
+		to determine file locations and levels
+		in prep for SCREW 1386
+		in nswdp.pl, nswosm.pl and nswfin.pl
+
+---------------------------------------------------------------------------
+20040210 - Jake - version 5.9
+	Changed all ibis_osm_* calls to NONE
+
+

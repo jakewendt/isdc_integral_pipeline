@@ -1,0 +1,148 @@
+#!/bin/csh -f
+
+echo "###############################################################################"
+echo "#######"
+echo "#######     RUNNING THE UNIT TEST FOR COMPONENT NRTSCW"
+echo "#######"
+echo "###############################################################################"
+
+set system = "nrtscw"
+
+source unittest.setup.csh
+if ( $status != 0 ) exit $status
+
+set TEST_DATA_TGZ = "nrtscw-8.2_test_data.tar.gz"
+set OUTREF_TGZ    = "nrtscw-8.3_outref.tar.gz"
+
+eval `/usr/bin/envv set NRTSCW_UNIT_TEST TRUE`												#  040721 - Jake - SPR 3776 
+echo "#######     NRTSCW_UNIT_TEST now set to ${NRTSCW_UNIT_TEST}"		#  040721 - Jake - SPR 3776
+
+if ( ! $?DO_NOT_RECREATE_DATA ) then
+	#	setenv DO_NOT_USE_LINKS
+	source unittest.data.csh
+	if ( $status != 0 ) exit $status
+endif
+
+
+######################################################################
+#  Now we're ready to run:
+#
+#  Find out what data should be run by looking in OPUS_WORK/nrtscw/input
+
+echo "#######     Looping over triggers in opus_work/nrtinput/input"
+
+foreach trigger (`/bin/ls opus_work/nrtscw/input/* | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+
+	if ( "$trigger" =~ "002500000061" ) then
+		echo "#######     Moving ISGRI context for rev 0025"
+		/bin/mv test_data/scw/0025/rev.000/cfg/isgri_context_20021227074907.fits.gz test_data/scw/0025/rev.000/cfg/back.isgri_context_20021227074907.fits.gz
+	endif
+	
+	echo "###############################################################################"
+	echo "######"
+	echo "######  RUNNING:  opus_wrapper on pipeline nrtscw for science window $trigger"
+	echo "######"
+	echo "######    You should see no errors"
+	echo "######"
+
+	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtscw $trigger ${OPUS_WORK}/${trigger}_nrtscw.log
+	@ exit_status = $status 
+	echo "#######     exit status from opus_wrapper was $exit_status"
+
+	if ($exit_status > 0) exit 1
+end  # foreach trigger
+
+
+
+
+#	START SPR 4477 testing
+#foreach trigger (`/bin/ls opus_work/nrtscw/input/* | /bin/awk -F. '{print $1}' | /bin/awk -F/ '{print $4}' | /bin/sort`)
+#
+#	/bin/rm -rf opus_work/nrtscw/obs/*$trigger*	
+#	/bin/rm -rf opus_misc_rep/trigger/nrt_scw/*$trigger*
+#
+#	if ( "$trigger" =~ "002500000061" ) then
+#		echo "#######     Moving ISGRI context for rev 0025"
+#		/bin/mv test_data/scw/0025/rev.000/cfg/isgri_context_20021227074907.fits.gz test_data/scw/0025/rev.000/cfg/back.isgri_context_20021227074907.fits.gz
+#	endif
+#	
+#	echo "###############################################################################"
+#	echo "######"
+#	echo "######  RE-RUNNING:  opus_wrapper on pipeline nrtscw for science window $trigger"
+#	echo "######"
+#	echo "######    You should see no errors"
+#	echo "######"
+#
+#	${ISDC_ENV}/opus/pipeline_lib/opus_wrapper nrtscw $trigger ${OPUS_WORK}/${trigger}_nrtscw.log
+#	@ exit_status = $status 
+#	echo "#######     exit status from opus_wrapper was $exit_status"
+#
+#	if ($exit_status > 0) exit 1
+#end  # foreach trigger
+#	END SPR 4477 testing
+
+
+foreach osf ( `osf_test -p nrtscw.path -pr dataset`)
+	set command = "cleanup.pl --path=nrtscw --dataset=$osf --level=opus --do_not_confirm"
+	echo "#######     Running $command"
+	$command
+	if ($status != 0) exit 1
+end
+
+echo "#######     "
+echo "###############################################################################"
+echo "#######     "
+echo "#######     Processing complete.  Moving results to out..."
+
+#  move opus_work stuff to check that cleanup.pl worked
+#  (don't move pfiles as may be diff and aren't cleaned anyway)
+/bin/mkdir -p out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/input   out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/logs    out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/scratch out/opus_work/nrtqla
+/bin/mv opus_work/nrtqla/obs     out/opus_work/nrtqla
+
+/bin/mkdir -p out/opus_work/nrtscw
+/bin/mv opus_work/nrtscw/input   out/opus_work/nrtscw
+/bin/mv opus_work/nrtscw/logs    out/opus_work/nrtscw
+/bin/mv opus_work/nrtscw/scratch out/opus_work/nrtscw
+/bin/mv opus_work/nrtscw/obs     out/opus_work/nrtscw
+
+/bin/mkdir -p out/scw/0024/rev.000
+/bin/mkdir -p out/scw/0025/rev.000
+
+/bin/mkdir -p out/idx/scw/raw
+/bin/mkdir -p out/idx/rev
+
+#  To avoid unique file errors in dircmp, copy only link, which in fact
+#   compies the source file itself.
+chdir test_data
+foreach index (`/usr/bin/find idx/scw -name \*IDX.fits -print`) 
+	/bin/cp $index ../out/${index}
+end
+chdir ..
+
+#  Because of Unix file systems, must chmod science windows to move them!
+/bin/chmod +w test_data/scw/*/0*
+
+#  and the logs dir to move the txt file out
+/bin/chmod +w test_data/scw/*/0*
+/bin/mv test_data/scw/0024/00* out/scw/0024
+/bin/mv test_data/scw/0025/00* out/scw/0025
+
+#  Move osm part of rev for HK averages.
+/bin/mv test_data/scw/0024/rev.000/osm out/scw/0024/rev.000
+/bin/mv test_data/scw/0025/rev.000/osm out/scw/0025/rev.000
+
+#  but we don't want these in the comparison;  always different
+/bin/mv out/scw/*/*/*_???.txt test_data
+
+echo "#######     "
+echo "#######     NOTE:  isdc_dircmp should find NO differences."
+echo "#######     "
+echo "#######     DONE"
+
+exit
+
+
+

@@ -1,0 +1,8 @@
+ninpst         nrtinput    nrtscw1
+ninput         nrtinput    nrtscw1
+ninpmd         nrtinput    alert
+ninpmp         nrtinput    alert
+ninpfi         nrtinput    nrtscw1
+ninpmc         nrtinput    nrtscw2
+cleanopus      nrtinput    nrtscw2
+cleanosf       nrtinput    nrtscw2

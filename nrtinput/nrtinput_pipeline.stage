@@ -1,0 +1,64 @@
+!
+!
+! Pipeline stage files define the title, description, and status values
+! for each stage of a data processing pipeline. The number of stages is
+! defined by the required key NSTAGE.
+! 
+! Each stage entry begins with the class STAGEnn where nn is a number between
+! 01 and 99 (the number must be formatted as two digits) that indicates where
+! a stage falls in the processing order (the first stage is 01, the second 02,
+! and so on). Valid subclasses include:
+!
+! .TITLE        (required) a two character title for the stage
+! .DESCRIPTION  (required) a short description for the stage
+! .PROCESSnn    (optional; nn : 01 to 99) a process name for that stage
+!
+! (NOTE: all values containing spaces must be enclosed in single quotes)
+!
+! In addition, the characters that indicate the status of a dataset with
+! respect to each stage are defined in this file. There are four subclasses
+! to which a status character can be assigned to:
+! 
+! .CSTATUS.c    status indicates "complete" in this stage
+! .TSTATUS.c    status indicates "trouble" in this stage
+! .PSTATUS.c    status indicates "pending" in this stage
+! .NSTATUS.c    status does not fall into any category
+! 
+! where c is the status character. The value for each of these entries
+! should be a short description of its meaning. For example,
+!
+! STAGE01.CSTATUS.P = 'Processing dataset'
+! STAGE01.TSTATUS.E = 'Fatal error while processing dataset'
+! STAGE01.NSTATUS.W = 'Waiting for processing'
+!
+! Status characters must be categorized consistently across all stages; if
+! a character is assigned as a CSTATUS for one stage, that same character
+! cannot be assigned to TSTATUS, PSTATUS, or NSTATUS in another stage.
+! 
+!------------------------------------------------------------------------
+NSTAGE = 4
+STAGE01.TITLE = ST
+ STAGE01.DESCRIPTION = 'Startup'
+ STAGE01.CSTATUS.C = 'Startup complete'
+ STAGE01.TSTATUS.X = 'Pipeline error'
+STAGE02.TITLE = IN
+ STAGE02.DESCRIPTION = 'Input Pipeline'
+ STAGE02.NSTATUS.W = 'Waiting for Input Pipeline'
+ STAGE02.PSTATUS.P = 'Input Pipeline in progress'
+ STAGE02.CSTATUS.C = 'Input Pipeline complete'
+ STAGE02.TSTATUS.X = 'Pipeline Error'
+STAGE03.TITLE = FI
+ STAGE03.DESCRIPTION = 'Finish'
+ STAGE03.NSTATUS.W = 'Waiting for Finish'
+ STAGE03.PSTATUS.P = 'Finishing up'
+ STAGE03.CSTATUS.C = 'Finishing Complete'
+ STAGE03.TSTATUS.X = 'Pipeline  error'
+STAGE04.TITLE = CL
+ STAGE04.DESCRIPTION = 'OSF Deletion'
+ STAGE04.NSTATUS.O = 'Marked for deletiong of OPUS files (D on success)'
+ STAGE04.NSTATUS.D = 'Marked for deletion of OSF'
+ STAGE04.NSTATUS.- = 'Not to be deleted'
+ STAGE04.PSTATUS.P = 'OSF being cleaned/deleted'
+ STAGE04.TSTATUS.X = 'Cleaning error'
+ STAGE04.TSTATUS.E = 'Deletion error'
+

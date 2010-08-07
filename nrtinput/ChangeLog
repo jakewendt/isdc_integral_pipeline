@@ -1,0 +1,137 @@
+
+20070226 - Jake
+	modification of unittest.data.csh to use /isdc/ic_tree/
+
+20061107 - Jake
+	new test data created from Preproc 4.1
+	(some changes in jemx frss rev data)
+
+--------------------------------------------------------------------------
+20060508 - Jake - deliver nrtinput 4.8 on SCREWs 1769 1832
+
+20060424 - Jake
+	removed all trailing \n's from all die statements because they
+	suppress the message of which line in which script the die occured
+
+20060421 - Jake
+	beginning to integrate embedded perldoc text in the scripts
+
+20060404 - Jake
+	SCREW 1832 - make parsing config file a function
+
+20060112 - Jake
+	modified makeisdc1.in to create $COMPONENT.txt from $COMPONENT.help
+
+20060111 - Jake
+	using gnrl_refr_cat_0023 now
+
+20060103 - Jake
+	Created new test_data using Preproc-3.8
+
+20051102 - Jake
+	SCREW 1769 - implementing makeisdc2 files to include only
+		COMPONENT_NAME and _VERS.  makeisdc1(.in) will be generic
+		and create the actual "component" file.
+
+20051028 - Jake
+	SCREW 1769 - modified makeisdc1.in file to copy the perl script
+		the prints the component version to the $ISDC_ENV/bin directory
+
+20050915 - Jake
+	change ISDC_IC_TREE from 20050528TEST to 20050626TEST
+
+20050831 - Jake
+	Cleaned up the code
+
+20050428 - Jake
+	The IC Tree will no longer be versioned
+	Therefore, I am creating a couple generic scripts
+	to be called from unit_tests to do some universal
+	things including the creation of a "versioned" IC Tree.
+
+--------------------------------------------------------------------------
+20050421 - Jake - deliver nrtinput 4.7 on SCREWs 1693 1704
+
+20050413 - Jake
+	make test seems to work on linux with no differences
+
+20050412 - Jake
+	SCREW 1704 - Linux compatibilty
+		modified unit tests
+
+20050331 - Jake
+	SCREW 1693 - no longer gzip raw data
+
+--------------------------------------------------------------------------
+20050303 - Jake - delivering 4.6 on SCREWs 1654 1667
+
+20050301 - Jake
+	SCREW 1667 - chmod -R fix
+
+20050224 - Jake
+	SCREW 1654 - added $my as prefix to some unix execs in ninpfi.pl
+
+20050223 - Jake
+	SCREW 1654 - removed ISDCPipeline:: from $my* in ninput.pl ninpmp.pl ninpmd.pl
+
+--------------------------------------------------------------------------
+20040908 - Jake - delivering 4.5 on SCREW 1533 1540 1550
+
+20040903 - Jake
+	SCREW 1550 - changed all osf_status_* to
+		pipeline_lib variables
+
+20040825 - Jake
+	SCREW 1540 - Cleanup and Clarity
+
+--------------------------------------------------------------------------
+20040611 - Jake - delivering 4.4 on SCREW 1493 and SPR 3671
+
+20040611 - Jake
+	SCREW 1493 replaces SPR 3636 and 3637
+
+20040609 - Jake
+	made MB's changes to ninput.pl
+
+20040607 - Jake
+	SPR 3671 - better template cfg parsing
+
+--------------------------------------------------------------------------
+20040604 - Jake - delivering 4.3 on SCREW 1484
+
+20040603 - Jake
+	SCREW 1484 - moved logdir from ./logs/ to ./
+
+20040521 - Jake
+	added osf_status variables in ninpst.pl and ninpmc.pl
+
+20040316 - Jake
+	using new generic component version file
+
+20040309 - Jake
+	added nrtinput script simply to give version number
+
+--------------------------------------------------------------------------
+20040305 - Jake - delivering 4.2
+	changed this file and makeisdc1.in
+
+20040225 - Jake
+	commiting many changes from reproc
+
+20040212 - Jake
+	ran properindent.pl on *pl
+
+20040210 - Jake
+	ran properindent on ninput.pl
+	added ChangeLog to cvs
+	added outref to README.test
+	changed (cd unit_test; README.test)
+		to   (cd unit_test; ./README.test)
+		in makeisdc1.in
+
+20040209 - Jake
+	modified ninput.pl to read $ENV{CFITSIO_INCLUDE_FILES}/GNRL_SCWG_RAW.cfg
+	 to determine where the files are (should work once "flattened")
+
+
+

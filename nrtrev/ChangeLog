@@ -43,12 +43,23 @@ Linux differences are expected.
 	WARNING: 'Fits-different' files -->    scw/0025/rev.000/prp/irem_prp_20021227060629.fits.gz
 	WARNING: 'Fits-different' files -->    scw/0025/rev.000/prp/irem_prp_20021227070629.fits.gz
 
-
-
 Sun differences from wrong version of root ( use  "root  4.03.02" )...
 	WARNING: 'Fits-different' files -->    scw/0024/rev.000/osm/spi_psd_adcgain.fits.gz
 	WARNING: 'Fits-different' files -->    scw/0025/rev.000/osm/spi_psd_adcgain.fits.gz
 
+
+
+-----------------------------------------------------------------------
+20071206 - Jake - deliver nrtrev 9.0 on SCREW 2052
+
+20071206 - Jake
+	SCREW 2052 - ibis_isgr_low_thres parameter updates
+
+20071130 - Jake
+	IC_TREE from 20071115 to 20071130
+
+20071116 - Jake
+	IC_TREE from 20070925B to 20071115
 
 20071024 - Jake
 	new test_data from integration of Preproc 4.2

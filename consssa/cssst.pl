@@ -26,6 +26,7 @@ use SSALIB;
 print "\n========================================================================\n";
 print "*******     Trigger $ENV{EVENT_NAME} received\n";
 
+
 &ISDCPipeline::EnvStretch("LOG_FILES","OUTPATH","PARFILES","WORKDIR","SCWDIR");
 
 #	Use the full $ENV{EVENT_NAME} because the function needs to determine if the file is zero size
@@ -53,10 +54,9 @@ if ( ( $ENV{REDO_CORRECTION} ) && ( $INST=~/SPI|OMC|PICSIT/ ) ) {
 	&Message ( "$proc - Not ReRunning Correction for $INST $ENV{OSF_DATASET}.\n" );
 } else {
 
-	my ( $scwid, $revno, $og, $inst, $INST, $instdir, $OG_DATAID, $OBSDIR ) = &SSALIB::ParseOSF;
-
-	&ISDCLIB::DoOrDie ( "$mymkdir -p $OBSDIR" ) unless ( -d "$OBSDIR" );
-	&Error ( "Did not mkdir $OBSDIR" ) unless ( -d "$OBSDIR" );
+#	my ( $scwid, $revno, $og, $inst, $INST, $instdir, $OG_DATAID, $OBSDIR ) = &SSALIB::ParseOSF;
+#	&ISDCLIB::DoOrDie ( "$mymkdir -p $OBSDIR" ) unless ( -d "$OBSDIR" );
+#	&Error ( "Did not mkdir $OBSDIR" ) unless ( -d "$OBSDIR" );
 
 	# Startup OSF for observation, with status cww 
 	$retval = &ISDCPipeline::PipelineStart (

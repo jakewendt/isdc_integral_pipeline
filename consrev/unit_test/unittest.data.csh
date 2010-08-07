@@ -109,7 +109,9 @@ endif
 #set ICVersion = "20070906"
 #set ICVersion = "20070917A"
 #set ICVersion = "20070919"
-set ICVersion = "20070925B"
+#set ICVersion = "20070925B"
+#set ICVersion = "20071115"
+set ICVersion = "20071130"
 cd $REP_BASE_PROD
 echo "#######   Building IC Tree Version $ICVersion"
 echo "#######    in REP_BASE_PROD +$REP_BASE_PROD+"

@@ -53,6 +53,22 @@ Compilation fails on Sun64 due to conflict with 32-bit root
 	make[3]: *** [param_gui] Error 8
 
 
+
+
+
+---------------------------------------------------------------------------
+20071204 - Jake - deliver nrtscw 8.5 on SPR 4761
+
+20071130 - Jake
+	IC_TREE from 20071115 to 20071130
+
+20071121 - Jake
+	SPR 4761 - added pointing check before touching nrtqla trigger
+		This caused 3 triggers to not exist in the unit_test
+
+20071116 - Jake
+	IC_TREE from 20070925B to 20071115
+
 ---------------------------------------------------------------------------
 20071030 - Jake - deliver nrtscw 8.4 on SPR 4695
 

@@ -1,6 +1,12 @@
 
 I have made the mods for SCREW 1769 for this component, but the SCREW has yet to be accepted. This SCREW has nothing to do with the function of this pipeline. It just creates an additional small script that would be copied to ISDC_ENV/bin, if "make install" were run, that will give the version when given the --v option.
 
+20071130 - Jake
+	IC_TREE from 20071115 to 20071130
+
+20071116 - Jake
+	IC_TREE from 20070925B to 20071115
+
 20071025 - Jake
 	new test_data created using Preproc 4.2
 

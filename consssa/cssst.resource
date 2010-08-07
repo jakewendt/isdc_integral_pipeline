@@ -48,13 +48,9 @@ ENV.PARFILES = parfiles       ! parfiles go here
 !ENV.INPUT = rii_input         ! input trigger directory
 ENV.SCWDIR = rii_scw
 
-
-
-!ENV.REDO_CORRECTION = 1			!	variable to redo correction step.  Comment out if no. (also in cssscw and cssfin.resource)
-										!	Here, it stops OMC, SPI and PICSIT from being processed
-
-
-
-
-!ENV.OSA_VERSION = 
-!	_test_7.3
+!===========================================================================
+!
+!  Advanced Processing Options (See consssa.path)
+!
+!
+ENV.REDO_CORRECTION = redo_correction

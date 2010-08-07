@@ -1,0 +1,12 @@
+
+20071115 - Jake
+	I think that some of the OSF and Trigger functionality could be 'objectified.'
+
+20071114 - Jake
+	I began trying to create more maintainable code by going OO.
+	Unfortunately, most of the ISDC code isn't really 'objectifiable.'
+	Level.pm is a small package used for finding the previous processing level.
+	The modules here are empty and serve no purpose (except Level.pm)
+		for the time being.  There is no reason to feel the need to use
+		them and only them and not create others.
+

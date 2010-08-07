@@ -97,6 +97,7 @@ sub Trigger2OSF {
 	my $in = &ISDCLIB::inst2in ( $inst );
 	my $osfname = "ss${in}_${scwid}";
 	$osfname =~ s/^ss/sm/ unless ( -z "$triggerfile" );
+#	$osfname =~ s/^(s\w{3}_)0000_?/$1/;
 	print ( "osfname:$osfname\n" ) if ( $ENV{DEBUGIN} );
 
 	return ( $osfname, $dcf, $inst, $INST, $revno, $scwid );
@@ -120,10 +121,12 @@ sub ParseOSF {
 	&Error ( "No revno found in dataset ->$ENV{OSF_DATASET}<-" ) unless ( $revno );
 	&Message ("revno:$revno") if ( $ENV{DEBUGIN} );
 
-	#	I just want to remove the "9999" from smii_9999_Sgr_A_star or smii_9999Sgr_A_star
+	#	I just want to remove the "0000" from smii_0000_Sgr_A_star or smii_0000Sgr_A_star
 	#	and then have smii_Sgr_A_star and NOT smii__Sgr_A_star
 	#	I think that the ? means 0 or 1.
-	( my $OG_DATAID = $ENV{OSF_DATASET} ) =~ s/^(s\w{3}_)9999_?/$1/;		#	Don't know if the _? is gonna work just right, but seems to at the mo
+	#	071203 - Jake - SCREW 2058 - Leave the 0000 there
+	#( my $OG_DATAID = $ENV{OSF_DATASET} ) =~ s/^(s\w{3}_)0000_?/$1/;		#	Don't know if the _? is gonna work just right, but seems to at the mo
+	my $OG_DATAID = $ENV{OSF_DATASET};
 	&Message ("OG_DATAID:$OG_DATAID") if ( $ENV{DEBUGIN} );
 
 	my $inst = &ISDCLIB::in2inst ( $in );
@@ -245,9 +248,9 @@ sub ParseTrigger {
 
 returns obs_$inst at minimum.
 
-If $ENV{OSA_VERSION} is set, it is appended to obs_$inst, returning obs_$inst$ENV{OSA_VERSION}$ENV{W_STAGE}.
+If $ENV{OSA_VERSION} is set, it is appended to obs_$inst, returning obs_$inst$ENV{OSA_VERSION}$ENV{OG_WRITE}.
 
-If $revno is given, that too is appended with a preceding "/", returning obs_$inst$ENV{OSA_VERSION}$ENV{W_STAGE}/$revno.
+If $revno is given, that too is appended with a preceding "/", returning obs_$inst$ENV{OSA_VERSION}$ENV{OG_WRITE}/$revno.
 
 =cut
 
@@ -256,7 +259,7 @@ sub inst2instdir {
 	my $instdir = "obs_$inst";
 	$instdir    =~ s/obs_jmx\d/obs_jmx/;
 	$instdir   .= "$ENV{OSA_VERSION}" if ( exists $ENV{OSA_VERSION} );
-	$instdir   .= "$ENV{W_STAGE}"     if ( exists $ENV{W_STAGE} );
+	$instdir   .= "$ENV{OG_WRITE}"    if ( exists $ENV{OG_WRITE} );
 	$instdir   .= "/$revno.000" if ( defined $revno );
 	return $instdir
 }

@@ -11,7 +11,7 @@ set system = "consssa"
 source unittest.setup.csh
 if ( $status != 0 ) exit $status
 
-set OUTREF_TGZ    = "consssa-2.2_outref.tar.gz"
+set OUTREF_TGZ    = "consssa-2.3_outref.tar.gz"
 
 eval `/usr/bin/envv set SSA_UNIT_TEST TRUE`
 echo "#######     SSA_UNIT_TEST now set to ${SSA_UNIT_TEST}"
@@ -20,12 +20,17 @@ setenv ISDC_REF_CAT "/isdc/arc/rev_2/cat/hec/gnrl_refr_cat_0025.fits[1]"
 echo "#######     ISDC_REF_CAT is now $ISDC_REF_CAT"
 
 #	Set instruments outside this "if block" bc needed later even if "if block" not run
-	set instruments = ( "jmx1" "jmx2" "picsit" "omc" "isgri" )
+
+#	if j_ima_iros-2.1.6+ gets delivered UNCOMMENT the following line
+#	set instruments = ( "jmx1" "jmx2" "picsit" "omc" "isgri" )
 #	set instruments = ( "jmx1" "picsit" "omc" "isgri" )	#	jemx2 currently core dumps
 #	set instruments = ( "isgri" )
 #	set instruments = ( "picsit" )
 #	set instruments = ( "isgri" "picsit" )
-#	set instruments = ( "isgri" "picsit" "omc" )
+
+	
+#	if j_ima_iros-2.1.6+ gets delivered COMMENT the following line
+	set instruments = ( "isgri" "picsit" "omc" )	#	j_ima_iros continues to cause problems so I won't test it
 #	set instruments = ( "jmx1" "jmx2" )
 #	set instruments = ( "jmx1" )
 #	set instruments = ( "jmx2" )	#	jmx2 core dumps in j_ima_iros
@@ -83,7 +88,7 @@ if ( ! $?DO_NOT_RECREATE_DATA ) then
 #\rm opus_work/consssa/input/*004400120010*
 #\rm opus_work/consssa/input/*004400850010*
 #\rm opus_work/consssa/input/*004400930010*
-\rm opus_work/consssa/input/004400930010_jmx?.trigger	#	because j_ima_iros continues to core dump
+#\rm opus_work/consssa/input/004400930010_jmx?.trigger	#	because j_ima_iros continues to core dump
 endif	#	if ( ! $?DO_NOT_RECREATE_DATA ) then
 #	
 #	\rm opus_work/consssa/input/*trigger
@@ -113,22 +118,6 @@ foreach trigger (`/bin/ls opus_work/consssa/input/*trigger | /bin/awk -F. '{prin
 	echo "#######     exit status from process_consssa_trigger.csh was $exit_status"
 	if ( $exit_status > 0 ) exit 1
 end  # foreach trigger
-
-
-
-
-
-
-
-
-set instruments = ( "picsit" "omc" "isgri" )	#	because not all the science windows have been processed for jemx
-#set instruments = ( "jmx1" "picsit" "omc" "isgri" )
-
-
-
-
-
-
 
 set instruments = ( $instruments "spi" )
 

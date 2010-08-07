@@ -74,7 +74,8 @@ ENV.ILT_RATIO_DEAD = 2.1			!  ratioDEAD param of ibis_isgr_low_thres
 ENV.ILT_RATIO_PEAK = 0.045			!  ratioPEAK param of ibis_isgr_low_thres	- 041206 from 0.07 to 0.04 - 040118 from 0.04 to 0.045
 ENV.ILT_RATIO_EFFIC = 0.7			!  ratioEffic param of ibis_isgr_low_thres
 !ENV.ILT_REVOL_WAIT = 3				!	4=nominal, 1000=to stop the reset ON - 050118 from 2 to 3
-ENV.ILT_REVOL_WAIT = 4				!	4=nominal, 1000=to stop the reset ON - SCREW 1980 - 070925 from 3 to 4
+!ENV.ILT_REVOL_WAIT = 4				!	4=nominal, 1000=to stop the reset ON - SCREW 1980 - 070925 from 3 to 4
+ENV.ILT_REVOL_WAIT = 5				!	4=nominal, 1000=to stop the reset ON - SCREW 2052 - 071206 from 4 to 5
 !  Compare context with ground (IC) version?  Either 1,2,3 for corresponding
 !   alert levels, or 0 (or comment out) for no checking.  DON'T leave it blank.
 ENV.ISGR_GRNDCTXT_COMP = 2

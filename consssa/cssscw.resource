@@ -48,43 +48,21 @@ ENV.LOG_FILES = log_files     ! where do we write log files?
 !ENV.PARFILES = parfiles       ! parfiles go here
 ENV.INPUT = rii_input         ! input trigger directory
 ENV.IC_ALIAS = CONS
-ENV.TIMEOUT = 14400
+ENV.TIMEOUT = 0
 
 !===========================================================================
 !
-!	Advanced Processing Options
+!	Advanced Processing Options (See consssa.path)
 !
 !
-!		variable to use local disks for processing.  Comment out if no.
-!ENV.USELOCALDISKS = 1        
-!
-!		variable to redo correction step.  Comment out if no. (also in cssst and cssfin.resource)
-!ENV.REDO_CORRECTION = 1			
-!
-!		variable when set in conjunction with REDO_CORRECTION will copy rev_2 instead of link it
-!		uncomment to copy, comment out to link (also in cssfin.resource)
-!		Here, it flags the running of evts_pick.
-!ENV.CREATE_REV_3    = 1		
-!
-!		If OSA_VERSION is set, it is appended to obs_$inst, returning obs_$inst${OSA_VERSION}
-!ENV.OSA_VERSION = 
-!	_test_7.3
-!
-!
-!		DO NOT USE in normal processing.  Comment out unless you are explicity doing consssa testing.
-!		SCREW 2046 Test
-!	W_STAGE is used to determine the parameters in IBISLIB.pm
-!	R_STAGE is used as a source for og_copy
-!	These should be very unique strings as at one point W_STAGE is replaced with R_STAGE
-!ENV.R_STAGE = .S01		!	Used as the read  obsdir when og_copy is run
-!ENV.W_STAGE = .S02		!	Used as the write obsdir when og_create or og_copy is run
-!
-!	either also include the ENV.W_STAGE setting in cssfin.resource OR 
-!	create a symbolic link between obs_isgri${W_STAGE} and obs_isgri
-!
-!
-!	NOT USED
-!ENV.STAGE = 1		!	og_create is run;  COR to BIN_I
-!ENV.STAGE = 2		!	og_create is NOT run;  BKG_I to IMA
-!
+ENV.USELOCALDISKS = uselocaldisks
+ENV.REDO_CORRECTION = redo_correction
+ENV.CREATE_REV_3    = create_rev_3
+ENV.OSA_VERSION = osa_version
+ENV.MULTISTAGE = multistage
+ENV.OG_TOOL = og_tool
+ENV.OG_READ = og_read
+ENV.OG_WRITE = og_write
+ENV.ISGRI_STARTLEVEL = isgri_startLevel
+ENV.ISGRI_ENDLEVEL = isgri_endLevel
 

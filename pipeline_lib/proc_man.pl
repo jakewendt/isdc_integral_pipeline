@@ -125,7 +125,7 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 				chomp;
 				$_ = &File::Basename::basename ( $_ );
 				( $pid, $proc, $stat, $hex, $pth, $node, $com ) = &OPUSLIB::ParsePSTAT ( $_ );
-				next if ( ( $machine ) && ( $node !~ /$machine/ ) );
+				next if ( ( $machine ) && ( $node !~ /^$machine$/ ) );		#	071113 - Jake - SPR 4762 - added ^ and $
 				next if ( ( $path ) && ( $pth !~ /$path/ ) );
 				
 				########################
@@ -202,7 +202,7 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 				#			(I'm assuming you don't have two identical processes on the same machine.)\n" 
 				#			if ( (defined $processes{$proc}) && (!(defined $machine)) && ($command !~ /stat/) );
 				
-				if ( ( $machine ) && ( $node !~ /$machine/ ) ) { next; }
+				if ( ( $machine ) && ( $node !~ /^$machine$/ ) ) { next; }		#	071113 - Jake - SPR 4762 - added ^ and $
 				
 				$foundpids{$pid} = $pid;	#	060501 - Jake - SCREW 1856
 				$processes{$pid} = $proc;
@@ -250,7 +250,8 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 				#  Check if this is on the blackboard
 				#   Note [_-] after proc to tightly match adp not adpmon, but also
 				#   get cleanopus, which doesn't leave space for _'s after.
-				$runline = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}* 2> /dev/null";
+				#	071113 - Jake - SPR 4762 - added the _ after machines
+				$runline = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}_* 2> /dev/null";
 				@list = `$runline`;
 				if ( ! ( @list ) ) {
 					print "$prefix1 WARNING:  cannot find process $processes{$pid} on path $paths{$pid} on machine $machines{$pid};  checking other machines.\n";
@@ -406,7 +407,8 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 					}
 				}
 			} else {
-				$runcom = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}* 2> /dev/null";
+				#	071113 - Jake - SPR 4762 - added the _ after machines
+				$runcom = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}_* 2> /dev/null";
 				my $restartingosf = `$runcom`;
 				chomp ( $restartingosf );
 				if ( $restartingosf =~ /absent/ ) {
@@ -420,7 +422,8 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 				#	This SHOULD only be 1 file, but I suppose could be more which would be a problem. Jake
 				#	000061a5-csasw1___-absent_________.41178a4e-conssa___-anaS4_______________-____
 				#	000061a5-csasw1___-idle___________.41178a4e-conssa___-anaS4_______________-____
-				$runcom = "$myrm $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}* 2> /dev/null";
+				#	071113 - Jake - SPR 4762 - added the _ after machines
+				$runcom = "$myrm $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}_* 2> /dev/null";
 				print "$prefix1 Running \'$runcom\'\n";
 				print `$runcom`;
 			} elsif ( $need2halt ) {
@@ -428,7 +431,7 @@ OPUSWORKDIR : foreach my $opuswork ( @opusworks ) {
 				print "$prefix1 Running \'$runcom\'\n";
 				print `$runcom`;
 	
-				$runcom = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}* 2> /dev/null";
+				$runcom = "$myls $ENV{OPUS_HOME_DIR}/*-*$processes{$pid}"."[_-]"."*.*-*$paths{$pid}*$machines{$pid}_* 2> /dev/null";
 				my $restartingosf = `$runcom`;
 				chomp ( $restartingosf );
 				print "$prefix1 $restartingosf\n";

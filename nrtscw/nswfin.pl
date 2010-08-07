@@ -378,7 +378,7 @@ close(AIT);
 die "******     ERROR:  Cannot make trigger $ENV{ARC_TRIG}/scw_$ENV{OSF_DATASET}0000.trigger:\n@result" if ($retval);
 
 #  trigger QLA (NRT case only):
-if ($inst =~ /nrt/) {
+if ( ($inst =~ /nrt/) && ($scwid =~ /0$/) ){	#	071121 - Jake - SPR 4761 - added pointing check
 	($retval,@result) = &ISDCPipeline::RunProgram("$mytouch $ENV{OPUS_WORK}/nrtqla/input/$scwid.trigger");
 	die "******     ERROR:  Cannot make trigger $ENV{OPUS_WORK}/nrtqla/input/$scwid.trigger:\n@result" if ($retval);
 }

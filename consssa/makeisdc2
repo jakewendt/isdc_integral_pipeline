@@ -1,6 +1,6 @@
 
 COMPONENT_NAME  = consssa
-COMPONENT_VERS  = 2.2
+COMPONENT_VERS  = 2.3.1
 
 revtest::  
 	(cd unit_test; ./FULLREV.test)

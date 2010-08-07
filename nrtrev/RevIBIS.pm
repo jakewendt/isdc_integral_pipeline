@@ -1566,7 +1566,8 @@ sub ICAiltNRT {
 		#	070227 - 15.29 to 15.39 (typo) # 061207 - SPR 4631 - from 15.25,	#	050107 - Jake - from 13.75		041206 - Jake - was "13.45",
 		#"par_meanExpect"   => "15.39",	
 		#"par_meanExpect"   => "14.95",	# 070910 - Jake - from 15.39 - SCREW 1980
-		"par_meanExpect"   => "14.99",	# 070925 - Jake - from 14.95 - SCREW 1980
+		#"par_meanExpect"   => "14.99",	# 070925 - Jake - from 14.95 - SCREW 1980
+		"par_meanExpect"   => "14.95",	# 071206 - Jake - from 14.99 - SCREW 2052
 		"par_meanREVon"    => "5.0",	#	051028 - Jake - NEW SCREW 1677
 		"par_ratioDEAD"    => "$ENV{ILT_RATIO_DEAD}",# 2.1
 		"par_ratioPeak"    => "$ENV{ILT_RATIO_PEAK}",# 0.04	- 041206 - Jake - was 0.07

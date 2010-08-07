@@ -52,9 +52,13 @@ ENV.ARC_TRIG = arcingest		! where ingest triggers are written
 
 ENV.IC_ALIAS = CONS
 
-!ENV.REDO_CORRECTION = 1			! variable to redo correction step.  Comment out if no.	(also in cssst and cssscw.resource)
-!ENV.CREATE_REV_3    = 1		! variable when set in conjunction with REDO_CORRECTION will copy rev_2 instead of link it
-										! uncomment to copy, comment out to link (also in cssscw.resource)
 
-!ENV.OSA_VERSION = 
-!	_test_7.3
+!===========================================================================
+!
+!	Advanced Processing Options (See consssa.path)
+!
+!
+ENV.USELOCALDISKS = uselocaldisks
+ENV.REDO_CORRECTION = redo_correction
+ENV.OSA_VERSION = osa_version
+ENV.OG_WRITE = og_write

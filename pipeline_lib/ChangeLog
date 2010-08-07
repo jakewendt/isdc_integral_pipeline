@@ -18,6 +18,64 @@ Many lines marked with FIX
 Check them!
 
 
+
+rev 9999 is still in SPILIB and CLEANLIB and may need fixed
+
+
+
+20071214 - Jake
+	SCREW 2059 - parameter updates
+	SCREW 2060 - parameter updates
+
+--------------------------------------------------------------------------------------
+20071204 - Jake - deliver pipeline_lib 9.6.4 on SCREW 997 2051 2058
+
+	SCREW 2051 - fulfilled earlier
+
+20071204 - Jake
+	SCREW 997 - added 35644 to OMCLIB, JMXLIB, SPILIB, IBISLIB
+
+20071203 - Jake
+	SCREW 2058 - changed ALL 9999 to 0000 in 
+		consssa/Trigger2OSF.pl
+		consssa/cssscw.pl
+		pipeline_lib/CleanLIB.pm
+		pipeline_lib/SPILIB.pm
+		pipeline_lib/SSALIB.pm
+
+20071121 - Jake
+	changed JMXLIB.pm and SPILIB.pm as well
+
+20071116 - Jake
+	change IBISLIB.pm to use giant hash rather than individual variables
+		(looks good so will also change JMX, SPI and OMC)
+
+--------------------------------------------------------------------------------------
+20071114 - Jake - deliver pipeline_lib 9.6.3 on SPR 4762 4763 and SCREW 2050
+
+20071114 - Jake
+	SCREW 2050 - ibis_science_analysis 10.6: OBS1_ExtenType from 0 to 1 for consssa testing
+
+20071114 - Jake
+	Began trying to make code more OO
+
+20071113 - Jake
+	created Level.pm
+	SPR 4762 - modified proc_man.pl
+
+20071112 - Jake
+	SPR 4763 - opus_wrapper to properly handle the *.path file variables
+	IBISLIB.pm to handle the different consssa.path variables
+	SSALIB.pm to handle the different consssa.path variables
+
+--------------------------------------------------------------------------------------
+20071108 - Jake - deliver pipeline_lib 9.6.2 on SCREW 2050
+
+20071107 - Jake
+	SCREW 2050 - energy_bands to change for consssa so created a energy_sa.fits.gz and 
+		energy_ssa.fits.gz and must modify IBISLIB.pm to copy them as energy_bands.fits.gz.  
+		This will require a new rebinned_corr_ima.fits.gz for consssa.
+		
 --------------------------------------------------------------------------------------
 20071029 - Jake - deliver pipeline_lib 9.6.1 on SPR 4695
 

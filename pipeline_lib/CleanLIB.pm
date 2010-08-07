@@ -587,8 +587,8 @@ sub ValidateRequest {
 	die "$prefix1 ERROR 041:  clean up to $pars{level} not allowed for Input!" 
 		if ( ( $pars{level} =~ /prp/ ) && ( $pars{path} =~ /input/ ) );
 
-	die "$prefix1 ERROR 042:  Cannot clean revol_ssa for revolution 9999!"
-		if ( ( $pars{path} =~ /revol_ssa/ ) && ( $pars{dataset} =~ /9999/ ) );
+	die "$prefix1 ERROR 042:  Cannot clean revol_ssa for revolution 0000!"
+		if ( ( $pars{path} =~ /revol_ssa/ ) && ( $pars{dataset} =~ /0000/ ) );
 
 	if ( ( ( $pars{level} =~ /raw/ ) || ( $pars{path} =~ /revol_/ ) ) && !( $pars{"do_not_confirm"} ) ) {
 		#  Ask if the operator is sure:
@@ -801,7 +801,7 @@ sub CleanConsssaData {
 	
 			chdir $fullobs;
 	
-			unless ( $revno =~ /9999/ ) {
+			unless ( $revno =~ /0000/ ) {
 				foreach my $revdir ( glob ( "$revno*.000" ) ) {		# NEED the .000 bc during processing we link the .001 or .002 or whatever!
 					if ( -d $revdir ) {
 						if ( $dataset =~ /^(\d{1,4})$/ ) {	#	060203 - changed from 4 to 2,4	#	changed to 1,4
@@ -814,14 +814,15 @@ sub CleanConsssaData {
 						&dprint ( "$prefix1 No dirs found matching revno $revno*.000\n" );
 					}
 				}
-			} else { # revno is 9999	#	I don't think that this is really used yet, so its not well tested.
-				$dataset =~ s/_9999//;
+			} else { # revno is 0000	#	I don't think that this is really used yet, so its not well tested.
+#	071203 - SCREW 2058 - Don't strip this out
+#				$dataset =~ s/_0000//;
 				&MoveData ( "$fullobs/$dataset", "$fullclean" );	#	FIX - Should there be a * after $dataset?????	Before????
 			}
 
 			if ( -e "$rep_base_prod/scratch/" ) {
 				chdir "$rep_base_prod/scratch/";
-				unless ( $revno =~ /9999/ ) {
+				unless ( $revno =~ /0000/ ) {
 					foreach my $revdir ( glob ( "$revno*" ) ) {
 						if ( -d $revdir ) {
 							if ( $dataset =~ /^(\d{1,4})$/ ) {	#	060203 - changed from 4 to 2,4	#	changed to 1,4

@@ -6,6 +6,47 @@ Linux intel compilation will fail.
 Try to implement a way to test cons_sma.sh in the unit test
 
 
+
+
+AT SOME POINT, RE-ENABLE JEMX IN THE UNIT TEST (j_ima_iros-2.1.6)
+
+
+
+--------------------------------------------------
+20071204 - deliver consssa 2.3.1 on SCREW 2051 2058
+
+	SCREW 2051 - fulfilled earlier
+
+20071203 - Jake
+	SCREW 2058 - changed ALL 9999 to 0000 in 
+		consssa/Trigger2OSF.pl
+		consssa/cssscw.pl
+		pipeline_lib/CleanLIB.pm
+		pipeline_lib/SPILIB.pm
+		pipeline_lib/SSALIB.pm
+
+20071130 - Jake
+	IC_TREE from 20071115 to 20071130
+
+20071119 - Jake
+	removed 9999 from IC_Group if statement
+
+20071116 - Jake
+	IC_TREE from 20070925B to 20071115
+
+--------------------------------------------------
+20071116 - deliver consssa 2.3 on SCREW 2050
+
+20071112 - Jake
+	consssa.path, css*.resource, cssscw.pl all to handle the multi-stage
+		processing variants and variables
+
+20071108 - Jake
+	SCREW 2050 - replaced rebinned_corr_ima.fits.gz with one created in unit test
+
+20071107 - Jake
+	SCREW 2050 - consssa and conssa energy_bands now differ so I moved it here.
+
 --------------------------------------------------
 20071030 - deliver consssa 2.2 on SPR 4735
 

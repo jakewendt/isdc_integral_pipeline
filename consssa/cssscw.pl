@@ -27,6 +27,7 @@ use SPILIB;
 use OMCLIB;
 use SSALIB;
 use CorLIB;
+use ISDC::Level;
 
 print "\n========================================================================\n";
 
@@ -59,19 +60,6 @@ if ( ( $ENV{REDO_CORRECTION} ) && ( $INST=~/SPI|OMC|PICSIT/ ) ) {
 	exit 0;
 }
 
-#if (  ( exists $ENV{W_STAGE} )
-#	&& ( exists $ENV{R_STAGE} ) 
-#	&& ( $ENV{W_STAGE} eq $ENV{R_STAGE} ) ) {
-#		&ISDCPipeline::PipelineStep(
-#			"step"         => "$proc - dummy step to set COMMONLOGFILE variable",
-#			"program_name" => "$myecho",
-#		);
-#		&Message ( "Checking the results of STAGE 1 and prepping for STAGE 2" );
-#		&Error ( "og $OBSDIR/$og does not exist" )   unless ( -e "$OBSDIR/$og" );
-#		&ISDCLIB::DoOrDie ( "$mychmod -R +w $OBSDIR" );
-#		&ISDCLIB::DoOrDie ( "$mygunzip $OBSDIR/*gz" )       if ( glob ( "$OBSDIR/*gz" ) );
-#		&ISDCLIB::DoOrDie ( "$mygunzip $OBSDIR/scw/*/*gz" ) if ( glob ( "$OBSDIR/scw/*/*gz" ) );
-#	}
 
 =item Previous-run-cleanup
 
@@ -83,33 +71,68 @@ if (( -e "$OBSDIR") ||		#	using -e bc may be link or directory
 	(  -l "$OBSDIR" )) {		#	need -l in case of dead link
 	#  Clean up previous run:
 	
-	#  Move log back to central dir (assuming it exists and the previous
-	#   run had gotten that far.
-	#
-	#	The filename is OG_DATAID in the actual dir, but OSF_DATASET
-	#	in the OPUS logs and obs dirs. (The only difference may be the 
-	#	removed 9999 if it is a multiple revolution mosaic.)
-	#	051212 - Jake - SPR 4408
-	&ISDCPipeline::MoveLog(										#	move log from OBSDIR to OPUS_WORK
-		"$OBSDIR/logs/${OG_DATAID}_css.txt",				#	current location
-		"$ENV{LOG_FILES}/$ENV{OSF_DATASET}_css.txt",		#	new location
-		"$ENV{LOG_FILES}/$ENV{OSF_DATASET}.log"			#	link location
-		) if ( -e "$OBSDIR/logs/${OG_DATAID}_css.txt" );
+	if ( $ENV{OG_TOOL} ne 'og_clean' ) {
+
+		#  Move log back to central dir (assuming it exists and the previous
+		#   run had gotten that far.)
+		#
+		#	The filename is OG_DATAID in the actual dir, but OSF_DATASET
+		#	in the OPUS logs and obs dirs. (The only difference may be the 
+		#	removed 0000 if it is a multiple revolution mosaic.)
+		&ISDCPipeline::MoveLog(										#	move log from OBSDIR to OPUS_WORK
+			"$OBSDIR/logs/${OG_DATAID}_css.txt",				#	current location
+			"$ENV{LOG_FILES}/$ENV{OSF_DATASET}_css.txt",		#	new location
+			"$ENV{LOG_FILES}/$ENV{OSF_DATASET}.log"			#	link location
+			) if ( -e "$OBSDIR/logs/${OG_DATAID}_css.txt" );
 	
-#unless (  ( exists $ENV{W_STAGE} )
-#	&& ( exists $ENV{R_STAGE} ) 
-#	&& ( $ENV{W_STAGE} eq $ENV{R_STAGE} ) ) { ?????
-	#	If the log file doesn't exist, this will fail.
-	#	The log file will probably exist at the beginning, but then it has been deleted.
-	#	This same thing continues below with the &Error calls.
-	($retval,@result) = &ISDCPipeline::PipelineStep (
-		"step"         => "$proc - clean up previous main",
-		"program_name" => "$myrm -rf $OBSDIR",
-		"subdir"       => "$ENV{WORKDIR}",
+		#	If the log file doesn't exist, this will fail.
+		#	The log file will probably exist at the beginning, but then it has been deleted.
+		#	This same thing continues below with the &Error calls.
+		($retval,@result) = &ISDCPipeline::PipelineStep (
+			"step"         => "$proc - clean up previous main",
+			"program_name" => "$myrm -rf $OBSDIR",
+			"subdir"       => "$ENV{WORKDIR}",
+			);
+		&Error ( "Didn't remove $OBSDIR" )
+			if (( -e "$OBSDIR" ) || ( -l "$OBSDIR" ));
+
+
+	} else {   # $ENV{OG_TOOL} eq 'og_clean' ) {
+
+		&ISDCPipeline::PipelineStep(
+			"step"         => "$proc - dummy step to set COMMONLOGFILE variable",
+			"program_name" => "$myecho",
 		);
-	&Error ( "Didn't remove $OBSDIR" )
-		if (( -e "$OBSDIR" ) || ( -l "$OBSDIR" ));
-#	}	#	DO NOT DELETE STAGE 1 DATA!
+		&Message ( "Checking the results of STAGE 1 and prepping for STAGE 2" );
+		&Error ( "og $OBSDIR/$og does not exist" )   unless ( -e "$OBSDIR/$og" );
+		&ISDCLIB::DoOrDie ( "$mychmod -R +w $OBSDIR" );
+		&ISDCPipeline::MoveLog(										#	move log from OBSDIR to OPUS_WORK
+			"$OBSDIR/logs/${OG_DATAID}_css.txt",				#	current location
+			"$ENV{LOG_FILES}/$ENV{OSF_DATASET}_css.txt",		#	new location
+			"$ENV{LOG_FILES}/$ENV{OSF_DATASET}.log"			#	link location
+			) if ( -e "$OBSDIR/logs/${OG_DATAID}_css.txt" );
+#		&ISDCLIB::DoOrDie ( "$mygunzip $OBSDIR/*gz" )       if ( glob ( "$OBSDIR/*gz" ) );
+#		&ISDCLIB::DoOrDie ( "$mygzip $OBSDIR/energy_bands.fits" ) if ( -e "$OBSDIR/energy_bands.fits" );
+#		&ISDCLIB::DoOrDie ( "$mygunzip $OBSDIR/scw/*/*gz" ) if ( glob ( "$OBSDIR/scw/*/*gz" ) );
+		&UnixLIB::Gunzip ( "$OBSDIR/*gz" );
+		&UnixLIB::Gzip   ( "$OBSDIR/energy_bands.fits" );
+		&UnixLIB::Gunzip ( "$OBSDIR/scw/*/*gz" );
+
+
+#		the endLevel should actually be 1 less that the given $ENV{ISGRI_STARTLEVEL}
+
+		my $level = new ISDC::Level('isgri',$ENV{ISGRI_STARTLEVEL});
+		
+		&ISDCPipeline::PipelineStep(
+			"step"         => "$proc - clean og to level ".$level->previous,
+			"program_name" => "og_clean",
+			"par_ogDOL"    => "$og",
+			"par_endLevel" => $level->previous,
+			"par_chatter"  => "3",
+			"subdir"       => $OBSDIR,
+		);
+
+	} # if ( $ENV{OG_TOOL} ne 'og_clean' ) {
 }
 	
 #	
@@ -119,7 +142,7 @@ if (( -e "$OBSDIR") ||		#	using -e bc may be link or directory
 #			start over, (s)he will need to chmod manually.
 #
 	
-if ( $ENV{USELOCALDISKS} ) {
+if ( ( $ENV{USELOCALDISKS} ) && ( $ENV{OG_TOOL} ne 'og_clean' ) ) {
 	chomp ( my $hostname = `hostname` );
 	my $localdir        = "/reproc/$hostname/cons/ops_sa/$instdir/$OG_DATAID";
 	my $allpossibledirs = "/reproc/anaB?/cons/ops_sa/$instdir/$OG_DATAID";		#	this NEEDS to have a wildcard in it!
@@ -193,10 +216,10 @@ if ( $proctype =~ /mosaic/ ) {
 
 #	add third possible option to continue processing in the same directory
 
-if (  ( exists $ENV{W_STAGE} )
-	&& ( exists $ENV{R_STAGE} ) 
-	&& ( $ENV{W_STAGE} ne $ENV{R_STAGE} ) ) {
-	( my $source = $instdir ) =~ s/$ENV{W_STAGE}/$ENV{R_STAGE}/;
+if ( $ENV{OG_TOOL} eq 'og_copy' ) {
+	&Error ( "\$ENV{OG_READ} and \$ENV{OG_WRITE} must be different!" ) unless ( $ENV{OG_WRITE} ne $ENV{OG_READ} );
+
+	( my $source = $instdir ) =~ s/$ENV{OG_WRITE}/$ENV{OG_READ}/;
 
 	($retval,@result) = &ISDCPipeline::PipelineStep(
 		"step"           => "$proc - copy OG",
@@ -213,7 +236,7 @@ if (  ( exists $ENV{W_STAGE} )
 		"subdir"         => "$ENV{REP_BASE_PROD}",
 		);
 
-} else {
+} elsif ( ( $ENV{OG_TOOL} eq 'og_create' ) || ( $ENV{OG_TOOL} eq '' ) ){
 	&ISDCLIB::DoOrDie ( "$mycp $trigger $OBSDIR/logs/$OG_DATAID.trigger" ) if ( $proctype =~ /mosaic/ );
 	
 	($retval,@result) = &ISDCPipeline::PipelineStep(
@@ -238,7 +261,8 @@ if (  ( exists $ENV{W_STAGE} )
 chdir ( "$OBSDIR" ) or &Error ( "Cannot chdir to $OBSDIR" );
 print "*******     Current directory is $OBSDIR \n";
 
-my $IC_Group = ( $revno =~ /9999/ ) ? "../../idx/ic/ic_master_file.fits[1]" : "../../../idx/ic/ic_master_file.fits[1]";
+my $IC_Group = "../../../idx/ic/ic_master_file.fits[1]";
+#my $IC_Group = ( $revno =~ /0000/ ) ? "../../idx/ic/ic_master_file.fits[1]" : "../../../idx/ic/ic_master_file.fits[1]";
 
 ############################################################################
 

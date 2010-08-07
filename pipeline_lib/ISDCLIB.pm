@@ -476,8 +476,14 @@ sub FindDirVers {
 	(scalar(@files) > 1)
 		and print "*******      Found ".scalar(@files)." different versions;  choosing last, $files[$#files]\n";
 #	die ">>>>>>>     ERROR:  not expecting both $files[0] and $files[$#files]!"
+
+
+
 	&ISDCLIB::Error ( "not expecting both $files[0] and $files[$#files]!" )	#	060524
 		if (($files[0] =~ /\.000$/) && ($#files > 0));
+
+
+
 	return $files[$#files];
 }
 
@@ -758,7 +764,7 @@ As it sounds, DoOrDie executes the given command in `'s and returns the result, 
 
 sub DoOrDie {
 	my ( $command ) = @_;
-	&ISDCLIB::dprint ( "$command" );
+	&ISDCLIB::dprint ( "$command\n" );
 #	&ISDCLIB::Message ( "$command" );
 #	`$command`;
 #	die "*******    ERROR:  $command failed with $?" if ( $? );
